@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { Input, Button, Select } from "antd";
+import { Input, Button, Select, Divider } from "antd";
 import axios from "axios";
 import React from "react";
 
@@ -9,7 +10,10 @@ const ClinicVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     visit_date: "",
     visit_type: "",
-    measurements: "",
+    height: "",
+    weight: "",
+    temperature: "",
+    other: "",
     test_results: "",
     additional_notes: "",
   });
@@ -42,6 +46,10 @@ const ClinicVisitForm: React.FC = () => {
         Clinic Visit Form
       </h2>
       <form onSubmit={onFinish} className="mt-4 space-y-6">
+        {/* Section 1: Visit Info */}
+        <Divider orientation="left" className="text-lg font-semibold">
+          Visit Information
+        </Divider>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="visit_date" className="text-gray-700">
@@ -56,12 +64,13 @@ const ClinicVisitForm: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="visit_type" className="text-gray-700">
+            <label htmlFor="visit_type" className="text-gray-700 block">
               Visit Type
             </label>
             <Select
               id="visit_type"
               placeholder="Select Visit Type"
+              className="w-full"
               onChange={handleSelectChange}
             >
               <Option value="Consultation">Consultation</Option>
@@ -71,19 +80,62 @@ const ClinicVisitForm: React.FC = () => {
               {/* Add other common visit types here */}
             </Select>
           </div>
-
+        </div>
+        {/* Section 2: Measurements */}
+        <Divider orientation="left" className="text-lg font-semibold">
+          Measurements
+        </Divider>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="measurements" className="text-gray-700">
-              Measurements
+            <label htmlFor="height" className="text-gray-700">
+              Height
             </label>
             <Input
-              id="measurements"
+              id="height"
               onChange={handleInputChange}
-              value={formValues.measurements}
-              placeholder="Enter measurements (e.g., height, weight)"
+              value={formValues.height}
+              placeholder="Enter Height"
             />
           </div>
-
+          <div>
+            <label htmlFor="weight" className="text-gray-700">
+              Weight
+            </label>
+            <Input
+              id="weight"
+              onChange={handleInputChange}
+              value={formValues.weight}
+              placeholder="Enter Weight"
+            />
+          </div>
+          <div>
+            <label htmlFor="temperature" className="text-gray-700">
+              Temperature
+            </label>
+            <Input
+              id="temperature"
+              onChange={handleInputChange}
+              value={formValues.temperature}
+              placeholder="Enter Temperature"
+            />
+          </div>
+          <div>
+            <label htmlFor="other" className="text-gray-700">
+              Other
+            </label>
+            <Input
+              id="other"
+              onChange={handleInputChange}
+              value={formValues.other}
+              placeholder="Enter Other"
+            />
+          </div>
+        </div>
+        {/* Section 2: Results */}
+        <Divider orientation="left" className="text-lg font-semibold">
+          Test Results
+        </Divider>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="test_results" className="text-gray-700">
               Test Results

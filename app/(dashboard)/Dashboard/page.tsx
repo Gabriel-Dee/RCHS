@@ -30,6 +30,7 @@ export default async function Dashboard() {
 
       <div className="flex-1 space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {/* Card 1 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
@@ -53,12 +54,10 @@ export default async function Dashboard() {
               <p className="text-xs text-black">+20.1% from last year</p>
             </CardContent>
           </Card>
-
+          {/* Card 2 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Male
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Total Male</CardTitle>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -79,9 +78,12 @@ export default async function Dashboard() {
               <p className="text-xs text-black">+18.1% from last year</p>
             </CardContent>
           </Card>
+          {/* Card 3 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Female</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Female
+              </CardTitle>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -101,6 +103,7 @@ export default async function Dashboard() {
               <p className="text-xs text-black">+10% from last year</p>
             </CardContent>
           </Card>
+          {/* Card 4 */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Avarage Age</CardTitle>
@@ -124,7 +127,6 @@ export default async function Dashboard() {
           </Card>
         </div>
         <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-7">
-
           <TableCard className="lg:col-span-12 border-2">
             <TableCardHeader>
               <TableCardTitle>Recent Patients</TableCardTitle>
@@ -134,10 +136,8 @@ export default async function Dashboard() {
             </TableCardHeader>
             <TableCardContent>
               <RecentChildAttendance />
-              {/* <RecentSales/> */}
             </TableCardContent>
           </TableCard>
-
         </div>
       </div>
     </>

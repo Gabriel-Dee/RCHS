@@ -294,7 +294,7 @@ const ClinicVisitForm: React.FC = () => {
           </label>
           <textarea
             id="breastfeeding_advice"
-            className="p-2 w-full border border-gray-300 rounded-lg"
+            className="p-2 w-full border border-gray-300 rounded-lg bg-white"
             onChange={handleInputChange}
             value={formValues.breastfeeding_advice}
             rows={4}

@@ -23,21 +23,21 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { id: string }, TValue> { // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function VisistsDataTable<TData, TValue>({
+export function VisistsDataTable<TData extends { id: string; }, TValue>({ // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
   data,
   columns,
 }: DataTableProps<TData, TValue>) {
-  const router = useRouter ()
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>( [] );
+  const router = useRouter();
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
-    initialState: { 
+    initialState: {
       pagination: {
         pageIndex: 0,
         pageSize: 5,
@@ -52,16 +52,24 @@ export function VisistsDataTable<TData, TValue>({
     },
   });
 
+  // const handleRowClick = (patientId: string) => {
+  const handleRowClick = () => {
+    // router.push(`/Profile/${patientId}`);
+    router.push(`/Profile`);
+  };
+  const handleNewPatientRegistration = (e: any) => {
+    e.preventDefault();
+    router.push("/Records/Child");
+  };
+  const handleNewVisistRegistration = (e: any) => {
+    e.preventDefault();
+    router.push("/Visits/BeforeCard");
+  };
+  const handleParentRegistration = (e: any) => {
+    e.preventDefault();
+    router.push("Records/Mother");
+  };
 
-  const handleNewPatientRegistration = (e: any) => { 
-    e.preventDefault()
-    router.push('/Records/Child')
-   }
-  const handleNewVisistRegistration = (e: any) => { 
-    e.preventDefault()
-    router.push('/Visits/BeforeCard')
-   }
-   
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -75,15 +83,21 @@ export function VisistsDataTable<TData, TValue>({
         />
         <Button
           onClick={handleNewPatientRegistration}
-          className="flex flex-col ml-2" // Add some margin to separate the button from the input
+          className="flex flex-col ml-2"
         >
           Register New Patient
         </Button>
         <Button
           onClick={handleNewVisistRegistration}
-          className="flex flex-col ml-2" // Add some margin to separate the button from the input
+          className="flex flex-col ml-2"
         >
           Register New Visit
+        </Button>
+        <Button
+          onClick={handleParentRegistration}
+          className="flex flex-col ml-2"
+        >
+          Register Parent
         </Button>
       </div>
       <div className="rounded-md border border-rchsLight">
@@ -112,6 +126,9 @@ export function VisistsDataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  // onClick={() => handleRowClick(row.original.id)}
+                  onClick={() => handleRowClick()}
+                  style={{ cursor: "pointer" }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

@@ -1,20 +1,10 @@
 "use client";
-
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 // import { DataTable } from "@/components/ui/custom/data-table";
 import { VisistsDataTable } from "@/components/ui/custom/visits-data-table";
-
-// Defining the type for child attendance data specific to RCHS
-export type ChildAttendance = {
-  id: string;
-  name: string;
-  age: number;
-  gender: string;
-  weight: number;
-  height: number;
-  lastVisit: string;
-};
+import { useEffect, useState } from "react";
+import { ChildAttendance } from "@/types/types";
 
 // Sample child attendance data (replace with real data)
 const childAttendanceData: ChildAttendance[] = [
@@ -157,9 +147,36 @@ export const columns: ColumnDef<ChildAttendance>[] = [
 ];
 
 export function RecentChildAttendance() {
+  // const [childAttendanceData, setChildAttendanceData] = useState<
+  //   ChildAttendance[]
+  // >([]);
+
+  // useEffect(() => {
+  //   // Fetch data from backend API endpoint
+  //   fetchChildrenData();
+  // }, []);
+
+  // const fetchChildrenData = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/api/children");
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setChildAttendanceData(data);
+  //     } else {
+  //       throw new Error("Failed to fetch data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  // Render the table
   return (
     <div className="w-full">
-      <VisistsDataTable data={childAttendanceData} columns={columns}></VisistsDataTable>
+      <VisistsDataTable
+        data={childAttendanceData}
+        columns={columns}
+      />
     </div>
   );
 }

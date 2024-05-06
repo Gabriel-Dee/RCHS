@@ -28,11 +28,13 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const user_id = e.target.user_id.value;
+    const username = e.target.username.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const firstName = e.target.firstName.value;
-    const middleName = e.target.middleName.value;
-    const lastName = e.target.lastName.value;
+    const first_name = e.target.first_name.value;
+    const middle_name = e.target.middle_name.value;
+    const last_name = e.target.last_name.value;
     const occupation = e.target.occupation.value;
 
     if (!isValidEmail(email)) {
@@ -54,11 +56,13 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          user_id,
+          username,
           email,
           password,
-          firstName,
-          middleName,
-          lastName,
+          first_name,
+          middle_name,
+          last_name,
           occupation,
         }),
       });
@@ -87,6 +91,38 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4">
             <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="user_id">
+                Id number
+              </Label>
+              <Input
+                id="user_id"
+                name="user_id"
+                placeholder="User Id Number"
+                type="text"
+                autoCapitalize="none"
+                autoComplete="user_id"
+                autoCorrect="off"
+                disabled={isLoading}
+                required
+              />
+            </div>
+            <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="username">
+                Username
+              </Label>
+              <Input
+                id="username"
+                name="username"
+                placeholder="Username"
+                type="text"
+                autoCapitalize="none"
+                autoComplete="username"
+                autoCorrect="off"
+                disabled={isLoading}
+                required
+              />
+            </div>
+            <div className="grid gap-1">
               <Label className="sr-only" htmlFor="email">
                 Email
               </Label>
@@ -99,6 +135,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                 autoComplete="email"
                 autoCorrect="off"
                 disabled={isLoading}
+                required
               />
             </div>
             <div className="grid gap-1">
@@ -112,48 +149,52 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                 type="password"
                 autoComplete="new-password"
                 disabled={isLoading}
+                required
               />
             </div>
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="firstName">
+              <Label className="sr-only" htmlFor="first_name">
                 First Name
               </Label>
               <Input
-                id="firstName"
-                name="firstName"
+                id="first_name"
+                name="first_name"
                 placeholder="First Name"
                 type="text"
                 autoComplete="given-name"
                 autoCorrect="off"
                 disabled={isLoading}
+                required
               />
             </div>
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="middleName">
+              <Label className="sr-only" htmlFor="middle_name">
                 Middle Name
               </Label>
               <Input
-                id="middleName"
-                name="middleName"
+                id="middle_name"
+                name="middle_name"
                 placeholder="Middle Name"
                 type="text"
                 autoComplete="additional-name"
                 autoCorrect="off"
                 disabled={isLoading}
+                required
               />
             </div>
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="lastName">
+              <Label className="sr-only" htmlFor="last_name">
                 Last Name
               </Label>
               <Input
-                id="lastName"
-                name="lastName"
+                id="last_name"
+                name="last_name"
                 placeholder="Last Name"
                 type="text"
                 autoComplete="family-name"
                 autoCorrect="off"
                 disabled={isLoading}
+                required
               />
             </div>
             <div className="grid gap-1">
@@ -168,6 +209,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
                 autoComplete="occupation"
                 autoCorrect="off"
                 disabled={isLoading}
+                required
               />
             </div>
             <Button disabled={isLoading}>
