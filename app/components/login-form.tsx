@@ -14,9 +14,9 @@ interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function LoginForm({ className, ...props }: LoginFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
   const [error, setError] = useState("");
   const { data: session, status: sessionStatus } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
@@ -31,8 +31,10 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password.value;
+    // const email = e.target[0].value;
+    // const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -60,6 +62,31 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       setError("");
       router.push("/Dashboard");
     }
+
+    // try {
+    //   const response = await fetch("your-django-api-login-endpoint", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ email, password }),
+    //   });
+
+    //   if (!response.ok) {
+    //     throw new Error("Invalid email or password");
+    //   }
+
+    //   // Assuming the response contains a token or session information
+    //   const data = await response.json();
+    //   // Store the token/session information in local storage or a cookie
+    //   // localStorage.setItem("token", data.token);
+    //   // Redirect to Dashboard page
+    //   router.push("/Dashboard");
+    // } catch (error) {
+    //   setError(error.message);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   if (sessionStatus === "loading") {
