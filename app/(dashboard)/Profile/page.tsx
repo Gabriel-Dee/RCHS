@@ -1,6 +1,6 @@
 // components/Profile.tsx
 import ActivityLog from "@/app/components/patient-activity-log";
-import AboutStatistics from "@/app/components/patient-stats";
+import AboutStatistics from "@/app/components/graphs/patient-length-age-boys";
 import PersonalInfo from "@/app/components/personal-info";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";

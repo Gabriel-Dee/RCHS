@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useEffect, useState } from "react";
 import Chart, { ChartConfiguration } from "chart.js/auto";
