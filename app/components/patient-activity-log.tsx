@@ -53,8 +53,8 @@ const ActivityLog: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8 border border-[#08a29e]">
-      <h4 className="text-xl text-gray-900 font-bold">Activity log</h4>
+    <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8 border border-rchs">
+      <h4 className="text-xl text-gray-900 font-bold">Visits Activity Log</h4>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -65,7 +65,7 @@ const ActivityLog: React.FC = () => {
           {activityData.map((item) => (
             <div key={item.id} className="flex items-center w-full my-6 -ml-1.5">
               <div className="w-1/12 z-10">
-                <div className="w-3.5 h-3.5 bg-[#08a29e] rounded-full"></div>
+                <div className="w-3.5 h-3.5 bg-rchs rounded-full"></div>
               </div>
               <div className="w-11/12">
                 <p className="text-sm">{item.description}</p>

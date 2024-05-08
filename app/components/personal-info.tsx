@@ -13,7 +13,7 @@ const PersonalInfo: React.FC = () => {
   ];
 
   return (
-    <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-[#08a29e] rounded-md">
+    <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-rchs rounded-md">
       <div className="w-full flex flex-col 2xl:w-1/3 min-w-full">
         <div className="relative overflow-x-auto shadow-md rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

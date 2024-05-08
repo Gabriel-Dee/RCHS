@@ -33,6 +33,8 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
     e.preventDefault();
     const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
+    // const email = e.target[0].value;
+    // const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -52,9 +54,11 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       password,
     });
 
+    console.log(res);
+    
     setIsLoading(false); // Set isLoading to false after the sign-in process completes
 
-    if (res?.error) {
+    if (!res?.ok) {
       setError("Invalid email or password");
     } else {
       setError("");

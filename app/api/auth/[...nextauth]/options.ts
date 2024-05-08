@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { Account, User as AuthUser } from "next-auth";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
@@ -13,6 +12,7 @@ export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
+      
       credentials: {
         email: {
           label: "Email:",
