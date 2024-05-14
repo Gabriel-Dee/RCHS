@@ -35,6 +35,16 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         ],
       },
       {
+        title: "Patient Records",
+        path: "/Records",
+        icon: BsFillPersonLinesFill({ size: 20 }),
+        submenu: true,
+        subMenuItems: [
+          { title: "Child", path: "/Profile" },
+          { title: "Mother", path: "/Profile" },
+        ],
+      },
+      {
         title: "Hospital Visits",
         path: "/Visits",
         icon: BsCalendarFill({ size: 20 }),
