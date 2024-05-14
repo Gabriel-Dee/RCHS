@@ -20,7 +20,7 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
         setSubMenuOpen(!subMenuOpen);
     };
 
-    const inactiveLink = classNames("flex items-center min-h-[40px] h-full text-sidebar-foreground py-2 px-4 hover:text-sidebar-muted-foreground  hover:bg-rchsLight rounded-md transition duration-200",
+    const inactiveLink = classNames("flex items-center min-h-[40px] h-full text-white py-2 px-4 hover:text-sidebar-muted-foreground  hover:bg-rchsLight rounded-md transition duration-200",
         { ["justify-center"]: toggleCollapse }
     );
 
@@ -47,14 +47,14 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
                         }
                     </a>
                     {subMenuOpen && !toggleCollapse && (
-                        <div className='bg-sidebar-muted border-l-4'>
+                        <div className='bg-rchsLight border-l-4 rounded-lg'>
                             <div className='grid gap-y-2 px-10 leading-5 py-3'>
                                 {item.subMenuItems?.map((subItem: { path: string | UrlObject; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }, idx: React.Key | null | undefined) => {
                                     return (
                                         <Link
                                             key={idx}
                                             href={subItem.path}
-                                            className={`${navMenuDropdownItem} ${subItem.path === pathname ? ' text-sidebar-muted-foreground font-medium ' : ' text-sidebar-foreground'}`}
+                                            className={`${navMenuDropdownItem} ${subItem.path === pathname ? ' text-white font-medium ' : ' text-white'}`}
                                         >
                                             <span>{subItem.title}</span>
                                         </Link>
