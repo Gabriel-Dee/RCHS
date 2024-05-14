@@ -31,7 +31,7 @@ export const SideBar = () => {
           height={35}
         ></Image>
         {!toggleCollapse && (
-          <h3 className="pl-2 font-bold text-2xl">RCHS System</h3>
+          <h3 className="pl-2 font-bold text-2xl font-white">RCHS System</h3>
         )}
       </div>
       <nav className="flex flex-col gap-2 transition duration-300 ease-in-out">
