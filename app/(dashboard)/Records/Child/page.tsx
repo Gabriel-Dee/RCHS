@@ -1,197 +1,52 @@
-"use client";
-import { useState } from "react";
-import { Input, Button, Select } from "antd";
-import axios from "axios";
+// components/Profile.tsx
+import ActivityLog from "@/app/components/patient-activity-log";
+import PersonalInfo from "@/app/components/personal-info";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import BoyStatistics from "@/app/components/graphs/patient-length-age-boys";
+import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
 
-const { Option } = Select;
-
-const ChildDetailsForm: React.FC = () => {
-  const [formValues, setFormValues] = useState({
-    healthcare_centre_name: "",
-    child_number: "",
-    child_name: "",
-    child_gender: "",
-    date_of_birth: "",
-    weight_at_birth: "",
-    length_at_birth: "",
-    place_of_birth: "",
-    maternal_health_worker: "",
-    child_residence: "",
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormValues({ ...formValues, [id]: value });
-  };
-
-  const handleSelectChange = (value: string) => {
-    setFormValues({ ...formValues, child_gender: value });
-  };
-
-  const onFinish = async () => {
-    try {
-      console.log(formValues);
-      const response = await axios.post(
-        "http://127.0.0.1:8000/child/",
-        formValues
-      );
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
+const Profile: React.FC = () => {
   return (
-    <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
-      <h2 className="text-lg font-semibold text-gray-700 capitalize">
-        Child Registration Form
-      </h2>
-      <form onSubmit={onFinish} className="mt-4 space-y-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="healthcare_centre_name" className="text-gray-700">
-              Healthcare Centre Name
-            </label>
-            <Input
-              id="healthcare_centre_name"
-              onChange={handleInputChange}
-              value={formValues.healthcare_centre_name}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="child_number" className="text-gray-700">
-              Child's Number
-            </label>
-            <Input
-              id="child_number"
-              onChange={handleInputChange}
-              value={formValues.child_number}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="child_name" className="text-gray-700">
-              Child's Name
-            </label>
-            <Input
-              id="child_name"
-              onChange={handleInputChange}
-              value={formValues.child_name}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="child_gender" className="text-gray-700 block">
-              Child's Gender
-            </label>
-            <Select
-              id="child_gender"
-              placeholder="Select Gender"
-              className="w-full"
-              onChange={handleSelectChange}
-            >
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
-            </Select>
-          </div>
-
-          <div>
-            <label htmlFor="date_of_birth" className="text-gray-700">
-              Date of Birth
-            </label>
-            <Input
-              id="date_of_birth"
-              type="date"
-              onChange={handleInputChange}
-              value={formValues.date_of_birth}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="weight_at_birth" className="text-gray-700">
-              Weight at Birth
-            </label>
-            <Input
-              id="weight_at_birth"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.weight_at_birth}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="length_at_birth" className="text-gray-700">
-              Length at Birth
-            </label>
-            <Input
-              id="length_at_birth"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.length_at_birth}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="place_of_birth" className="text-gray-700">
-              Place of Birth
-            </label>
-            <Input
-              id="place_of_birth"
-              onChange={handleInputChange}
-              value={formValues.place_of_birth}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="maternal_health_worker"
-              className="text-gray-700 block"
-            >
-              Maternal Health Worker
-            </label>
-            <Select
-              id="maternal_health_worker"
-              placeholder="Select Worker"
-              className="w-full"
-              onChange={(value) =>
-                setFormValues({ ...formValues, maternal_health_worker: value })
-              }
-            >
-              <Option value="Healthcare Worker">Healthcare Worker</Option>
-              <Option value="Traditional Birth Attendant (TBA)">
-                Traditional Birth Attendant (TBA)
-              </Option>
-              <Option value="Others">Others</Option>
-            </Select>
-          </div>
-
-          <div>
-            <label htmlFor="child_residence" className="text-gray-700">
-              Child's Residence
-            </label>
-            <Input
-              id="child_residence"
-              onChange={handleInputChange}
-              value={formValues.child_residence}
-            />
+    <>
+      <div className="bg-white rounded-lg shadow-xl pb-8 border border-rchsLight">
+        <div className="w-full h-[200px] bg-rchs rounded-lg"></div>
+        <div className="flex flex-col items-center -mt-20">
+          <Image
+            src="/avatar/me.png"
+            className="w-40 border-4 border-white rounded-full"
+            alt="Profile Image"
+            width={200}
+            height={200}
+          />
+          <div className="flex items-center space-x-2 mt-2">
+            <p className="text-2xl">Tuntufye Mwakifumbwa</p>
           </div>
         </div>
-
-        <div className="flex justify-center mt-6">
-          <Button
-            type="primary"
-            onClick={onFinish}
-            htmlType="submit"
-            className="bg-rchs"
-          >
-            Submit
-          </Button>
+        <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+          <div className="flex items-center space-x-4 mt-2">
+            <Link href={"/Visits"}>
+              <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                <span>New Visit</span>
+              </Button>
+            </Link>
+            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <span>New Appoitment</span>
+            </Button>
+            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <span>Generate Report</span>
+            </Button>
+          </div>
         </div>
-      </form>
-    </section>
+      </div>
+      <PersonalInfo />
+      <ActivityLog/>
+      <BoyStatistics/>
+      <GirlWeightStatistics />
+    </>
   );
 };
 
-export default ChildDetailsForm;
+export default Profile;

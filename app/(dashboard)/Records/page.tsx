@@ -1,9 +1,7 @@
-import Image from "next/image";
-
-export default function Support() {
+export default function Records() {
   return (
     <>
-    <h2>Support</h2>
+    <h2>Records</h2>
     </>
     );
 }

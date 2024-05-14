@@ -1,317 +1,52 @@
-"use client";
-import { useState } from "react";
+// components/Profile.tsx
+import ActivityLog from "@/app/components/patient-activity-log";
+import PersonalInfo from "@/app/components/personal-info";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-import axios from "axios";
-import { Input, Button, Select } from "antd";
+import BoyStatistics from "@/app/components/graphs/patient-length-age-boys";
+import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
 
-const { Option } = Select;
-
-const MotherDetailsForm: React.FC = () => {
-  // State variables to store form values
-  const [formValues, setFormValues] = useState({
-    healthcare_centre_name: "",
-    registration_number: "",
-    mosquito_net_voucher_number: "",
-    mother_name: "",
-    mother_age: "",
-    mother_education: "",
-    mother_employment: "",
-    Height: "56",
-    partner_name: "",
-    partner_age: "",
-    partner_work: "",
-    partner_education: "",
-    address: "",
-    Chairperson_name: "",
-    pregnancies: "",
-    births: "",
-    alive_children: "",
-    miscarriages: "",
-    miscarriage_age: "",
-    miscarriage_year: "",
-  });
-
-  // Handler for input change
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { id, value } = e.target;
-    setFormValues({ ...formValues, [id]: value });
-  };
-
-  // Handler for select change
-  const handleSelectChange = (value: string) => {
-    setFormValues({ ...formValues, Height: value });
-  };
-
-  // Handler for form submission
-  const onFinish = async () => {
-    try {
-      console.log(formValues);
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/mother/",
-        formValues
-      );
-      console.log("Response:", response.data); // Log the response from the server
-    } catch (error) {
-      console.error("Error:", error); // Log any errors that occur during the request
-    }
-  };
-
+const Profile: React.FC = () => {
   return (
-    <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
-      <h2 className="text-lg font-semibold text-gray-700 capitalize">
-        Mother(Parent/Guardian) Registration Form
-      </h2>
-      <form onSubmit={onFinish} className="mt-4 space-y-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="healthcare_centre_name" className="text-gray-700">
-              Healthcare Centre Name
-            </label>
-            <Input
-              id="healthcare_centre_name"
-              onChange={handleInputChange}
-              value={formValues.healthcare_centre_name}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="registration_number" className="text-gray-700">
-              Registration Number
-            </label>
-            <Input
-              id="registration_number"
-              onChange={handleInputChange}
-              value={formValues.registration_number}
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="mosquito_net_voucher_number"
-              className="text-gray-700"
-            >
-              Mosquito Net Voucher Number
-            </label>
-            <Input
-              id="mosquito_net_voucher_number"
-              onChange={handleInputChange}
-              value={formValues.mosquito_net_voucher_number}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="mother_name" className="text-gray-700">
-              Mother's Name
-            </label>
-            <Input
-              id="mother_name"
-              onChange={handleInputChange}
-              value={formValues.mother_name}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="mother_age" className="text-gray-700">
-              Mother's Age
-            </label>
-            <Input
-              id="mother_age"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.mother_age}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="mother_education" className="text-gray-700">
-              Mother's Education
-            </label>
-            <Input
-              id="mother_education"
-              onChange={handleInputChange}
-              value={formValues.mother_education}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="mother_employment" className="text-gray-700">
-              Work/Employment
-            </label>
-            <Input
-              id="mother_employment"
-              onChange={handleInputChange}
-              value={formValues.mother_employment}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="Height" className="text-gray-700 block">
-              Height
-            </label>
-            <Select id="Height" placeholder="Select Height" className="w-full">
-              <Option value="above_150">Above 150 cm</Option>
-              <Option value="below_150">Below 150 cm</Option>
-            </Select>
-          </div>
-
-          <div>
-            <label htmlFor="partner_name" className="text-gray-700">
-              Husband's/Partner's/Companion's Name
-            </label>
-            <Input
-              id="partner_name"
-              onChange={handleInputChange}
-              value={formValues.partner_name}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="partner_age" className="text-gray-700">
-              Husband's/Partner's/Companion's Age
-            </label>
-            <Input
-              id="partner_age"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.partner_age}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="partner_work" className="text-gray-700">
-              Husband's/Partner's/Companion's Work
-            </label>
-            <Input
-              id="partner_work"
-              onChange={handleInputChange}
-              value={formValues.partner_work}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="partner_education" className="text-gray-700">
-              Husband's/Partner's/Companion's Education
-            </label>
-            <Input
-              id="partner_education"
-              onChange={handleInputChange}
-              value={formValues.partner_education}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="address" className="text-gray-700">
-              Village/Street/Ward
-            </label>
-            <Input
-              id="address"
-              onChange={handleInputChange}
-              value={formValues.address}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="Chairperson_name" className="text-gray-700">
-              Chairperson's Name
-            </label>
-            <Input
-              id="Chairperson_name"
-              onChange={handleInputChange}
-              value={formValues.Chairperson_name}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="pregnancies" className="text-gray-700">
-              How many pregnancies
-            </label>
-            <Input
-              id="pregnancies"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.pregnancies}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="births" className="text-gray-700">
-              How many times has she given birth
-            </label>
-            <Input
-              id="births"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.births}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="alive_children" className="text-gray-700">
-              Alive Children
-            </label>
-            <Input
-              id="alive_children"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.alive_children}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="miscarriages" className="text-gray-700">
-              Miscarriages
-            </label>
-            <Input
-              id="miscarriages"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.miscarriages}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="miscarriage_age" className="text-gray-700">
-              Miscarriage Age
-            </label>
-            <Input
-              id="miscarriage_age"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.miscarriage_age}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="miscarriage_year" className="text-gray-700">
-              Miscarriage Year
-            </label>
-            <Input
-              id="miscarriage_year"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.miscarriage_year}
-            />
+    <>
+      <div className="bg-white rounded-lg shadow-xl pb-8 border border-rchsLight">
+        <div className="w-full h-[200px] bg-rchs rounded-lg"></div>
+        <div className="flex flex-col items-center -mt-20">
+          <Image
+            src="/avatar/me.png"
+            className="w-40 border-4 border-white rounded-full"
+            alt="Profile Image"
+            width={200}
+            height={200}
+          />
+          <div className="flex items-center space-x-2 mt-2">
+            <p className="text-2xl">Tuntufye Mwakifumbwa</p>
           </div>
         </div>
-
-        <div className="flex justify-center mt-6">
-          <Button
-            type="primary"
-            onClick={onFinish}
-            htmlType="submit"
-            className="bg-rchs"
-          >
-            Submit
-          </Button>
+        <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+          <div className="flex items-center space-x-4 mt-2">
+            <Link href={"/Visits"}>
+              <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                <span>New Visit</span>
+              </Button>
+            </Link>
+            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <span>New Appoitment</span>
+            </Button>
+            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+              <span>Generate Report</span>
+            </Button>
+          </div>
         </div>
-      </form>
-    </section>
+      </div>
+      <PersonalInfo />
+      <ActivityLog/>
+      <BoyStatistics/>
+      <GirlWeightStatistics />
+    </>
   );
 };
 
-export default MotherDetailsForm;
+export default Profile;
