@@ -57,7 +57,7 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
   // const handleRowClick = (patientId: string) => {
   const handleRowClick = () => {
     // router.push(`/Profile/${patientId}`);
-    router.push(`/Profiles/Child`);
+    router.push(`/Profiles/Mother`);
   };
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
