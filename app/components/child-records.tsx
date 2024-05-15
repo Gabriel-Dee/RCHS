@@ -1,8 +1,8 @@
 "use client";
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { VisistsDataTable } from "@/components/ui/custom/visits-data-table";
 import { ChildAttendance } from "@/types/types";
+import { ChildDataTable } from "@/components/ui/custom/child-records-table";
 
 // Sample child attendance data (replace with real data)
 const childAttendanceData: ChildAttendance[] = [
@@ -144,7 +144,7 @@ export const columns: ColumnDef<ChildAttendance>[] = [
   },
 ];
 
-export function RecentChildAttendance() {
+export function ChildRecords() {
   // const [childAttendanceData, setChildAttendanceData] = useState<
   //   ChildAttendance[]
   // >([]);
@@ -171,7 +171,7 @@ export function RecentChildAttendance() {
   // Render the table
   return (
     <div className="w-full">
-      <VisistsDataTable
+      <ChildDataTable
         data={childAttendanceData}
         columns={columns}
       />
