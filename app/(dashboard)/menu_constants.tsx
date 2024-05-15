@@ -37,12 +37,12 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
       },
       {
         title: "Patient Records",
-        path: "/Profile",
+        path: "/Records",
         icon: BsFillPersonLinesFill({ size: 20 }),
         submenu: true,
         subMenuItems: [
-          { title: "Child", path: "/Profile" },
-          { title: "Mother", path: "/Profile" },
+          { title: "Child", path: "/Records/Child" },
+          { title: "Mother", path: "/Records/Mother" },
         ],
       },
       {

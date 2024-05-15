@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
             height={200}
           />
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl">Tuntufye Mwakifumbwa</p>
+            <p className="text-2xl">Mama Mwakifumbwa</p>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -32,9 +32,9 @@ const Profile: React.FC = () => {
                 <span>New Visit</span>
               </Button>
             </Link>
-            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+            {/* <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
               <span>New Appoitment</span>
-            </Button>
+            </Button> */}
             <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
               <span>Generate Report</span>
             </Button>
@@ -43,8 +43,6 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo />
       <ActivityLog/>
-      <BoyStatistics/>
-      <GirlWeightStatistics />
     </>
   );
 };

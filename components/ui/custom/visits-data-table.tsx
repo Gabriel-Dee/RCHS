@@ -23,12 +23,14 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface DataTableProps<TData extends { id: string }, TValue> { // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
+interface DataTableProps<TData extends { id: string }, TValue> {
+  // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function VisistsDataTable<TData extends { id: string; }, TValue>({ // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
+export function VisistsDataTable<TData extends { id: string }, TValue>({
+  // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
   data,
   columns,
 }: DataTableProps<TData, TValue>) {
@@ -55,11 +57,11 @@ export function VisistsDataTable<TData extends { id: string; }, TValue>({ // her
   // const handleRowClick = (patientId: string) => {
   const handleRowClick = () => {
     // router.push(`/Profile/${patientId}`);
-    router.push(`/Profile`);
+    router.push(`/Records/Child`);
   };
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
-    router.push("/Records/Child");
+    router.push("/Registration/Child");
   };
   const handleNewVisistRegistration = (e: any) => {
     e.preventDefault();
@@ -67,7 +69,7 @@ export function VisistsDataTable<TData extends { id: string; }, TValue>({ // her
   };
   const handleParentRegistration = (e: any) => {
     e.preventDefault();
-    router.push("Records/Mother");
+    router.push("Registration/Mother");
   };
 
   return (
@@ -85,13 +87,7 @@ export function VisistsDataTable<TData extends { id: string; }, TValue>({ // her
           onClick={handleNewPatientRegistration}
           className="flex flex-col ml-2"
         >
-          Register New Patient
-        </Button>
-        <Button
-          onClick={handleNewVisistRegistration}
-          className="flex flex-col ml-2"
-        >
-          Register New Visit
+          Register Child
         </Button>
         <Button
           onClick={handleParentRegistration}
@@ -99,6 +95,12 @@ export function VisistsDataTable<TData extends { id: string; }, TValue>({ // her
         >
           Register Parent
         </Button>
+        {/* <Button
+          onClick={handleNewVisistRegistration}
+          className="flex flex-col ml-2"
+        >
+          Register New Visit
+        </Button> */}
       </div>
       <div className="rounded-md border border-rchsLight">
         <Table>
