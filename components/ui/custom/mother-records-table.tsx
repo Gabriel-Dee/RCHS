@@ -29,7 +29,7 @@ interface DataTableProps<TData extends { id: string }, TValue> {
   data: TData[];
 }
 
-export function VisistsDataTable<TData extends { id: string }, TValue>({
+export function MotherDataTable<TData extends { id: string }, TValue>({
   // here before TData was as it is but i added extends { id: string } because of the onclick function on the Trow tag
   data,
   columns,
@@ -42,7 +42,7 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
     initialState: {
       pagination: {
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 10,
       },
     },
     onColumnFiltersChange: setColumnFilters,
@@ -57,26 +57,18 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
   // const handleRowClick = (patientId: string) => {
   const handleRowClick = () => {
     // router.push(`/Profile/${patientId}`);
-    router.push(`/Profiles/Child`);
+    router.push(`/Profiles/Mother`);
   };
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
-    router.push("/Registration/Child");
-  };
-  const handleNewVisistRegistration = (e: any) => {
-    e.preventDefault();
-    router.push("/Visits/BeforeCard");
-  };
-  const handleParentRegistration = (e: any) => {
-    e.preventDefault();
-    router.push("Registration/Mother");
+    router.push("/Registration/Mother");
   };
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search Patients..."
+          placeholder="Search Mother..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -87,20 +79,8 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
           onClick={handleNewPatientRegistration}
           className="flex flex-col ml-2"
         >
-          Register Child
+          Register Mother
         </Button>
-        <Button
-          onClick={handleParentRegistration}
-          className="flex flex-col ml-2"
-        >
-          Register Parent
-        </Button>
-        {/* <Button
-          onClick={handleNewVisistRegistration}
-          className="flex flex-col ml-2"
-        >
-          Register New Visit
-        </Button> */}
       </div>
       <div className="rounded-md border border-rchsLight">
         <Table>

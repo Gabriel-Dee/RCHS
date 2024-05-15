@@ -5,6 +5,7 @@ import {
   BsFillPersonLinesFill,
   BsGearFill,
   BsHouseDoorFill,
+  BsPersonAdd,
   BsPersonFill,
   BsQuestionCircleFill,
   BsShieldFillCheck,
@@ -25,13 +26,23 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
     title: "Manage",
     menuList: [
       {
+        title: "Patient Registration",
+        path: "/Registration",
+        icon: BsPersonAdd({ size: 20 }),
+        submenu: true,
+        subMenuItems: [
+          { title: "Child", path: "/Registration/Child" },
+          { title: "Mother", path: "/Registration/Mother" },
+        ],
+      },
+      {
         title: "Patient Records",
         path: "/Records",
         icon: BsFillPersonLinesFill({ size: 20 }),
         submenu: true,
         subMenuItems: [
-          { title: "Children", path: "/Records/Child" },
-          { title: "Parent", path: "/Records/Mother" },
+          { title: "Child", path: "/Records/Child" },
+          { title: "Mother", path: "/Records/Mother" },
         ],
       },
       {

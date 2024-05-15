@@ -4,72 +4,47 @@ import Chart, { ChartConfiguration, Tick } from "chart.js/auto";
 import {
   fillBetweenLinesSD2toSD2negPlugin,
   fillBetweenLinesSD2negToSD3negPlugin,
-  fillBetweenLinesSD2toSD3Plugin,
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const BoyBmiStatistics: React.FC = () => {
+const BoyStatistics0t02: React.FC = () => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
-  Chart.register(fillBetweenLinesSD2toSD3Plugin);
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // Updated BMI data
-    const dataBmiAgainstAge = [
-      16.17, 16.0, 15.73, 15.41, 15.09, 14.77, 14.48, 14.22, 13.96, 13.73, 13.5, 13.31,
-      13.12, 12.96, 12.81, 12.68, 12.56, 12.45, 12.35, 12.26, 12.18, 12.11, 12.04, 11.99,
-      11.93, 11.88, 11.83, 11.79, 11.76, 11.72, 11.69, 11.66, 11.64, 11.62, 11.6, 11.59,
-      11.58, 11.57, 11.56, 11.55, 11.55, 11.54, 11.54, 11.54, 11.53, 11.53, 11.53, 11.53,
-      11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.54, 11.54, 11.54, 11.54, 11.54, 11.54,
+    // Data preparation
+    const dataLengthAgainstAge = [
+      // this has also been defined at drawLineOnTopPlugin
+      45, 46, 48, 50, 51.5, 52, 54, 55.5, 57, 58.5, 60, 62, 65, 66.5, 67.5, 69,
+      70.5, 72, 73.5, 75, 76, 78, 80, 82, 85,
     ];
 
-    // Updated line1Data
+    // Data for all seven lines
     const line1Data = [
-      10.2, 11.3, 12.5, 13.1, 13.4, 13.5, 13.6, 13.7, 13.6, 13.6, 13.5, 13.4,
-      13.4, 13.3, 13.2, 13.1, 13.1, 13, 12.9, 12.9, 12.8, 12.8, 12.7, 12.7,
-      12.7, 12.9, 12.8, 12.8, 12.7, 12.7, 12.7, 12.6, 12.6, 12.5, 12.5, 12.5,
-      12.4, 12.4, 12.4, 12.3, 12.3, 12.3, 12.2, 12.2, 12.2, 12.2, 12.2, 12.1,
-      12.1, 12.1, 12.1, 12.1, 12.1, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+      44.2, 48.9, 52.4, 55.3, 57.6, 59.6, 61.2, 62.7, 64, 65.2, 66.4, 67.6,
+      68.6, 69.6, 70.6, 71.6, 72.5, 73.3, 74.2, 75, 75.8, 76.5, 77.2, 78, 78.7,
     ];
 
-    // Updated line2Data
     const line2Data = [
-      11.1, 12.4, 13.7, 14.3, 14.5, 14.7, 14.7, 14.8, 14.7, 14.7, 14.6, 14.5,
-      14.4, 14.3, 14.2, 14.1, 14, 13.9, 13.9, 13.8, 13.7, 13.7, 13.6, 13.6,
-      13.6, 13.8, 13.8, 13.7, 13.7, 13.6, 13.6, 13.6, 13.5, 13.5, 13.5, 13.4,
-      13.4, 13.4, 13.3, 13.3, 13.3, 13.2, 13.2, 13.2, 13.2, 13.1, 13.1, 13.1,
-      13.1, 13.1, 13, 13, 13, 13, 13, 13, 13, 12.9, 12.9, 12.9, 12.9, 12.9,
+      46.1, 50.8, 54.4, 57.3, 59.7, 61.7, 63.3, 64.8, 66.2, 67.5, 68.7, 69.9,
+      71, 72.1, 73.1, 74.1, 75, 76, 76.9, 77.7, 78.6, 79.4, 80.2, 81, 81.7,
     ];
 
-    // Updated line3Data
     const line3Data = [
-      13.4, 14.9, 16.3, 16.9, 17.2, 17.3, 17.3, 17.3, 17.3, 17.2, 17, 16.9,
-      16.8, 16.7, 16.6, 16.4, 16.3, 16.2, 16.1, 16.1, 16, 15.9, 15.8, 15.8,
-      15.7, 16, 16, 15.9, 15.9, 15.9, 15.8, 15.8, 15.8, 15.7, 15.7, 15.7, 15.6,
-      15.6, 15.6, 15.5, 15.5, 15.5, 15.5, 15.4, 15.4, 15.4, 15.4, 15.4, 15.3,
-      15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.2, 15.2, 15.2, 15.2, 15.2,
-      15.2,
+      49.9, 54.7, 58.4, 61.4, 63.9, 65.9, 67.6, 69.2, 70.6, 72, 73.3, 74.5,
+      75.7, 76.9, 78, 79.1, 80.2, 81.2, 82.3, 83.2, 84.2, 85.1, 86, 86.9, 87.8,
     ];
 
-    // Updated line4Data
     const line4Data = [
-      16.3, 17.8, 19.4, 20, 20.3, 20.5, 20.5, 20.5, 20.4, 20.3, 20.1, 20, 19.8,
-      19.7, 19.5, 19.4, 19.3, 19.1, 19, 18.9, 18.8, 18.7, 18.7, 18.6, 18.5,
-      18.9, 18.8, 18.8, 18.7, 18.7, 18.6, 18.6, 18.5, 18.5, 18.5, 18.4, 18.4,
-      18.4, 18.3, 18.3, 18.3, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2,
-      18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.3,
-      18.3, 18.3,
+      53.7, 58.6, 62.4, 65.5, 68, 70.1, 71.9, 73.5, 75, 76.5, 77.9, 79.2, 80.5,
+      81.8, 83, 84.2, 85.4, 86.5, 87.7, 88.8, 89.8, 90.9, 91.9, 92.9, 93.9,
     ];
 
-    // Updated line5Data
     const line5Data = [
-      18.1, 19.4, 21.1, 21.8, 22.1, 22.3, 22.3, 22.3, 22.2, 22.1, 22, 21.8,
-      21.6, 21.5, 21.3, 21.2, 21, 20.9, 20.8, 20.7, 20.6, 20.5, 20.4, 20.3,
-      20.3, 20.6, 20.5, 20.5, 20.4, 20.4, 20.3, 20.2, 20.2, 20.1, 20.1, 20, 20,
-      20, 19.9, 19.9, 19.9, 19.9, 19.9, 19.8, 19.8, 19.8, 19.8, 19.8, 19.9,
-      19.9, 19.9, 19.9, 19.9, 19.9, 20, 20, 20, 20.1, 20.1, 20.2, 20.2, 20.3,
+      55.6, 60.6, 64.4, 67.6, 70.1, 72.2, 74, 75.7, 77.2, 78.7, 80.1, 81.5,
+      82.9, 84.2, 85.5, 86.7, 88, 89.2, 90.4, 91.5, 92.6, 93.8, 94.9, 95.9, 97,
     ];
 
     // Prepare labels and chart data for the main line
@@ -82,8 +57,8 @@ const BoyBmiStatistics: React.FC = () => {
       labels: labelsMonths,
       datasets: [
         {
-          label: "BMI vs Age",
-          data: dataBmiAgainstAge,
+          label: "Length vs Age",
+          data: dataLengthAgainstAge,
           borderColor: "rgb(54, 162, 235)",
           backgroundColor: "rgba(54, 162, 235, 0.5)",
           tension: 0.5, // Adjust tension for smoother curves, if needed
@@ -181,6 +156,8 @@ const BoyBmiStatistics: React.FC = () => {
               display: true,
               text: "Age (months)",
             },
+            min: 0,
+            max: 24,
             ticks: {
               callback: (
                 value: string | number,
@@ -201,12 +178,11 @@ const BoyBmiStatistics: React.FC = () => {
             position: "left",
             title: {
               display: true,
-              text: "BMI (kg/m²)",
+              text: "Length (cm)",
             },
-            min: 10, // Start from 0
-            max: 23, // Maximum BMI
+            min: 40,
+            max: 130, // Maximum height
             ticks: {
-              stepSize: 1, // Set step size to 1
               callback: (
                 value: string | number,
                 index: number,
@@ -215,8 +191,8 @@ const BoyBmiStatistics: React.FC = () => {
                 const typedValues = values as unknown as (string | number)[];
                 if (
                   typeof value === "number" &&
-                  value >= 10 &&
-                  value % 1 === 0
+                  value >= 45 &&
+                  value % 5 === 0
                 ) {
                   return value.toString();
                 }
@@ -224,7 +200,6 @@ const BoyBmiStatistics: React.FC = () => {
               },
             },
           },
-
           y1: {
             type: "linear",
             display: true,
@@ -233,10 +208,9 @@ const BoyBmiStatistics: React.FC = () => {
               display: true,
               text: "Length (cm)",
             },
-            min: 0, // Start from 0
-            max: 23, // Maximum BMI
+            min: 40,
+            max: 130, // Maximum height
             ticks: {
-              stepSize: 1, // Set step size to 1
               callback: (
                 value: string | number,
                 index: number,
@@ -245,8 +219,8 @@ const BoyBmiStatistics: React.FC = () => {
                 const typedValues = values as unknown as (string | number)[];
                 if (
                   typeof value === "number" &&
-                  value >= 10 &&
-                  value % 1 === 0
+                  value >= 45 &&
+                  value % 5 === 0
                 ) {
                   return value.toString();
                 }
@@ -262,13 +236,13 @@ const BoyBmiStatistics: React.FC = () => {
     };
 
     // Chart creation
-    const canvasElement = document.getElementById("boyBmiLineChart");
+    const canvasElement = document.getElementById("boyLineChartLength");
     if (canvasElement instanceof HTMLCanvasElement) {
-      const boyBmiLineChart = new Chart(canvasElement, configLineChart);
+      const boyLineChartLength = new Chart(canvasElement, configLineChart);
 
       // Cleanup function to destroy chart instance
       return () => {
-        boyBmiLineChart.destroy();
+        boyLineChartLength.destroy();
       };
     }
   }, []);
@@ -277,18 +251,19 @@ const BoyBmiStatistics: React.FC = () => {
     <div className="flex flex-col w-full 2xl:w-2/3 min-w-full ">
       <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8 border border-rchs">
         <h2 className="text-xl text-gray-900 font-bold text-center">
-          Child Nutritional Status (BMI Vs Age)
+          Child Nutritional Status (Length Vs Age)
         </h2>
+        <p className="text-md text-gray-900 font-bold text-center">This is for Growth Tracking form Birth to two Years of Age</p>
 
         {/* Omitted code for statistics cards */}
 
         {/* Line chart canvas */}
         <div className="mt-4">
-          <canvas id="boyBmiLineChart"></canvas>
+          <canvas id="boyLineChartLength"></canvas>
         </div>
       </div>
     </div>
   );
 };
 
-export default BoyBmiStatistics;
+export default BoyStatistics0t02;

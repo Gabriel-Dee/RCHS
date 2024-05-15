@@ -8,7 +8,7 @@ import {
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const GirlBmiStatistics: React.FC = () => {
+const GirlBmiStatistics2to5: React.FC = () => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
@@ -18,18 +18,14 @@ const GirlBmiStatistics: React.FC = () => {
   useEffect(() => {
     // Updated BMI data
     const dataBmiAgainstAge = [
-      16.17, 16.0, 15.73, 15.41, 15.09, 14.77, 14.48, 14.22, 13.96, 13.73, 13.5,
-      13.31, 13.12, 12.96, 12.81, 12.68, 12.56, 12.45, 12.35, 12.26, 12.18,
-      12.11, 12.04, 11.99, 11.93, 11.88, 11.83, 11.79, 11.76, 11.72, 11.69,
-      11.66, 11.64, 11.62, 11.6, 11.59, 11.58, 11.57, 11.56, 11.55, 11.55,
-      11.54, 11.54, 11.54, 11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.53,
-      11.53, 11.53, 11.53, 11.54, 11.54, 11.54, 11.54, 11.54, 11.54,
+      11.88, 11.83, 11.79, 11.76, 11.72, 11.69, 11.66, 11.64, 11.62, 11.6,
+      11.59, 11.58, 11.57, 11.56, 11.55, 11.55, 11.54, 11.54, 11.54, 11.53,
+      11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.53, 11.54,
+      11.54, 11.54, 11.54, 11.54, 11.54,
     ];
 
     // Updated line1Data
     const line1Data = [
-      10.1, 10.8, 11.8, 12.4, 12.7, 12.9, 13, 13, 13, 12.9, 12.9, 12.8, 12.7,
-      12.6, 12.6, 12.5, 12.4, 12.4, 12.3, 12.3, 12.2, 12.2, 12.2, 12.2, 12.1,
       12.4, 12.4, 12.3, 12.3, 12.3, 12.3, 12.3, 12.2, 12.2, 12.2, 12.2, 12.1,
       12.1, 12.1, 12.1, 12, 12, 12, 12, 11.9, 11.9, 11.9, 11.9, 11.8, 11.8,
       11.8, 11.8, 11.8, 11.7, 11.7, 11.7, 11.7, 11.7, 11.7, 11.7, 11.6, 11.6,
@@ -37,8 +33,6 @@ const GirlBmiStatistics: React.FC = () => {
 
     // Updated line2Data
     const line2Data = [
-      11.1, 12, 13, 13.6, 13.9, 14.1, 14.1, 14.2, 14.1, 14.1, 14, 13.9, 13.8,
-      13.7, 13.6, 13.5, 13.5, 13.4, 13.3, 13.3, 13.2, 13.2, 13.1, 13.1, 13.1,
       13.3, 13.3, 13.3, 13.3, 13.3, 13.2, 13.2, 13.2, 13.2, 13.1, 13.1, 13.1,
       13.1, 13.1, 13, 13, 13, 13, 12.9, 12.9, 12.9, 12.9, 12.9, 12.8, 12.8,
       12.8, 12.8, 12.8, 12.8, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7,
@@ -46,18 +40,14 @@ const GirlBmiStatistics: React.FC = () => {
 
     // Updated line3Data
     const line3Data = [
-      13.3, 14.6, 15.8, 16.4, 16.7, 16.8, 16.9, 16.9, 16.8, 16.7, 16.6, 16.5,
-      16.4, 16.2, 16.1, 16, 15.9, 15.8, 15.7, 15.7, 15.6, 15.5, 15.5, 15.4,
-      15.4, 15.7, 15.7, 15.6, 15.6, 15.6, 15.6, 15.5, 15.5, 15.5, 15.5, 15.4,
-      15.4, 15.4, 15.4, 15.4, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3,
-      15.3, 15.3, 15.3, 15.3, 15.3, 15.2, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3,
-      15.3, 15.3,
+      15.7, 15.7, 15.6, 15.6, 15.6, 15.6, 15.5, 15.5, 15.5, 15.5, 15.4, 15.4,
+      15.4, 15.4, 15.4, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3,
+      15.3, 15.3, 15.3, 15.3, 15.2, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3, 15.3,
+      15.3,
     ];
 
     // Updated line4Data
     const line4Data = [
-      16.1, 17.5, 19, 19.7, 20, 20.2, 20.3, 20.3, 20.2, 20.1, 19.9, 19.8, 19.6,
-      19.5, 19.3, 19.2, 19.1, 18.9, 18.8, 18.8, 18.7, 18.6, 18.5, 18.5, 18.4,
       18.7, 18.7, 18.7, 18.6, 18.6, 18.6, 18.5, 18.5, 18.5, 18.5, 18.5, 18.4,
       18.4, 18.4, 18.4, 18.4, 18.4, 18.4, 18.4, 18.4, 18.5, 18.5, 18.5, 18.5,
       18.5, 18.5, 18.6, 18.6, 18.6, 18.6, 18.7, 18.7, 18.7, 18.7, 18.8, 18.8,
@@ -66,18 +56,15 @@ const GirlBmiStatistics: React.FC = () => {
 
     // Updated line5Data
     const line5Data = [
-      17.7, 19.1, 20.7, 21.5, 22, 22.2, 22.3, 22.3, 22.2, 22.1, 21.9, 21.8,
-      21.6, 21.4, 21.3, 21.1, 21, 20.9, 20.8, 20.7, 20.6, 20.5, 20.4, 20.4,
-      20.3, 20.6, 20.6, 20.6, 20.5, 20.5, 20.4, 20.4, 20.4, 20.4, 20.3, 20.3,
-      20.3, 20.3, 20.3, 20.3, 20.3, 20.3, 20.4, 20.4, 20.4, 20.4, 20.5, 20.5,
-      20.5, 20.6, 20.6, 20.7, 20.7, 20.7, 20.8, 20.8, 20.9, 20.9, 21, 21, 21,
-      21.1,
+      20.6, 20.6, 20.6, 20.5, 20.5, 20.4, 20.4, 20.4, 20.4, 20.3, 20.3, 20.3,
+      20.3, 20.3, 20.3, 20.3, 20.3, 20.4, 20.4, 20.4, 20.4, 20.5, 20.5, 20.5,
+      20.6, 20.6, 20.7, 20.7, 20.7, 20.8, 20.8, 20.9, 20.9, 21, 21, 21, 21.1,
     ];
 
     // Prepare labels and chart data for the main line
-    const labelsMonths = Array.from({ length: 61 }, (_, i) =>
-      (i + 1).toString()
-    ); // Convert numbers to strings
+    const labelsMonths = Array.from({ length: 37 }, (_, i) =>
+      (i + 25).toString()
+    ); // Convert numbers to strings for months 25 to 60
 
     // Chart configuration
     const dataLineChart = {
@@ -191,7 +178,10 @@ const GirlBmiStatistics: React.FC = () => {
               ) => {
                 const typedValues = values as unknown as (string | number)[];
                 if (typeof value === "number" && value % 12 === 0) {
-                  return `Year ${value / 12}`;
+                  return `Year ${value / 12 + 2}`;
+                } else if (typeof value === "number") {
+                  // Convert months 0 to 36 to months 24 to 60
+                  return `${value + 24}`;
                 }
                 return value.toString();
               },
@@ -264,13 +254,13 @@ const GirlBmiStatistics: React.FC = () => {
     };
 
     // Chart creation
-    const canvasElement = document.getElementById("girlBmiLineChart");
+    const canvasElement = document.getElementById("girlBmiLineChart2to5");
     if (canvasElement instanceof HTMLCanvasElement) {
-      const girlBmiLineChart = new Chart(canvasElement, configLineChart);
+      const girlBmiLineChart2to5 = new Chart(canvasElement, configLineChart);
 
       // Cleanup function to destroy chart instance
       return () => {
-        girlBmiLineChart.destroy();
+        girlBmiLineChart2to5.destroy();
       };
     }
   }, []);
@@ -281,16 +271,16 @@ const GirlBmiStatistics: React.FC = () => {
         <h2 className="text-xl text-gray-900 font-bold text-center">
           Child Nutritional Status (BMI Vs Age)
         </h2>
-
-        {/* Omitted code for statistics cards */}
-
+        <p className="text-md text-gray-900 font-bold text-center">
+          This is for Growth Tracking form Two Years of Age to Five Years of Age
+        </p>
         {/* Line chart canvas */}
         <div className="mt-4">
-          <canvas id="girlBmiLineChart"></canvas>
+          <canvas id="girlBmiLineChart2to5"></canvas>
         </div>
       </div>
     </div>
   );
 };
 
-export default GirlBmiStatistics;
+export default GirlBmiStatistics2to5;
