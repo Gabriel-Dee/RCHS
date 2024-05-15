@@ -2,17 +2,18 @@
 import React, { useEffect } from "react";
 import Chart, { ChartConfiguration, Tick } from "chart.js/auto";
 import {
-  fillBetweenLinesSD2negToSD3negPlugin,
   fillBetweenLinesSD2toSD2negPlugin,
+  fillBetweenLinesSD2negToSD3negPlugin,
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const GirlStatistics2to5: React.FC = () => {
+const BoyStatistics2to5: React.FC = () => {
+  // Register the Chart plugins
+  Chart.register(fillBetweenLinesSD2toSD2negPlugin);
+  Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
+  Chart.register(drawLineOnTopPlugin);
+
   useEffect(() => {
-    // Register the Chart plugins
-    Chart.register(fillBetweenLinesSD2toSD2negPlugin);
-    Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
-    Chart.register(drawLineOnTopPlugin);
     // Data preparation
     const dataLengthAgainstAge = [
       87.5, 88, 90, 100, 102.5, 103, 105, 106, 107, 108, 109, 110, 110.5, 111.5,
@@ -22,37 +23,36 @@ const GirlStatistics2to5: React.FC = () => {
 
     // Data for all seven lines
     const line1Data = [
-      76, 76.8, 77.5, 78.1, 78.8, 79.5, 80.1, 80.7, 81.3, 81.9, 82.5, 83.1,
-      83.6, 84.2, 84.7, 85.3, 85.8, 86.3, 86.8, 87.4, 87.9, 88.4, 88.9, 89.3,
-      89.8, 90.3, 90.7, 91.2, 91.7, 92.1, 92.6, 93, 93.4, 93.9, 94.3, 94.7,
-      95.2,
+      78, 78.6, 79.3, 79.9, 80.5, 81.1, 81.7, 82.3, 82.8, 83.4, 83.9, 84.4, 85,
+      85.5, 86, 86.5, 87, 87.5, 88, 88.4, 88.9, 89.4, 89.8, 90.3, 90.7, 91.2,
+      91.6, 92.1, 92.5, 93, 93.4, 93.9, 94.3, 94.7, 95.2, 95.6, 96.1,
     ];
 
     const line2Data = [
-      79.3, 80, 80.8, 81.5, 82.2, 82.9, 83.6, 84.3, 84.9, 85.6, 86.2, 86.8,
-      87.4, 88, 88.6, 89.2, 89.8, 90.4, 90.9, 91.5, 92, 92.5, 93.1, 93.6, 94.1,
-      94.6, 95.1, 95.6, 96.1, 96.6, 97.1, 97.6, 98.1, 98.5, 99, 99.5, 99.9,
+      81, 81.7, 82.5, 83.1, 83.8, 84.5, 85.1, 85.7, 86.4, 86.9, 87.5, 88.1,
+      88.7, 89.2, 89.8, 90.3, 90.9, 91.4, 91.9, 92.4, 93, 93.5, 94, 94.4, 94.9,
+      95.4, 95.9, 96.4, 96.9, 97.4, 97.8, 98.3, 98.8, 99.3, 99.7, 100.2, 100.7,
     ];
 
     const line3Data = [
-      85.7, 86.6, 87.4, 88.3, 89.1, 89.9, 90.7, 91.4, 92.2, 92.9, 93.6, 94.4,
-      95.1, 95.7, 96.4, 97.1, 97.7, 98.4, 99, 99.7, 100.3, 100.9, 101.5, 102.1,
-      102.7, 103.3, 103.9, 104.5, 105, 105.6, 106.2, 106.7, 107.3, 107.8, 108.4,
-      108.9, 109.4,
+      87.1, 88, 88.8, 89.6, 90.4, 91.2, 91.9, 92.7, 93.4, 94.1, 94.8, 95.4,
+      96.1, 96.7, 97.4, 98, 98.6, 99.2, 99.9, 100.4, 101, 101.6, 102.2, 102.8,
+      103.3, 103.9, 104.4, 105, 105.6, 106.1, 106.7, 107.2, 107.8, 108.3, 108.9,
+      109.4, 110,
     ];
 
     const line4Data = [
-      92.2, 93.1, 94.1, 95, 96, 96.9, 97.7, 98.6, 99.4, 100.3, 101.1, 101.9,
-      102.7, 103.4, 104.2, 105, 105.7, 106.4, 107.2, 107.9, 108.6, 109.3, 110,
-      110.7, 111.3, 112, 112.7, 113.3, 114, 114.6, 115.2, 115.9, 116.5, 117.1,
-      117.7, 118.3, 118.9,
+      93.2, 94.2, 95.2, 96.1, 97, 97.9, 98.7, 99.6, 100.4, 101.2, 102, 102.7,
+      103.5, 104.2, 105, 105.7, 106.4, 107.1, 107.8, 108.5, 109.1, 109.8, 110.4,
+      111.1, 111.7, 112.4, 113, 113.6, 114.2, 114.9, 115.5, 116.1, 116.7, 117.4,
+      118, 118.6, 119.2,
     ];
 
     const line5Data = [
-      95.4, 96.4, 97.4, 98.4, 99.4, 100.3, 101.3, 102.2, 103.1, 103.9, 104.8,
-      105.6, 106.5, 107.3, 108.1, 108.9, 109.7, 110.5, 111.2, 112, 112.7, 113.5,
-      114.2, 114.9, 115.7, 116.4, 117.1, 117.7, 118.4, 119.1, 119.8, 120.4,
-      121.1, 121.8, 122.4, 123.1, 123.7,
+      96.3, 97.3, 98.3, 99.3, 100.3, 101.2, 102.1, 103, 103.9, 104.8, 105.6,
+      106.4, 107.2, 108, 108.8, 109.5, 110.3, 111, 111.7, 112.5, 113.2, 113.9,
+      114.6, 115.2, 115.9, 116.6, 117.3, 117.9, 118.6, 119.2, 119.9, 120.6,
+      121.2, 121.9, 122.6, 123.2, 123.9,
     ];
 
     // Prepare labels and chart data for the main line
@@ -112,12 +112,11 @@ const GirlStatistics2to5: React.FC = () => {
         pointRadius: 0, // Remove nodes
         pointHoverRadius: 0, // Remove nodes
       },
-
       {
         label: "SD2",
         data: line4Data,
         borderColor: "red",
-        backgroundColor: "rgba(0, 0, 0, 0)", // Transparent background
+        backgroundColor: "rgba(0, 0, 0, 0)", // Red color with 50% opacity
         borderWidth: 1,
         borderDash: [5, 5], // Dotted line
         tension: 0, // Not used for dashed lines
@@ -156,7 +155,7 @@ const GirlStatistics2to5: React.FC = () => {
           },
           title: {
             display: true,
-            text: "Girl Child Growth Chart",
+            text: "Boy Child Growth Chart",
           },
         },
         scales: {
@@ -191,7 +190,7 @@ const GirlStatistics2to5: React.FC = () => {
               text: "Length (cm)",
             },
             min: 40,
-            max: 130,
+            max: 130, // Maximum height
             ticks: {
               callback: (
                 value: string | number,
@@ -246,13 +245,13 @@ const GirlStatistics2to5: React.FC = () => {
     };
 
     // Chart creation
-    const canvasElement = document.getElementById("girlLineChart");
+    const canvasElement = document.getElementById("boyLineChartHeight");
     if (canvasElement instanceof HTMLCanvasElement) {
-      const girlLineChart = new Chart(canvasElement, configLineChart);
+      const boyLineChartHeight = new Chart(canvasElement, configLineChart);
 
       // Cleanup function to destroy chart instance
       return () => {
-        girlLineChart.destroy();
+        boyLineChartHeight.destroy();
       };
     }
   }, []);
@@ -263,17 +262,19 @@ const GirlStatistics2to5: React.FC = () => {
         <h2 className="text-xl text-gray-900 font-bold text-center">
           Child Nutritional Status (Height Vs Age)
         </h2>
-        <p className="text-md text-gray-900 font-bold text-center">This is for Growth Tracking form Two Years of Age to Five Years of Age</p>
+        <p className="text-md text-gray-900 font-bold text-center">
+          This is for Growth Tracking form Two Years of Age to Five Years of Age
+        </p>
 
         {/* Omitted code for statistics cards */}
 
         {/* Line chart canvas */}
         <div className="mt-4">
-          <canvas id="girlLineChart"></canvas>
+          <canvas id="boyLineChartHeight"></canvas>
         </div>
       </div>
     </div>
   );
 };
 
-export default GirlStatistics2to5;
+export default BoyStatistics2to5;

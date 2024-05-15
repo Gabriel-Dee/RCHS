@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import BoyStatistics from "@/app/components/graphs/patient-length-age-boys";
 import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
+import BoyStatistics0t02 from "@/app/components/graphs/patient-length-age-boys-0t02";
 
 const Profile: React.FC = () => {
   return (
@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo />
       <ActivityLog/>
-      <BoyStatistics/>
+      <BoyStatistics0t02/>
       <GirlWeightStatistics />
     </>
   );

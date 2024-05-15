@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import BoyStatistics from "@/app/components/graphs/patient-length-age-boys";
+import BoyStatistics from "@/app/components/graphs/patient-length-age-boys-2to5";
 import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
 
 const Profile: React.FC = () => {
