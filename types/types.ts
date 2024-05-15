@@ -29,7 +29,6 @@ export type MotherAttendance = {
   id: string;
   name: string;
   age: number;
-  gender: string;
   child: string;
   lastVisit: string;
 };
