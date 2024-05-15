@@ -279,9 +279,9 @@ const GirlWeightStatistics: React.FC = () => {
         <h2 className="text-xl text-gray-900 font-bold text-center">
           Child Nutritional Status (weight Vs Age)
         </h2>
-
-        {/* Omitted code for statistics cards */}
-
+        <p className="text-md text-gray-900 font-bold text-center">
+          This is for Growth Tracking form Birth to Five Years of Age
+        </p>
         {/* Line chart canvas */}
         <div className="mt-4">
           <canvas id="girlWeightLineChart"></canvas>
