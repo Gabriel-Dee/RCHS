@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
 import BoyStatistics0t02 from "@/app/components/graphs/patient-length-age-boys-0t02";
+import NavigationMenu from "@/app/components/graphs/graph-tabs";
 
 const Profile: React.FC = () => {
   return (
@@ -43,8 +44,9 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo />
       <ActivityLog/>
-      <BoyStatistics0t02/>
-      <GirlWeightStatistics />
+      <NavigationMenu/>
+      {/* <BoyStatistics0t02/>
+      <GirlWeightStatistics /> */}
     </>
   );
 };
