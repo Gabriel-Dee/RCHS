@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // components/Profile.tsx
 import ActivityLog from "@/app/components/patient-activity-log";
 import PersonalInfo from "@/app/components/personal-info";
@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
             height={200}
           />
           <div className="flex items-center space-x-2 mt-2">
-          <p className="text-2xl">{selectedChildData.name}</p>
+            <p className="text-2xl">{selectedChildData.name}</p>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -56,8 +56,8 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <PersonalInfo />
-      <ActivityLog/>
-      <NavigationMenu/>
+      <ActivityLog />
+      <NavigationMenu />
       {/* <BoyStatistics0t02/>
       <GirlWeightStatistics /> */}
     </>

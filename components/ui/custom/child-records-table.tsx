@@ -54,20 +54,14 @@ export function ChildDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  // // const handleRowClick = (patientId: string) => {
-  // const handleRowClick = (row: TData) => {
-  //   // router.push(`/Profile/${patientId}`);
-  //   router.push(`/Profiles/Child`);
-  // };
-  
   const handleRowClick = (childData: TData) => {
     console.log("Row clicked:", childData);
-  
+
     const queryString = JSON.stringify(childData);
     console.log("Navigating to URL: /Profiles/Child with query:", queryString);
-  
+
     router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
-  };  
+  };
 
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();

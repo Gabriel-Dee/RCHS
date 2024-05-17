@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
@@ -13,15 +13,21 @@ const PersonalInfo: React.FC = () => {
     : null;
 
   const personalInfo = selectedChildData
-  ? [
-      { attribute: "Full name:", value: selectedChildData.name },
-      { attribute: "Age:", value: selectedChildData.age.toString() },
-      { attribute: "Gender:", value: selectedChildData.gender },
-      { attribute: "Weight (kg):", value: selectedChildData.weight.toString() },
-      { attribute: "Height (cm):", value: selectedChildData.height.toString() },
-      { attribute: "Last Visit Date:", value: selectedChildData.lastVisit },
-    ]
-  : [];
+    ? [
+        { attribute: "Full name:", value: selectedChildData.name },
+        { attribute: "Age:", value: selectedChildData.age.toString() },
+        { attribute: "Gender:", value: selectedChildData.gender },
+        {
+          attribute: "Weight (kg):",
+          value: selectedChildData.weight.toString(),
+        },
+        {
+          attribute: "Height (cm):",
+          value: selectedChildData.height.toString(),
+        },
+        { attribute: "Last Visit Date:", value: selectedChildData.lastVisit },
+      ]
+    : [];
 
   return (
     <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-rchs rounded-md">

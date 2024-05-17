@@ -54,11 +54,17 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  // const handleRowClick = (patientId: string) => {
-  const handleRowClick = () => {
-    // router.push(`/Profile/${patientId}`);
-    router.push(`/Profiles/Mother`);
+  const handleRowClick = (motherData: TData) => {
+    console.log("Row clicked:", motherData);
+
+    const queryString = JSON.stringify(motherData);
+    console.log("Navigating to URL: /Profiles/Mother with query:", queryString);
+
+    router.push(
+      `/Profiles/Mother?motherData=${encodeURIComponent(queryString)}`
+    );
   };
+
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Mother");
@@ -108,8 +114,7 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  // onClick={() => handleRowClick(row.original.id)}
-                  onClick={() => handleRowClick()}
+                  onClick={() => handleRowClick(row.original)}
                   style={{ cursor: "pointer" }}
                 >
                   {row.getVisibleCells().map((cell) => (
