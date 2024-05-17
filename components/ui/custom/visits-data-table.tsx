@@ -42,7 +42,7 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
     initialState: {
       pagination: {
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 6,
       },
     },
     onColumnFiltersChange: setColumnFilters,
@@ -54,19 +54,20 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  // const handleRowClick = (patientId: string) => {
-  const handleRowClick = () => {
-    // router.push(`/Profile/${patientId}`);
-    router.push(`/Profiles/Child`);
+  const handleRowClick = (childData: TData) => {
+    console.log("Row clicked:", childData);
+
+    const queryString = JSON.stringify(childData);
+    console.log("Navigating to URL: /Profiles/Child with query:", queryString);
+
+    router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
   };
+
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Child");
   };
-  const handleNewVisistRegistration = (e: any) => {
-    e.preventDefault();
-    router.push("/Visits/BeforeCard");
-  };
+
   const handleParentRegistration = (e: any) => {
     e.preventDefault();
     router.push("Registration/Mother");
@@ -128,8 +129,7 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  // onClick={() => handleRowClick(row.original.id)}
-                  onClick={() => handleRowClick()}
+                  onClick={() => handleRowClick(row.original)}
                   style={{ cursor: "pointer" }}
                 >
                   {row.getVisibleCells().map((cell) => (

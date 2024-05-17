@@ -1,16 +1,33 @@
+"use client";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 const PersonalInfo: React.FC = () => {
-  // Simulated data fetched from a database
-  const personalInfo = [
-    { attribute: "Full name:", value: "Tuntufye Mwakifumbwa" },
-    { attribute: "Birthday:", value: "24 Jul, 2024" },
-    { attribute: "Joined:", value: "30 Jul 2024" },
-    { attribute: "Mother/Guradian:", value: "Mama Mpeli" },
-    { attribute: "Father/Guardian:", value: "Baba Rosa" },
-    { attribute: "Location:", value: "Pugu, Mwezini" },
-    { attribute: "Status:", value: "Safe" },
-  ];
+  const searchParams = useSearchParams();
+  const childData = searchParams.get("childData");
+  // Parse the childData string to JSON
+  const selectedChildData = childData
+    ? typeof childData === "string"
+      ? JSON.parse(childData)
+      : JSON.parse(childData[0]) // Handle case when childData is an array
+    : null;
+
+  const personalInfo = selectedChildData
+    ? [
+        { attribute: "Full name:", value: selectedChildData.name },
+        { attribute: "Age:", value: selectedChildData.age.toString() },
+        { attribute: "Gender:", value: selectedChildData.gender },
+        {
+          attribute: "Weight (kg):",
+          value: selectedChildData.weight.toString(),
+        },
+        {
+          attribute: "Height (cm):",
+          value: selectedChildData.height.toString(),
+        },
+        { attribute: "Last Visit Date:", value: selectedChildData.lastVisit },
+      ]
+    : [];
 
   return (
     <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-rchs rounded-md">

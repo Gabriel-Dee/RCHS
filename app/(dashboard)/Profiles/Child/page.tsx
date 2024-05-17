@@ -1,15 +1,28 @@
+"use client";
 // components/Profile.tsx
 import ActivityLog from "@/app/components/patient-activity-log";
-import PersonalInfo from "@/app/components/personal-info";
+import PersonalInfo from "@/app/components/child-personal-info";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
-import BoyStatistics0t02 from "@/app/components/graphs/patient-length-age-boys-0t02";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
+import { useSearchParams } from "next/navigation";
 
 const Profile: React.FC = () => {
+  const searchParams = useSearchParams();
+  const childData = searchParams.get("childData");
+
+  // Parse the childData string to JSON
+  const selectedChildData = childData
+    ? typeof childData === "string"
+      ? JSON.parse(childData)
+      : JSON.parse(childData[0]) // Handle case when childData is an array
+    : null;
+
+  if (!selectedChildData) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <div className="bg-white rounded-lg shadow-xl pb-8 border border-rchsLight">
@@ -23,7 +36,7 @@ const Profile: React.FC = () => {
             height={200}
           />
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl">Tuntufye Mwakifumbwa</p>
+            <p className="text-2xl">{selectedChildData.name}</p>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -43,8 +56,8 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <PersonalInfo />
-      <ActivityLog/>
-      <NavigationMenu/>
+      <ActivityLog />
+      <NavigationMenu />
       {/* <BoyStatistics0t02/>
       <GirlWeightStatistics /> */}
     </>
