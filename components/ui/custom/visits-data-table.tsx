@@ -42,7 +42,7 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
     initialState: {
       pagination: {
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 6,
       },
     },
     onColumnFiltersChange: setColumnFilters,
