@@ -16,15 +16,6 @@ const PersonalInfo: React.FC = () => {
     ? [
         { attribute: "Full name:", value: selectedMotherData.name },
         { attribute: "Age:", value: selectedMotherData.age.toString() },
-        { attribute: "Gender:", value: selectedMotherData.gender },
-        {
-          attribute: "Weight (kg):",
-          value: selectedMotherData.weight.toString(),
-        },
-        {
-          attribute: "Height (cm):",
-          value: selectedMotherData.height.toString(),
-        },
         { attribute: "Last Visit Date:", value: selectedMotherData.lastVisit },
       ]
     : [];
