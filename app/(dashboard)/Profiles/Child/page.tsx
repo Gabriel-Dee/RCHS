@@ -1,7 +1,7 @@
 "use client";
 // components/Profile.tsx
 import ActivityLog from "@/app/components/patient-activity-log";
-import PersonalInfo from "@/app/components/personal-info";
+import PersonalInfo from "@/app/components/child-personal-info";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
