@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import GirlWeightStatistics from "@/app/components/graphs/patient-weight-age-girls";
-import BoyStatistics0t02 from "@/app/components/graphs/patient-length-age-boys-0t02";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
 
 const Profile: React.FC = () => {
