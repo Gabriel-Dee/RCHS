@@ -4,6 +4,12 @@ import { SideBarMenuItem } from './sidebar-menu-item';
 import classNames from 'classnames';
 import { SideNavItem, SideNavItemGroup } from '@/types/types';
 
+interface SideBarMenuGroupProps {
+    menuGroup: SideNavItemGroup;
+    openGroup: string | null;
+    setOpenGroup: (group: string | null) => void;
+  }
+  
 const SideBarMenuGroup = ({ menuGroup }: { menuGroup: SideNavItemGroup }) => {
 
     const { toggleCollapse } = useSideBarToggle();
@@ -14,7 +20,7 @@ const SideBarMenuGroup = ({ menuGroup }: { menuGroup: SideNavItemGroup }) => {
         }
     )
     return (
-        <>
+        <> 
             <h3 className={menuGroupTitleSyle}>{!toggleCollapse ? menuGroup.title : '...'}</h3>
             {
                 menuGroup.menuList?.map((item: SideNavItem, index: React.Key | null | undefined) => {
