@@ -1,25 +1,29 @@
 "use client"
 import useUsers from '@/hooks/use-users';
 import { FC } from 'react';
-
+ // Adjust the import path as necessary
 
 const UsersPage: FC = () => {
-  const { users, loading } = useUsers();
+  const { users, loading, error } = useUsers();
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div>
-      <h1>All Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} ({user.username}) - {user.email}
-          </li>
-        ))}
-      </ul>
+      <h1>Users</h1>
+      {users.map((user) => (
+        <div key={user.id}>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+          <p>{user.phone}</p>
+        </div>
+      ))}
     </div>
   );
 };

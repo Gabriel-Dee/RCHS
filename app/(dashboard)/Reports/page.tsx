@@ -1,29 +1,30 @@
-import { FC } from 'react';
+"use client";
+import { getUsers } from "@/app/lib/actions/users";
+import { useEffect, useState } from "react";
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  // Add other fields as necessary
-}
-
-const UsersPage: FC = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users');
-  const users: User[] = await res.json();
+export default function Home() {
+  let [users, setUsers] = useState([]);
+  useEffect(() => {
+    getUsers().then((data) => {
+      if (data.error) {
+        return console.error(data.error)
+      }
+      setUsers(data);
+    });
+  }, []);
 
   return (
     <div>
-      <h1>All Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} ({user.username}) - {user.email}
-          </li>
-        ))}
-      </ul>
+      <h1>Users</h1>
+      {users.map((user: any) => {
+        return (
+          <div key={user.id}>
+            <h2>{user.name}</h2>
+            <p>{user.email}</p>
+            <p>{user.phone}</p>
+          </div>
+        );
+      })}
     </div>
   );
-};
-
-export default UsersPage;
+}
