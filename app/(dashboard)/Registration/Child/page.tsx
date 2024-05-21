@@ -8,6 +8,7 @@ const { Option } = Select;
 
 const ChildDetailsForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
+    mother: "",
     healthcare_centre_name: "",
     child_number: "",
     child_name: "",
@@ -49,6 +50,17 @@ const ChildDetailsForm: React.FC = () => {
       </h2>
       <form onSubmit={onFinish} className="mt-4 space-y-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="mother" className="text-gray-700">
+              Mother's Name
+            </label>
+            <Input
+              id="mother"
+              onChange={handleInputChange}
+              value={formValues.mother}
+            />
+          </div>
+
           <div>
             <label htmlFor="healthcare_centre_name" className="text-gray-700">
               Healthcare Centre Name

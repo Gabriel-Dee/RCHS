@@ -6,14 +6,14 @@ export default function Home() {
   let [users, setUsers] = useState([]);
   useEffect(() => {
     getUsers().then((data) => {
-      if (data.error) {
-        return console.error(data.error)
+      if (!data || data.error) {
+        return console.error(data?.error)
       }
       setUsers(data);
     });
   }, []);
 
-  return (
+  return ( 
     <div>
       <h1>Users</h1>
       {users.map((user: any) => {
