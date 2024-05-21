@@ -16,7 +16,7 @@ const MotherDetailsForm: React.FC = () => {
     mother_age: "",
     mother_education: "",
     mother_employment: "",
-    Height: "56",
+    Height: "",
     partner_name: "",
     partner_age: "",
     partner_work: "",
@@ -31,6 +31,8 @@ const MotherDetailsForm: React.FC = () => {
     miscarriage_year: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Handler for input change
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,8 +46,27 @@ const MotherDetailsForm: React.FC = () => {
     setFormValues({ ...formValues, Height: value });
   };
 
+  // // Handler for form submission
+  // const onFinish = async () => {
+  //   try {
+  //     console.log(formValues);
+
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/mother/",
+  //       formValues
+  //     );
+  //     console.log("Response:", response.data); // Log the response from the server
+  //   } catch (error) {
+  //     console.error("Error:", error); // Log any errors that occur during the request
+  //   }
+  // };
+
   // Handler for form submission
-  const onFinish = async () => {
+  const onFinish = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return; // Prevent multiple submissions
+
+    setIsSubmitting(true);
     try {
       console.log(formValues);
 
@@ -56,6 +77,8 @@ const MotherDetailsForm: React.FC = () => {
       console.log("Response:", response.data); // Log the response from the server
     } catch (error) {
       console.error("Error:", error); // Log any errors that occur during the request
+    } finally {
+      setIsSubmitting(false); // Re-enable the submit button
     }
   };
 
@@ -300,11 +323,19 @@ const MotherDetailsForm: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-6">
-          <Button
+          {/* <Button
             type="primary"
             onClick={onFinish}
             htmlType="submit"
             className="bg-rchs"
+          >
+            Submit
+          </Button> */}
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="bg-rchs"
+            disabled={isSubmitting}
           >
             Submit
           </Button>
