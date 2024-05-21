@@ -16,7 +16,7 @@ const MotherDetailsForm: React.FC = () => {
     mother_age: "",
     mother_education: "",
     mother_employment: "",
-    Height: "",
+    Height: "56",
     partner_name: "",
     partner_age: "",
     partner_work: "",
@@ -30,9 +30,6 @@ const MotherDetailsForm: React.FC = () => {
     miscarriage_age: "",
     miscarriage_year: "",
   });
-
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Handler for input change
   const handleInputChange = (
