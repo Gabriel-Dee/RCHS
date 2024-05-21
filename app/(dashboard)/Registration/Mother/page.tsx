@@ -46,24 +46,9 @@ const MotherDetailsForm: React.FC = () => {
     setFormValues({ ...formValues, Height: value });
   };
 
-  // // Handler for form submission
-  // const onFinish = async () => {
-  //   try {
-  //     console.log(formValues);
-
-  //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/mother/",
-  //       formValues
-  //     );
-  //     console.log("Response:", response.data); // Log the response from the server
-  //   } catch (error) {
-  //     console.error("Error:", error); // Log any errors that occur during the request
-  //   }
-  // };
-
   // Handler for form submission
-  const onFinish = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onFinish = async () => {
+    // e.preventDefault();
     if (isSubmitting) return; // Prevent multiple submissions
 
     setIsSubmitting(true);
@@ -81,6 +66,27 @@ const MotherDetailsForm: React.FC = () => {
       setIsSubmitting(false); // Re-enable the submit button
     }
   };
+
+  // // Handler for form submission
+  // const onFinish = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (isSubmitting) return; // Prevent multiple submissions
+
+  //   setIsSubmitting(true);
+  //   try {
+  //     console.log(formValues);
+
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/mother/",
+  //       formValues
+  //     );
+  //     console.log("Response:", response.data); // Log the response from the server
+  //   } catch (error) {
+  //     console.error("Error:", error); // Log any errors that occur during the request
+  //   } finally {
+  //     setIsSubmitting(false); // Re-enable the submit button
+  //   }
+  // };
 
   return (
     <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
@@ -323,19 +329,11 @@ const MotherDetailsForm: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-6">
-          {/* <Button
+          <Button
             type="primary"
             onClick={onFinish}
             htmlType="submit"
             className="bg-rchs"
-          >
-            Submit
-          </Button> */}
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-rchs"
-            disabled={isSubmitting}
           >
             Submit
           </Button>
