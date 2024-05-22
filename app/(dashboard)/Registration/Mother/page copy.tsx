@@ -31,18 +31,7 @@ const MotherDetailsForm: React.FC = () => {
     miscarriage_year: "",
   });
 
-  // Function to remove duplicate values
-  const removeDuplicates = (values: any) => {
-    const uniqueValues = new Set(Object.values(values));
-    const uniqueObject: any = {};
-    uniqueValues.forEach((value) => {
-      const key = Object.keys(values).find((key) => values[key] === value);
-      if (key) {
-        uniqueObject[key] = value;
-      }
-    });
-    return uniqueObject;
-  };
+  
 
   // Handler for input change
   const handleInputChange = (
@@ -52,14 +41,17 @@ const MotherDetailsForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
+  // Handler for select change
+  // const handleSelectChange = (value: string) => {
+  //   setFormValues({ ...formValues, Height: value });
+  // };
+
   // Handler for form submission
   const onFinish = async () => {
     try {
-      const uniqueFormValues = removeDuplicates(formValues);
-      console.log("Unique Form Values:", uniqueFormValues); // Log the unique form values
       const response = await axios.post(
         "http://127.0.0.1:8000/mother/",
-        uniqueFormValues
+        formValues
       );
       console.log("Response:", response.data); // Log the response from the server
     } catch (error) {
@@ -161,13 +153,7 @@ const MotherDetailsForm: React.FC = () => {
             <label htmlFor="Height" className="text-gray-700 block">
               Height
             </label>
-            <Select
-              id="Height"
-              placeholder="Select Height"
-              className="w-full"
-              onChange={(value) => setFormValues({ ...formValues, Height: value })}
-              value={formValues.Height}
-            >
+            <Select id="Height" placeholder="Select Height" className="w-full">
               <Option value="above_150">Above 150 cm</Option>
               <Option value="below_150">Below 150 cm</Option>
             </Select>
