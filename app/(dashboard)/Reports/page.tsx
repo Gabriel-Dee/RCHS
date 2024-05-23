@@ -5,14 +5,14 @@ import { useReactToPrint } from 'react-to-print';
 const MedicalReport = forwardRef<HTMLDivElement>((props, ref) => (
   <div ref={ref} className="min-h-screen bg-gray-100 p-4">
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
-      <header className="flex justify-between items-center mb-8">
+      <header className="bg-blue-500 text-white p-4 rounded-t-lg flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-bold">In-Patient Discharge Summary</h1>
-          <h2 className="text-xl">Patient’s Copy</h2>
+          <h2 className="text-lg">Patient’s Copy</h2>
         </div>
         <div className="text-right">
           <h3 className="text-xl font-bold">Saint Elizabeth Hospital</h3>
-          <div className="text-gray-700">Logo</div>
+          <div className="text-gray-200">Logo</div>
         </div>
       </header>
 
@@ -58,8 +58,8 @@ const MedicalReport = forwardRef<HTMLDivElement>((props, ref) => (
       </section>
 
       <section className="mb-8">
-        <h3 className="text-lg font-semibold mb-2">Medical / Surgical / Family History</h3>
-        <div className="bg-blue-100 p-4 rounded">
+        <h3 className="text-lg font-semibold mb-2 bg-blue-500 text-white p-2 rounded">Medical / Surgical / Family History</h3>
+        <div className="p-4 border rounded">
           <p><strong>Medical / Surgical Hx:</strong> N.A.</p>
           <p><strong>Family History:</strong> N.A.</p>
         </div>
@@ -93,32 +93,39 @@ const MedicalReport = forwardRef<HTMLDivElement>((props, ref) => (
               <td className="p-2"><strong>Other Diagnosis:</strong></td>
               <td className="p-2">N.A.</td>
             </tr>
+            <tr className="border-t">
+              <td className="p-2"><strong>Operation Procedures:</strong></td>
+              <td className="p-2">N.A.</td>
+            </tr>
           </tbody>
         </table>
       </section>
+
+      <footer className="mt-8 flex justify-between items-center text-sm">
+        <span>1-800-765-7678 // 1500 San Pablo Street</span>
+        <span>Page 1</span>
+      </footer>
     </div>
   </div>
 ));
 
 export default function App() {
-  // const componentRef = useRef<HTMLDivElement>(
-    const componentRef = useRef<HTMLDivElement>(null);
-    const handlePrint = useReactToPrint({
-      content: () => componentRef.current,
-    });
-  
-    return (
-      <div>
-        <MedicalReport ref={componentRef} />
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={handlePrint}
-            className="px-6 py-3 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600"
-          >
-            Print Report
-          </button>
-        </div>
+  const componentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  return (
+    <div>
+      <MedicalReport ref={componentRef} />
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={handlePrint}
+          className="px-6 py-3 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600"
+        >
+          Print Report
+        </button>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}
