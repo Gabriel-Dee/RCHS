@@ -1,5 +1,5 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { RecentChildAttendance } from "@/app/components/recent-visits";
+import RecentChildAttendance from "@/app/components/recent-visits";
 import {
   Card,
   CardHeader,
@@ -134,7 +134,7 @@ export default async function Dashboard() {
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
-              <RecentChildAttendance />
+              <RecentChildAttendance childAttendanceData={[]} />
             </TableCardContent>
           </TableCard>
         </div>
