@@ -1,10 +1,34 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import DashboardCard from "@/app/components/DashboardCard";
 import RecentChildAttendance from "@/app/components/recent-visits";
-import { TableCard, TableCardContent, TableCardDescription, TableCardHeader, TableCardTitle } from "@/components/ui/table-card";
+import {
+  TableCard,
+  TableCardContent,
+  TableCardDescription,
+  TableCardHeader,
+  TableCardTitle,
+} from "@/components/ui/table-card";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 
+interface DashboardSummary {
+  totalChildren: {
+    count: number;
+    percentageChange: string;
+  };
+  totalMale: {
+    count: number;
+    percentageChange: string;
+  };
+  totalFemale: {
+    count: number;
+    percentageChange: string;
+  };
+  averageAge: {
+    value: number;
+    percentageChange: string;
+  };
+}
 
 export default async function Dashboard() {
   const session = await getServerSession(options);
@@ -12,6 +36,9 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Dashboard");
   }
+
+  const res = await fetch('http://your-api-endpoint/api/dashboard-summary');
+  const data: DashboardSummary = await res.json();
 
   return (
     <>
@@ -21,8 +48,8 @@ export default async function Dashboard() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <DashboardCard
             title="Total Children"
-            value="1,200"
-            percentageChange="+20.1% from last year"
+            value={data.totalChildren.count.toString()}
+            percentageChange={data.totalChildren.percentageChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +67,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Total Male"
-            value="600"
-            percentageChange="+18.1% from last year"
+            value={data.totalMale.count.toString()}
+            percentageChange={data.totalMale.percentageChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +88,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Total Female"
-            value="800"
-            percentageChange="+10% from last year"
+            value={data.totalFemale.count.toString()}
+            percentageChange={data.totalFemale.percentageChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +108,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Average Age"
-            value="2.5"
-            percentageChange="+1 since last year"
+            value={data.averageAge.value.toString()}
+            percentageChange={data.averageAge.percentageChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -114,3 +141,4 @@ export default async function Dashboard() {
     </>
   );
 }
+
