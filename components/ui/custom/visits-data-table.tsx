@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import {
   ColumnDef,
@@ -96,12 +97,6 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
         >
           Register Parent
         </Button>
-        {/* <Button
-          onClick={handleNewVisistRegistration}
-          className="flex flex-col ml-2"
-        >
-          Register New Visit
-        </Button> */}
       </div>
       <div className="rounded-md border border-rchsLight">
         <Table>

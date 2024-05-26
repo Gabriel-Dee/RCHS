@@ -1,5 +1,6 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { MotherRecords } from "@/app/components/mother-records";
+import MotherRecords from "@/app/components/mother-records";
+
 import {
   TableCard,
   TableCardContent,
@@ -29,7 +30,7 @@ export default async function Records() {
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
-              <MotherRecords />
+              <MotherRecords motherAttendanceData={[]} />
             </TableCardContent>
           </TableCard>
         </div>

@@ -58,8 +58,6 @@ const Profile: React.FC = () => {
       <PersonalInfo />
       <ActivityLog />
       <NavigationMenu />
-      {/* <BoyStatistics0t02/>
-      <GirlWeightStatistics /> */}
     </>
   );
 };
