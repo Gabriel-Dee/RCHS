@@ -3,7 +3,7 @@
 import React, { forwardRef, ReactNode } from 'react';
 
 const MonthlyReport = forwardRef<HTMLDivElement>((props, ref) => (
-  <div ref={ref} className="min-h-screen bg-gray-100 p-4">
+  <div ref={ref} className="min-h-screen bg-gray-100 p-4 rounded-lg">
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
       <header className="bg-blue-500 text-white p-4 rounded-t-lg flex justify-between items-center mb-8">
         <div>

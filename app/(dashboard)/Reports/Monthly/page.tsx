@@ -1,5 +1,5 @@
 "use client";
-import MedicalReport from "@/app/components/reports/reports";
+import MonthlyReport from "@/app/components/reports/monthly";
 import { Button } from "@/registry/new-york/ui/button";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -11,9 +11,9 @@ export default function App() {
   });
 
   return (
-    <div>
-      <MedicalReport ref={componentRef} />
-      <div className="flex justify-center mt-8">
+    <div className="border border-blue-500 bg-gray-100 rounded-lg">
+      <MonthlyReport ref={componentRef} />
+      <div className="flex justify-center p-4">
         <Button
           onClick={handlePrint}
           className="px-6 py-3 bg-blue-500 text-white shadow hover:bg-blue-600"
