@@ -7,6 +7,7 @@ import {
   BsHouseDoorFill,
   BsPersonAdd,
   BsPersonFill,
+  BsPieChartFill,
   BsQuestionCircleFill,
   BsShieldFillCheck,
 } from "react-icons/bs";
@@ -57,9 +58,15 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         ],
       },
       {
-        title: "Reports/Analytics",
+        title: "Reports",
         path: "/Reports",
         icon: BsFileBarGraphFill({ size: 20 }),
+        // icon: BsFileBarGraphFill({ size: 20 }),
+      },
+      {
+        title: "Analytics",
+        path: "/Analytics",
+        icon: BsPieChartFill({ size: 20 }),
       },
       {
         title: "Immunisation",
