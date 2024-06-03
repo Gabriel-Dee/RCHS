@@ -12,3 +12,4 @@ const ErrorComponent = ({error, reset}:{error: Error, reset: any}) => {
 };
 
 export default ErrorComponent;
+ 

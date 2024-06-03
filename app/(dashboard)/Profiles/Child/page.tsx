@@ -1,28 +1,37 @@
 "use client";
-// components/Profile.tsx
-import ActivityLog from "@/app/components/patient-activity-log";
-import PersonalInfo from "@/app/components/child-personal-info";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import PersonalInfo from "@/app/components/child-personal-info";
+import ActivityLog from "@/app/components/patient-activity-log";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
-import { useSearchParams } from "next/navigation";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
-  const childData = searchParams.get("childData");
+  const id = searchParams.get("id");
+  const [selectedChildData, setSelectedChildData] = useState<any | null>(null);
 
-  // Parse the childData string to JSON
-  const selectedChildData = childData
-    ? typeof childData === "string"
-      ? JSON.parse(childData)
-      : JSON.parse(childData[0]) // Handle case when childData is an array
-    : null;
+  console.log("This is the id");
+  console.log(id);
+  console.log(selectedChildData);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/child/${id}/`)
+        .then((res) => res.json())
+        .then((data) => setSelectedChildData(data))
+        .catch((error) =>
+          console.error("Error fetching child data uyu:", error)
+        );
+    }
+  }, []);
 
   if (!selectedChildData) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-xl pb-8 border border-rchsLight">
@@ -36,7 +45,9 @@ const Profile: React.FC = () => {
             height={200}
           />
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl">{selectedChildData.name}</p>
+            {selectedChildData && (
+              <p className="text-2xl">{selectedChildData.child_name}</p>
+            )}
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -47,7 +58,7 @@ const Profile: React.FC = () => {
               </Button>
             </Link>
             <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
-              <span>New Appoitment</span>
+              <span>New Appointment</span>
             </Button>
             <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
               <span>Generate Report</span>

@@ -1,10 +1,15 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import DashboardCard from "@/app/components/DashboardCard";
 import RecentChildAttendance from "@/app/components/recent-visits";
-import { TableCard, TableCardContent, TableCardDescription, TableCardHeader, TableCardTitle } from "@/components/ui/table-card";
+import {
+  TableCard,
+  TableCardContent,
+  TableCardDescription,
+  TableCardHeader,
+  TableCardTitle,
+} from "@/components/ui/table-card";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-
 
 export default async function Dashboard() {
   const session = await getServerSession(options);
@@ -12,6 +17,14 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Dashboard");
   }
+  // Fetch data here
+  const res = await fetch("http://127.0.0.1:8000/child/", {
+    // headers: {
+    //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
+    // },
+  });
+  
+  const childAttendanceData = await res.json();
 
   return (
     <>
@@ -103,10 +116,12 @@ export default async function Dashboard() {
           <TableCard className="lg:col-span-12 border-2">
             <TableCardHeader>
               <TableCardTitle>Recent Patients</TableCardTitle>
-              <TableCardDescription>256 Patients Attended this month</TableCardDescription>
+              <TableCardDescription>
+                256 Patients Attended this month
+              </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
-              <RecentChildAttendance childAttendanceData={[]} />
+              <RecentChildAttendance childAttendanceData={childAttendanceData} />
             </TableCardContent>
           </TableCard>
         </div>

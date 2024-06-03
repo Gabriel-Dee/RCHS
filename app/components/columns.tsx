@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 // Define columns for child attendance data table
 export const columns: ColumnDef<ChildAttendance>[] = [
     {
-      accessorKey: "name",
+      accessorKey: "child_name",
       header: "Name",
     },
     {
@@ -12,15 +12,15 @@ export const columns: ColumnDef<ChildAttendance>[] = [
       header: "Age",
     },
     {
-      accessorKey: "gender",
+      accessorKey: "child_gender",
       header: "Gender",
     },
     {
-      accessorKey: "weight",
+      accessorKey: "weight_at_birth",
       header: "Weight (kg)",
     },
     {
-      accessorKey: "height",
+      accessorKey: "length_at_birth",
       header: "Height (cm)",
     },
     {
@@ -30,6 +30,7 @@ export const columns: ColumnDef<ChildAttendance>[] = [
   ];
 
   // Define columns for child attendance data table
+
 export const mothercolumns: ColumnDef<MotherAttendance>[] = [
   {
     accessorKey: "name",
