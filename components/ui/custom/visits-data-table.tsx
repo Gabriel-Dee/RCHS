@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
-  // Pagination,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -55,14 +54,14 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  const handleRowClick = (childData: TData) => {
-    console.log("Row clicked:", childData);
+  // const handleRowClick = (childData: TData) => {
+  //   console.log("Row clicked:", childData);
 
-    const queryString = JSON.stringify(childData);
-    console.log("Navigating to URL: /Profiles/Child with query:", queryString);
+  //   const queryString = JSON.stringify(childData);
+  //   console.log("Navigating to URL: /Profiles/Child with query:", queryString);
 
-    router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
-  };
+  //   router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
+  // };
 
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
@@ -72,6 +71,10 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
   const handleParentRegistration = (e: any) => {
     e.preventDefault();
     router.push("Registration/Mother");
+  };
+
+  const handleRowClick = (childData: TData) => {
+    router.push(`/Profiles/Child?id=${childData.id}`);
   };
 
   return (

@@ -1,14 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Input, Button, Select } from "antd";
-import axios from "axios";
 import React from "react";
 
 const { Option } = Select;
 
 const ChildDetailsForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
-    mother: "",
+    mother_name: "",
     healthcare_centre_name: "",
     child_number: "",
     child_name: "",
@@ -21,23 +20,34 @@ const ChildDetailsForm: React.FC = () => {
     child_residence: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handler for input change
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     setFormValues({ ...formValues, [id]: value });
   };
 
+  // Handler for select change
   const handleSelectChange = (value: string) => {
     setFormValues({ ...formValues, child_gender: value });
   };
 
-  const onFinish = async () => {
+  // Handler for form submission
+  const onFinish = async (e: any) => {
     try {
+      e.preventDefault();
       console.log(formValues);
-      const response = await axios.post(
-        "http://127.0.0.1:8000/child/",
-        formValues
-      );
-      console.log("Response:", response.data);
+
+      const response = await fetch("http://127.0.0.1:8000/child/", {
+        headers: {
+          "Content-Type": "application/json", // Content type
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      console.log("Response:", await response.json()); // Log the response from the server
     } catch (error) {
       console.error("Error:", error);
     }
@@ -51,13 +61,13 @@ const ChildDetailsForm: React.FC = () => {
       <form onSubmit={onFinish} className="mt-4 space-y-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="mother" className="text-gray-700">
+            <label htmlFor="mother_name" className="text-gray-700">
               Mother's Name
             </label>
             <Input
-              id="mother"
+              id="mother_name"
               onChange={handleInputChange}
-              value={formValues.mother}
+              value={formValues.mother_name}
             />
           </div>
 

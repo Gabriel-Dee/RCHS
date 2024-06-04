@@ -1,27 +1,33 @@
 "use client";
-// components/Profile.tsx
+
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import ActivityLog from "@/app/components/patient-activity-log";
 import PersonalInfo from "@/app/components/mother-personal-info";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React from "react";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
-  const motherData = searchParams.get("motherData");
+  const id = searchParams.get('id'); // Get `id` from search parameters
+  const [selectedMotherData, setSelectedMotherData] = useState<any | null>(null);
 
-  // Parse the motherData string to JSON
-  const selectedMotherData = motherData
-    ? typeof motherData === "string"
-      ? JSON.parse(motherData)
-      : JSON.parse(motherData[0]) // Handle case when motherData is an array
-    : null;
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/mother/${id}/`)
+        .then((res) => res.json())
+        .then((data) => setSelectedMotherData(data))
+        .catch((error) =>
+          console.error("Error fetching mother data:", error)
+        );
+    }
+  }, [id]); // Add `id` as a dependency to re-fetch when `id` changes
 
   if (!selectedMotherData) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-xl pb-8 border border-rchsLight">
@@ -35,7 +41,7 @@ const Profile: React.FC = () => {
             height={200}
           />
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-2xl">{selectedMotherData.name}</p>
+            <p className="text-2xl">{selectedMotherData.mother_name}</p>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import React from "react";
 import axios from "axios";
 import { Input, Button, Select } from "antd";
+import { headers } from "next/headers";
 
 const { Option } = Select;
 
@@ -31,19 +32,6 @@ const MotherDetailsForm: React.FC = () => {
     miscarriage_year: "",
   });
 
-  // Function to remove duplicate values
-  const removeDuplicates = (values: any) => {
-    const uniqueValues = new Set(Object.values(values));
-    const uniqueObject: any = {};
-    uniqueValues.forEach((value) => {
-      const key = Object.keys(values).find((key) => values[key] === value);
-      if (key) {
-        uniqueObject[key] = value;
-      }
-    });
-    return uniqueObject;
-  };
-
   // Handler for input change
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -52,16 +40,30 @@ const MotherDetailsForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
+  // Handler for select change
+  const handleSelectChange = (value: string) => {
+    setFormValues({ ...formValues, Height: value });
+  };
+
   // Handler for form submission
-  const onFinish = async () => {
+  const onFinish = async (e: any) => {
     try {
-      const uniqueFormValues = removeDuplicates(formValues);
-      console.log("Unique Form Values:", uniqueFormValues); // Log the unique form values
-      const response = await axios.post(
-        "http://127.0.0.1:8000/mother/",
-        uniqueFormValues
-      );
-      console.log("Response:", response.data); // Log the response from the server
+      e.preventDefault();
+      console.log(formValues);
+
+      const response = await fetch("http://127.0.0.1:8000/mother/", {
+        headers: {
+          "Content-Type": "application/json", // Content type
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      // const response = await axios.post(
+      //   "http://127.0.0.1:8000/mother/",
+      //   formValues
+      // );
+      console.log("Response:", await response.json()); // Log the response from the server
     } catch (error) {
       console.error("Error:", error); // Log any errors that occur during the request
     }
@@ -165,8 +167,7 @@ const MotherDetailsForm: React.FC = () => {
               id="Height"
               placeholder="Select Height"
               className="w-full"
-              onChange={(value) => setFormValues({ ...formValues, Height: value })}
-              value={formValues.Height}
+              onChange={handleSelectChange}
             >
               <Option value="above_150">Above 150 cm</Option>
               <Option value="below_150">Below 150 cm</Option>

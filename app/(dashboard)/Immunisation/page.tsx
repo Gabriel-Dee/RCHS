@@ -19,9 +19,9 @@ const UsersPage: FC = () => {
       <h1>Users</h1>
       {users.map((user) => (
         <div key={user.id}>
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-          <p>{user.phone}</p>
+          <h2>{user.child_name}</h2>
+          <p>{user.child_gender}</p>
+          <p>{user.child_residence}</p>
         </div>
       ))}
     </div>

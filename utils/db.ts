@@ -12,3 +12,4 @@ const connect = async (): Promise<void> => {
 };
 
 export default connect;
+

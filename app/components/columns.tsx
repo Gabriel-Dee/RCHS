@@ -3,36 +3,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 // Define columns for child attendance data table
 export const columns: ColumnDef<ChildAttendance>[] = [
-    {
-      accessorKey: "name",
-      header: "Name",
-    },
-    {
-      accessorKey: "age",
-      header: "Age",
-    },
-    {
-      accessorKey: "gender",
-      header: "Gender",
-    },
-    {
-      accessorKey: "weight",
-      header: "Weight (kg)",
-    },
-    {
-      accessorKey: "height",
-      header: "Height (cm)",
-    },
-    {
-      accessorKey: "lastVisit",
-      header: "Last Visit Date",
-    },
-  ];
-
-  // Define columns for child attendance data table
-export const mothercolumns: ColumnDef<MotherAttendance>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "child_name",
     header: "Name",
   },
   {
@@ -40,8 +12,36 @@ export const mothercolumns: ColumnDef<MotherAttendance>[] = [
     header: "Age",
   },
   {
-    accessorKey: "child",
-    header: "Child",
+    accessorKey: "child_gender",
+    header: "Gender",
+  },
+  {
+    accessorKey: "weight_at_birth",
+    header: "Weight (kg)",
+  },
+  {
+    accessorKey: "length_at_birth",
+    header: "Height (cm)",
+  },
+  {
+    accessorKey: "lastVisit",
+    header: "Last Visit Date",
+  },
+];
+
+// Define columns for child attendance data table
+export const mothercolumns: ColumnDef<MotherAttendance>[] = [
+  {
+    accessorKey: "mother_name",
+    header: "Name",
+  },
+  {
+    accessorKey: "age",
+    header: "Age",
+  },
+  {
+    accessorKey: "partner_name",
+    header: "Partner",
   },
   {
     accessorKey: "lastVisit",

@@ -55,30 +55,34 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  const handleRowClick = (motherData: TData) => {
-    console.log("Row clicked:", motherData);
+  // const handleRowClick = (motherData: TData) => {
+  //   console.log("Row clicked:", motherData);
 
-    const queryString = JSON.stringify(motherData);
-    console.log("Navigating to URL: /Profiles/Mother with query:", queryString);
+  //   const queryString = JSON.stringify(motherData);
+  //   console.log("Navigating to URL: /Profiles/Mother with query:", queryString);
 
-    router.push(
-      `/Profiles/Mother?motherData=${encodeURIComponent(queryString)}`
-    );
-  };
+  //   router.push(
+  //     `/Profiles/Mother?motherData=${encodeURIComponent(queryString)}`
+  //   );
+  // };
 
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Mother");
   };
 
+  const handleRowClick = (motherData: TData) => {
+    router.push(`/Profiles/Mother?id=${motherData.id}`);
+  };  
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Search Mother..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("mother_name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("mother_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm border border-rchsLight"
         />

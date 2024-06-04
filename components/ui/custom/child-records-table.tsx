@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
-  // Pagination,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -55,18 +54,23 @@ export function ChildDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  const handleRowClick = (childData: TData) => {
-    console.log("Row clicked:", childData);
+  // const handleRowClick = (childData: TData) => {
+  //   console.log("Row clicked:", childData);
 
-    const queryString = JSON.stringify(childData);
-    console.log("Navigating to URL: /Profiles/Child with query:", queryString);
+  //   const queryString = JSON.stringify(childData);
+  //   console.log("Navigating to URL: /Profiles/Child with query:", queryString);
 
-    router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
-  };
+  //   router.push(`/Profiles/Child?childData=${encodeURIComponent(queryString)}`);
+
+  // };
 
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Child");
+  };
+
+  const handleRowClick = (childData: TData) => {
+    router.push(`/Profiles/Child?id=${childData.id}`);
   };
 
   return (
@@ -74,9 +78,11 @@ export function ChildDataTable<TData extends { id: string }, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Search Child..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("child_name")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("child_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm border border-rchsLight"
         />

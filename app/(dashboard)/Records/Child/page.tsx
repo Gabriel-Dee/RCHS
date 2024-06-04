@@ -16,6 +16,14 @@ export default async function Records() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Records/Child");
   }
+  // Fetch data here
+  const res = await fetch("http://127.0.0.1:8000/child/", {
+    // headers: {
+    //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
+    // },
+  });
+
+  const childAttendanceData = await res.json();
 
   return (
     <>
@@ -29,7 +37,7 @@ export default async function Records() {
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
-              <ChildRecords childAttendanceData={[]} />
+              <ChildRecords childAttendanceData={childAttendanceData} />
             </TableCardContent>
           </TableCard>
         </div>

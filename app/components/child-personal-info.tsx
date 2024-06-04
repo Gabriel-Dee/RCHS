@@ -9,7 +9,7 @@ const PersonalInfo: React.FC = () => {
   const selectedChildData = childData
     ? typeof childData === "string"
       ? JSON.parse(childData)
-      : JSON.parse(childData[0]) // Handle case when childData is an array
+      : JSON.parse(childData[0])
     : null;
 
   const personalInfo = selectedChildData

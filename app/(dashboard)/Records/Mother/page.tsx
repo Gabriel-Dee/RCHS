@@ -1,6 +1,5 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import MotherRecords from "@/app/components/mother-records";
-
 import {
   TableCard,
   TableCardContent,
@@ -17,6 +16,14 @@ export default async function Records() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Records/Mother");
   }
+  // Fetch data here
+  const res = await fetch("http://127.0.0.1:8000/mother/", {
+    // headers: {
+    //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
+    // },
+  });
+
+  const motherAttendanceData = await res.json();
 
   return (
     <>
@@ -30,7 +37,7 @@ export default async function Records() {
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
-              <MotherRecords motherAttendanceData={[]} />
+              <MotherRecords motherAttendanceData={motherAttendanceData} />
             </TableCardContent>
           </TableCard>
         </div>
