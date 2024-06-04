@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/components/child-personal-info";
 import ActivityLog from "@/app/components/patient-activity-log";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
@@ -23,7 +23,7 @@ const Profile: React.FC = () => {
         .then((res) => res.json())
         .then((data) => setSelectedChildData(data))
         .catch((error) =>
-          console.error("Error fetching child data uyu:", error)
+          console.error("Error fetching child data:", error)
         );
     }
   }, []);

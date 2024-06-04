@@ -17,7 +17,6 @@ export default async function Records() {
     redirect("/api/auth/signin?callbackUrl=/Records/Child");
   }
   // Fetch data here
-  console.log("Am hereeeee");
   const res = await fetch("http://127.0.0.1:8000/child/", {
     // headers: {
     //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
