@@ -66,7 +66,7 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
-      <PersonalInfo />
+      <PersonalInfo childData={selectedChildData}/>
       <ActivityLog />
       <NavigationMenu />
     </>

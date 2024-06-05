@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,12 @@ import PersonalInfo from "@/app/components/mother-personal-info";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get('id'); // Get `id` from search parameters
+  const id = searchParams.get('id');
   const [selectedMotherData, setSelectedMotherData] = useState<any | null>(null);
+
+  console.log("This is the id");
+  console.log(id);
+  console.log(selectedMotherData);
 
   useEffect(() => {
     if (id) {
@@ -22,7 +25,7 @@ const Profile: React.FC = () => {
           console.error("Error fetching mother data:", error)
         );
     }
-  }, [id]); // Add `id` as a dependency to re-fetch when `id` changes
+  }, []);
 
   if (!selectedMotherData) {
     return <div>Loading...</div>;

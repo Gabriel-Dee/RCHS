@@ -1,31 +1,25 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 
-const PersonalInfo: React.FC = () => {
-  const searchParams = useSearchParams();
-  const childData = searchParams.get("childData");
-  // Parse the childData string to JSON
-  const selectedChildData = childData
-    ? typeof childData === "string"
-      ? JSON.parse(childData)
-      : JSON.parse(childData[0])
-    : null;
+interface PersonalInfoProps {
+  childData: any;
+}
 
-  const personalInfo = selectedChildData
+const PersonalInfo: React.FC<PersonalInfoProps> = ({ childData }) => {
+  const personalInfo = childData
     ? [
-        { attribute: "Full name:", value: selectedChildData.name },
-        { attribute: "Age:", value: selectedChildData.age.toString() },
-        { attribute: "Gender:", value: selectedChildData.gender },
+        { attribute: "Full name:", value: childData.child_name },
+        { attribute: "Age:", value: childData.age ? childData.age.toString() : "N/A" },
+        { attribute: "Gender:", value: childData.child_gender || "N/A" },
         {
           attribute: "Weight (kg):",
-          value: selectedChildData.weight.toString(),
+          value: childData.weight ? childData.weight.toString() : "N/A",
         },
         {
           attribute: "Height (cm):",
-          value: selectedChildData.height.toString(),
+          value: childData.height ? childData.height.toString() : "N/A",
         },
-        { attribute: "Last Visit Date:", value: selectedChildData.lastVisit },
+        { attribute: "Last Visit Date:", value: childData.lastVisit || "N/A" },
       ]
     : [];
 
@@ -72,3 +66,4 @@ const PersonalInfo: React.FC = () => {
 };
 
 export default PersonalInfo;
+
