@@ -10,7 +10,7 @@ interface MotherAttendanceProps {
 // export const getServerSideProps: GetServerSideProps<MotherAttendanceProps> = async () => {
 //   try {
 //     const res = await fetch('http://127.0.0.1:8000/mother/');
-//     const data: ChildAttendance[] = await res.json();
+//     const data: MotherAttendance[] = await res.json();
 //     console.log("Fetched data:", data); // Log fetched data
 //     return {
 //       props: { motherAttendanceData: data },
