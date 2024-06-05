@@ -17,7 +17,7 @@ const MotherDetailsForm: React.FC = () => {
     mother_age: "",
     mother_education: "",
     mother_employment: "",
-    Height: "56",
+    Height: "",
     partner_name: "",
     partner_age: "",
     partner_work: "",
@@ -160,18 +160,14 @@ const MotherDetailsForm: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="Height" className="text-gray-700 block">
+          <label htmlFor="Height" className="text-gray-700 block">
               Height
             </label>
-            <Select
+            <Input
               id="Height"
-              placeholder="Select Height"
-              className="w-full"
-              onChange={handleSelectChange}
-            >
-              <Option value="above_150">Above 150 cm</Option>
-              <Option value="below_150">Below 150 cm</Option>
-            </Select>
+              onChange={handleInputChange}
+              value={formValues.Height}
+            />
           </div>
 
           <div>
