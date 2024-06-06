@@ -20,9 +20,9 @@ export type ChildAttendance = {
   child_name: string;
   age: number;
   child_gender: string;
-  weight_at_birth: number;
-  length_at_birth: number;
-  lastVisit: string;
+  weight_grams: number;
+  height: number;
+  date: string;
 };
 
 // Defining the type for child attendance data specific to RCHS

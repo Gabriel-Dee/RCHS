@@ -17,8 +17,8 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Dashboard");
   }
-  // Fetch data here
-  const res = await fetch("http://127.0.0.1:8000/child/", {
+  // Fetch Child data here
+  const res = await fetch("http://127.0.0.1:8000/api/getChildSummary/", {
     // headers: {
     //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
     // },

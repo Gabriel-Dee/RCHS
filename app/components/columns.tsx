@@ -16,15 +16,15 @@ export const columns: ColumnDef<ChildAttendance>[] = [
     header: "Gender",
   },
   {
-    accessorKey: "weight_at_birth",
+    accessorKey: "weight_grams",
     header: "Weight (kg)",
   },
   {
-    accessorKey: "length_at_birth",
+    accessorKey: "height",
     header: "Height (cm)",
   },
   {
-    accessorKey: "lastVisit",
+    accessorKey: "date",
     header: "Last Visit Date",
   },
 ];

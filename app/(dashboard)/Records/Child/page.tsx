@@ -17,18 +17,11 @@ export default async function Records() {
     redirect("/api/auth/signin?callbackUrl=/Records/Child");
   }
   // Fetch Child data here
-  const res = await fetch("http://127.0.0.1:8000/child/", {
+  const res = await fetch("http://127.0.0.1:8000/api/getChildSummary/", {
     // headers: {
     //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
     // },
   });
-
-    // Fetch Visists data here
-    const response = await fetch("http://127.0.0.1:8000/child_visit/", {
-      // headers: {
-      //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
-      // },
-    });
 
   const childAttendanceData = await res.json();
 
