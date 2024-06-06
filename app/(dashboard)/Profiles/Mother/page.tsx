@@ -60,7 +60,7 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
-      <PersonalInfo />
+      <PersonalInfo motherData={selectedMotherData}/>
       <ActivityLog />
     </>
   );
