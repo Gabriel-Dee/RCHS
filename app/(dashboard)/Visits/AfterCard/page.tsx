@@ -1,49 +1,85 @@
 "use client";
-import React from "react";
-import { useState } from "react";
-import { Input, Button, Select, Divider } from "antd";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Input, Button, Divider, Select } from "antd";
 
 const { Option } = Select;
 
+interface Child {
+  url: string;
+  id: string;
+  child_name: string;
+  healthcare_centre_name: string;
+  mother_name: string;
+  mother: string;
+  child_number: string;
+  child_gender: string;
+  date_of_birth: string;
+  weight_at_birth: string;
+  length_at_birth: string;
+  place_of_birth: string;
+  maternal_health_worker: string;
+  child_residence: string;
+}
+
 const ChildVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
-    Date: "",
-    Child_growth_and_development_status: "",
-    Return_date: "",
-    Bcg_tuberculosis_injection_right_shoulder: "",
-    Polio: "",
-    Dpt_hep_b: "",
-    Pneumococcal: "",
-    Rota: "",
-    Measles: "",
-    Vitamin_a: "",
-    Deworming_medication: "",
-    Weight_grams: "",
-    Anemia: "",
-    Body_temperature: "",
-    Exclusive_breastfeeding: "",
-    Replacement_milk: "",
-    Unable_to_breastfeed: "",
-    Child_play: "",
-    Eyes: "",
-    Mouth: "",
-    Ears: "",
-    Navel_Healed: "",
-    Navel_Red: "",
-    Navel_Discharge_odor: "",
-    Has_pus_filled_bumps: "",
-    Has_turned_yellow: "",
-    Received_BCG: "",
-    Received_Polio_0: "",
-    Received_Polio_1: "",
-    Received_DTP_Hep_Hib: "",
-    Received_Pneumococcal: "",
-    Received_Rota: "",
-    Name_of_attendant: "",
-    Attendant_title: "",
-    Other_issues: "",
+    child_name: "",
+    visit_number: "",
+    date: "",
+    child_growth_and_development_status: "",
+    return_date: "",
+    bcg_tuberculosis_injection_right_shoulder: "",
+    polio: "",
+    dpt_hep_b: "",
+    pneumococcal: "",
+    rota: "",
+    measles: "",
+    vitamin_a: "",
+    deworming_medication: "",
+    weight_grams: "",
+    height: "",
+    anemia: "",
+    body_temperature: "",
+    exclusive_breastfeeding: "",
+    replacement_milk: "",
+    unable_to_breastfeed: "",
+    child_play: "",
+    eyes: "",
+    mouth: "",
+    ears: "",
+    navel_healed: "",
+    navel_red: "",
+    navel_discharge_odor: "",
+    has_pus_filled_bumps: "",
+    has_turned_yellow: "",
+    received_bcg: "",
+    received_polio_0: "",
+    received_polio_1: "",
+    received_dtp_hep_hib: "",
+    received_pneumococcal: "",
+    received_rota: "",
+    name_of_attendant: "",
+    attendant_title: "",
+    other_issues: "",
   });
+
+  const [children, setChildren] = useState<Child[]>([]);
+
+  // Fetch Child list from the server
+  useEffect(() => {
+    const fetchChildren = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/child/");
+        const data = await response.json();
+        console.log("Children data:", data); // Log the fetched data
+        setChildren(data);
+      } catch (error) {
+        console.error("Error fetching children:", error);
+      }
+    };
+
+    fetchChildren();
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -54,14 +90,30 @@ const ChildVisitForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
-  const onFinish = async () => {
+  // Specific handlers for select changes
+  const handlechildNameChange = (value: string) => {
+    setFormValues({ ...formValues, child_name: value });
+  };
+
+  const handleSelectChange = (id: string, value: string) => {
+    setFormValues({ ...formValues, [id]: value });
+  };
+
+  // Handler for form submission
+  const onFinish = async (e: React.FormEvent) => {
     try {
+      e.preventDefault();
       console.log(formValues);
-      const response = await axios.post(
-        "http://127.0.0.1:8000/child_visit/",
-        formValues
-      );
-      console.log("Response:", response.data);
+
+      const response = await fetch("http://127.0.0.1:8000/child_visit/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      console.log("Response:", await response.json());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -77,73 +129,120 @@ const ChildVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Basic Information
         </Divider>
+        <div>
+          <label htmlFor="child_name" className="text-gray-700">
+            Child's Name
+          </label>
+          <Select
+            id="child_name"
+            showSearch
+            placeholder="Search and select child"
+            optionFilterProp="children"
+            onChange={handlechildNameChange}
+            filterOption={(input, option) =>
+              (option?.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+            value={formValues.child_name}
+            className="w-full"
+          >
+            {children.map((child) => (
+              <Option key={child.url} value={child.child_name}>
+                {child.child_name}
+              </Option>
+            ))}
+          </Select>
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="Date" className="text-gray-700">
+            <label htmlFor="visit_number" className="text-gray-700">
+              Visit Number
+            </label>
+            <Input
+              id="visit_number"
+              type="number"
+              onChange={handleInputChange}
+              value={formValues.visit_number}
+            />
+          </div>
+          <div>
+            <label htmlFor="date" className="text-gray-700">
               Visit Date
             </label>
             <Input
-              id="Date"
+              id="date"
               type="date"
               onChange={handleInputChange}
-              value={formValues.Date}
+              value={formValues.date}
             />
           </div>
           <div>
             <label
-              htmlFor="Child_growth_and_development_status"
+              htmlFor="child_growth_and_development_status"
               className="text-gray-700"
             >
               Child Growth and Development Status
             </label>
             <Input
-              id="Child_growth_and_development_status"
+              id="child_growth_and_development_status"
               onChange={handleInputChange}
-              value={formValues.Child_growth_and_development_status}
+              value={formValues.child_growth_and_development_status}
             />
           </div>
           <div>
-            <label htmlFor="Return_date" className="text-gray-700">
+            <label htmlFor="return_date" className="text-gray-700">
               Return Date
             </label>
             <Input
-              id="Return_date"
+              id="return_date"
               type="date"
               onChange={handleInputChange}
-              value={formValues.Return_date}
+              value={formValues.return_date}
             />
           </div>
           <div>
-            <label htmlFor="Weight_grams" className="text-gray-700">
+            <label htmlFor="weight_grams" className="text-gray-700">
               Weight (Grams)
             </label>
             <Input
-              id="Weight_grams"
+              id="weight_grams"
               type="number"
               onChange={handleInputChange}
-              value={formValues.Weight_grams}
+              value={formValues.weight_grams}
             />
           </div>
           <div>
-            <label htmlFor="Anemia" className="text-gray-700">
+            <label htmlFor="height" className="text-gray-700">
+              Height (Cm)
+            </label>
+            <Input
+              id="height"
+              type="number"
+              onChange={handleInputChange}
+              value={formValues.height}
+            />
+          </div>
+          <div>
+            <label htmlFor="anemia" className="text-gray-700">
               Anemia (Hb or palmar pallor)
             </label>
             <Input
-              id="Anemia"
+              id="anemia"
               onChange={handleInputChange}
-              value={formValues.Anemia}
+              value={formValues.anemia}
             />
           </div>
           <div>
-            <label htmlFor="Body_temperature" className="text-gray-700">
+            <label htmlFor="body_temperature" className="text-gray-700">
               Body temperature (°C)
             </label>
             <Input
-              id="Body_temperature"
+              id="body_temperature"
               type="number"
               step="0.01"
               onChange={handleInputChange}
-              value={formValues.Body_temperature}
+              value={formValues.body_temperature}
             />
           </div>
           {/* Add more input fields for basic information */}
@@ -156,387 +255,418 @@ const ChildVisitForm: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label
-              htmlFor="Bcg_tuberculosis_injection_right_shoulder"
+              htmlFor="bcg_tuberculosis_injection_right_shoulder"
               className="text-gray-700"
             >
               BCG Tuberculosis Injection (Right Shoulder)
             </label>
             <Input
-              id="Bcg_tuberculosis_injection_right_shoulder"
+              id="bcg_tuberculosis_injection_right_shoulder"
               onChange={handleInputChange}
-              value={formValues.Bcg_tuberculosis_injection_right_shoulder}
+              value={formValues.bcg_tuberculosis_injection_right_shoulder}
             />
           </div>
           {/* Polio */}
           <div>
-            <label htmlFor="Polio" className="text-gray-700">
+            <label htmlFor="polio" className="text-gray-700">
               Polio
             </label>
             <Input
-              id="Polio"
+              id="polio"
               onChange={handleInputChange}
-              value={formValues.Polio}
+              value={formValues.polio}
             />
           </div>
 
           {/* DPT Hep B */}
           <div>
-            <label htmlFor="Dpt_hep_b" className="text-gray-700">
+            <label htmlFor="dpt_hep_b" className="text-gray-700">
               DPT Hep B
             </label>
             <Input
-              id="Dpt_hep_b"
+              id="dpt_hep_b"
               onChange={handleInputChange}
-              value={formValues.Dpt_hep_b}
+              value={formValues.dpt_hep_b}
             />
           </div>
 
           {/* Pneumococcal */}
           <div>
-            <label htmlFor="Pneumococcal" className="text-gray-700">
+            <label htmlFor="pneumococcal" className="text-gray-700">
               Pneumococcal
             </label>
             <Input
-              id="Pneumococcal"
+              id="pneumococcal"
               onChange={handleInputChange}
-              value={formValues.Pneumococcal}
+              value={formValues.pneumococcal}
             />
           </div>
 
           {/* Rota */}
           <div>
-            <label htmlFor="Rota" className="text-gray-700">
+            <label htmlFor="rota" className="text-gray-700">
               Rota
             </label>
             <Input
-              id="Rota"
+              id="rota"
               onChange={handleInputChange}
-              value={formValues.Rota}
+              value={formValues.rota}
             />
           </div>
 
           {/* Measles */}
           <div>
-            <label htmlFor="Measles" className="text-gray-700">
+            <label htmlFor="measles" className="text-gray-700">
               Measles
             </label>
             <Input
-              id="Measles"
+              id="measles"
               onChange={handleInputChange}
-              value={formValues.Measles}
+              value={formValues.measles}
             />
           </div>
 
           {/* Vitamin A */}
           <div>
-            <label htmlFor="Vitamin_a" className="text-gray-700">
+            <label htmlFor="vitamin_a" className="text-gray-700">
               Vitamin A
             </label>
             <Input
-              id="Vitamin_a"
+              id="vitamin_a"
               onChange={handleInputChange}
-              value={formValues.Vitamin_a}
+              value={formValues.vitamin_a}
             />
           </div>
 
           {/* Deworming Medication */}
           <div>
-            <label htmlFor="Deworming_medication" className="text-gray-700">
+            <label htmlFor="deworming_medication" className="text-gray-700">
               Deworming Medication
             </label>
             <Input
-              id="Deworming_medication"
+              id="deworming_medication"
               onChange={handleInputChange}
-              value={formValues.Deworming_medication}
-            />
-          </div>
-
-          {/* Weight (grams) */}
-          <div>
-            <label htmlFor="Weight_grams" className="text-gray-700">
-              Weight (Grams)
-            </label>
-            <Input
-              id="Weight_grams"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.Weight_grams}
-            />
-          </div>
-
-          {/* Anemia */}
-          <div>
-            <label htmlFor="Anemia" className="text-gray-700">
-              Anemia (Hb or palmar pallor)
-            </label>
-            <Input
-              id="Anemia"
-              onChange={handleInputChange}
-              value={formValues.Anemia}
-            />
-          </div>
-
-          {/* Body Temperature */}
-          <div>
-            <label htmlFor="Body_temperature" className="text-gray-700">
-              Body Temperature (°C)
-            </label>
-            <Input
-              id="Body_temperature"
-              type="number"
-              step="0.01"
-              onChange={handleInputChange}
-              value={formValues.Body_temperature}
+              value={formValues.deworming_medication}
             />
           </div>
           {/* Exclusive Breastfeeding */}
           <div>
-            <label htmlFor="Exclusive_breastfeeding" className="text-gray-700">
+            <label htmlFor="exclusive_breastfeeding" className="text-gray-700">
               Exclusive Breastfeeding (EBF)
             </label>
             <Input
-              id="Exclusive_breastfeeding"
+              id="exclusive_breastfeeding"
               onChange={handleInputChange}
-              value={formValues.Exclusive_breastfeeding}
+              value={formValues.exclusive_breastfeeding}
             />
           </div>
 
           {/* Replacement Milk */}
           <div>
-            <label htmlFor="Replacement_milk" className="text-gray-700">
+            <label htmlFor="replacement_milk" className="text-gray-700">
               Replacement Milk (RF)
             </label>
             <Input
-              id="Replacement_milk"
+              id="replacement_milk"
               onChange={handleInputChange}
-              value={formValues.Replacement_milk}
+              value={formValues.replacement_milk}
             />
           </div>
 
           {/* Unable to Breastfeed */}
           <div>
-            <label htmlFor="Unable_to_breastfeed" className="text-gray-700">
+            <label htmlFor="unable_to_breastfeed" className="text-gray-700">
               Unable to Breastfeed
             </label>
             <Input
-              id="Unable_to_breastfeed"
+              id="unable_to_breastfeed"
               onChange={handleInputChange}
-              value={formValues.Unable_to_breastfeed}
+              value={formValues.unable_to_breastfeed}
             />
           </div>
 
           {/* Child Play */}
           <div>
-            <label htmlFor="Child_play" className="text-gray-700">
+            <label htmlFor="child_play" className="text-gray-700">
               Child Play
             </label>
             <Input
-              id="Child_play"
+              id="child_play"
               onChange={handleInputChange}
-              value={formValues.Child_play}
+              value={formValues.child_play}
             />
           </div>
 
           {/* Eyes */}
           <div>
-            <label htmlFor="Eyes" className="text-gray-700">
+            <label htmlFor="eyes" className="text-gray-700">
               Eyes
             </label>
             <Input
-              id="Eyes"
+              id="eyes"
               onChange={handleInputChange}
-              value={formValues.Eyes}
+              value={formValues.eyes}
             />
           </div>
 
           {/* Mouth */}
           <div>
-            <label htmlFor="Mouth" className="text-gray-700">
+            <label htmlFor="mouth" className="text-gray-700">
               Mouth
             </label>
             <Input
-              id="Mouth"
+              id="mouth"
               onChange={handleInputChange}
-              value={formValues.Mouth}
+              value={formValues.mouth}
             />
           </div>
 
           {/* Ears */}
           <div>
-            <label htmlFor="Ears" className="text-gray-700">
+            <label htmlFor="ears" className="text-gray-700">
               Ears
             </label>
             <Input
-              id="Ears"
+              id="ears"
               onChange={handleInputChange}
-              value={formValues.Ears}
+              value={formValues.ears}
             />
           </div>
 
           {/* Navel Healed */}
           <div>
-            <label htmlFor="Navel_Healed" className="text-gray-700">
+            <label htmlFor="navel_healed" className="text-gray-700">
               Navel Healed
             </label>
-            <Input
-              id="Navel_Healed"
-              onChange={handleInputChange}
-              value={formValues.Navel_Healed}
-            />
+            <Select
+              id="navel_healed"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) => handleSelectChange("navel_healed", value)}
+              value={formValues.navel_healed}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Navel Red */}
           <div>
-            <label htmlFor="Navel_Red" className="text-gray-700">
+            <label htmlFor="navel_red" className="text-gray-700">
               Navel Red
             </label>
-            <Input
-              id="Navel_Red"
-              onChange={handleInputChange}
-              value={formValues.Navel_Red}
-            />
+            <Select
+              id="navel_red"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) => handleSelectChange("navel_red", value)}
+              value={formValues.navel_red}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Navel Discharge Odor */}
           <div>
-            <label htmlFor="Navel_Discharge_odor" className="text-gray-700">
+            <label htmlFor="navel_discharge_odor" className="text-gray-700">
               Navel Discharge Odor
             </label>
-            <Input
-              id="Navel_Discharge_odor"
-              onChange={handleInputChange}
-              value={formValues.Navel_Discharge_odor}
-            />
+            <Select
+              id="navel_discharge_odor"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("navel_discharge_odor", value)
+              }
+              value={formValues.navel_discharge_odor}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
+
           {/* Has pus-filled bumps */}
           <div>
-            <label htmlFor="Has_pus_filled_bumps" className="text-gray-700">
+            <label htmlFor="has_pus_filled_bumps" className="text-gray-700">
               Has Pus-filled Bumps
             </label>
-            <Input
-              id="Has_pus_filled_bumps"
-              onChange={handleInputChange}
-              value={formValues.Has_pus_filled_bumps}
-            />
+            <Select
+              id="has_pus_filled_bumps"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("has_pus_filled_bumps", value)
+              }
+              value={formValues.has_pus_filled_bumps}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Has turned yellow */}
           <div>
-            <label htmlFor="Has_turned_yellow" className="text-gray-700">
+            <label htmlFor="has_turned_yellow" className="text-gray-700">
               Has Turned Yellow
             </label>
-            <Input
-              id="Has_turned_yellow"
-              onChange={handleInputChange}
-              value={formValues.Has_turned_yellow}
-            />
+            <Select
+              id="has_turned_yellow"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("has_turned_yellow", value)
+              }
+              value={formValues.has_turned_yellow}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received BCG */}
           <div>
-            <label htmlFor="Received_BCG" className="text-gray-700">
+            <label htmlFor="received_bcg" className="text-gray-700">
               Received BCG
             </label>
-            <Input
-              id="Received_BCG"
-              onChange={handleInputChange}
-              value={formValues.Received_BCG}
-            />
+            <Select
+              id="received_bcg"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) => handleSelectChange("received_bcg", value)}
+              value={formValues.received_bcg}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received Polio 0 */}
           <div>
-            <label htmlFor="Received_Polio_0" className="text-gray-700">
+            <label htmlFor="received_polio_0" className="text-gray-700">
               Received Polio 0
             </label>
-            <Input
-              id="Received_Polio_0"
-              onChange={handleInputChange}
-              value={formValues.Received_Polio_0}
-            />
+            <Select
+              id="received_polio_0"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("received_polio_0", value)
+              }
+              value={formValues.received_polio_0}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received Polio 1 */}
           <div>
-            <label htmlFor="Received_Polio_1" className="text-gray-700">
+            <label htmlFor="received_polio_1" className="text-gray-700">
               Received Polio 1
             </label>
-            <Input
-              id="Received_Polio_1"
-              onChange={handleInputChange}
-              value={formValues.Received_Polio_1}
-            />
+            <Select
+              id="received_polio_1"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("received_polio_1", value)
+              }
+              value={formValues.received_polio_1}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received DTP Hep Hib */}
           <div>
-            <label htmlFor="Received_DTP_Hep_Hib" className="text-gray-700">
+            <label htmlFor="received_dtp_hep_hib" className="text-gray-700">
               Received DTP Hep Hib
             </label>
-            <Input
-              id="Received_DTP_Hep_Hib"
-              onChange={handleInputChange}
-              value={formValues.Received_DTP_Hep_Hib}
-            />
+            <Select
+              id="received_dtp_hep_hib"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("received_dtp_hep_hib", value)
+              }
+              value={formValues.received_dtp_hep_hib}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received Pneumococcal */}
           <div>
-            <label htmlFor="Received_Pneumococcal" className="text-gray-700">
+            <label htmlFor="received_pneumococcal" className="text-gray-700">
               Received Pneumococcal
             </label>
-            <Input
-              id="Received_Pneumococcal"
-              onChange={handleInputChange}
-              value={formValues.Received_Pneumococcal}
-            />
+            <Select
+              id="received_pneumococcal"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("received_pneumococcal", value)
+              }
+              value={formValues.received_pneumococcal}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Received Rota */}
           <div>
-            <label htmlFor="Received_Rota" className="text-gray-700">
+            <label htmlFor="received_rota" className="text-gray-700">
               Received Rota
             </label>
-            <Input
-              id="Received_Rota"
-              onChange={handleInputChange}
-              value={formValues.Received_Rota}
-            />
+            <Select
+              id="received_rota"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) => handleSelectChange("received_rota", value)}
+              value={formValues.received_rota}
+            >
+              <Option value="yes">Yes</Option>
+              <Option value="no">No</Option>
+            </Select>
           </div>
 
           {/* Name of Attendant */}
           <div>
-            <label htmlFor="Name_of_attendant" className="text-gray-700">
+            <label htmlFor="name_of_attendant" className="text-gray-700">
               Name of Attendant
             </label>
             <Input
-              id="Name_of_attendant"
+              id="name_of_attendant"
               onChange={handleInputChange}
-              value={formValues.Name_of_attendant}
+              value={formValues.name_of_attendant}
             />
           </div>
 
           {/* Attendant Title */}
           <div>
-            <label htmlFor="Attendant_title" className="text-gray-700">
+            <label htmlFor="attendant_title" className="text-gray-700">
               Attendant Title
             </label>
             <Input
-              id="Attendant_title"
+              id="attendant_title"
               onChange={handleInputChange}
-              value={formValues.Attendant_title}
+              value={formValues.attendant_title}
             />
           </div>
 
           {/* Other Issues */}
           <div>
-            <label htmlFor="Other_issues" className="text-gray-700">
+            <label htmlFor="other_issues" className="text-gray-700">
               Other Issues
             </label>
             <Input
-              id="Other_issues"
+              id="other_issues"
               onChange={handleInputChange}
-              value={formValues.Other_issues}
+              value={formValues.other_issues}
             />
           </div>
         </div>
@@ -546,7 +676,7 @@ const ChildVisitForm: React.FC = () => {
         <div className="flex justify-center mt-6">
           <Button
             type="primary"
-            onClick={onFinish}
+            // onClick={onFinish}
             htmlType="submit"
             className="bg-rchs"
           >

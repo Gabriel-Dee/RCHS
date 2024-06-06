@@ -1,14 +1,30 @@
 "use client";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button, Select, Divider } from "antd";
-import axios from "axios";
-import React from "react";
 
 const { Option } = Select;
 
+interface Child {
+  url: string;
+  id: string;
+  child_name: string;
+  healthcare_centre_name: string;
+  mother_name: string;
+  mother: string;
+  child_number: string;
+  child_gender: string;
+  date_of_birth: string;
+  weight_at_birth: string;
+  length_at_birth: string;
+  place_of_birth: string;
+  maternal_health_worker: string;
+  child_residence: string;
+}
+
 const ClinicVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
-    visit_date: "",
+    child_name: "",
+    date: "",
     visit_type: "",
     height: "",
     weight: "",
@@ -18,23 +34,57 @@ const ClinicVisitForm: React.FC = () => {
     additional_notes: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [children, setChildren] = useState<Child[]>([]);
+
+  // Fetch Child list from the server
+  useEffect(() => {
+    const fetchChildren = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/child/");
+        const data = await response.json();
+        console.log("Children data:", data); // Log the fetched data
+        setChildren(data);
+      } catch (error) {
+        console.error("Error fetching children:", error);
+      }
+    };
+
+    fetchChildren();
+  }, []);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const { id, value } = e.target;
     setFormValues({ ...formValues, [id]: value });
   };
 
-  const handleSelectChange = (value: string) => {
-    setFormValues({ ...formValues, visit_type: value });
+  // Specific handlers for select changes
+  const handlechildNameChange = (value: string) => {
+    setFormValues({ ...formValues, child_name: value });
   };
 
-  const onFinish = async () => {
+  const handleSelectChange = (id: string, value: string) => {
+    setFormValues({ ...formValues, [id]: value });
+  };
+
+  // Handler for form submission
+  const onFinish = async (e: React.FormEvent) => {
     try {
+      e.preventDefault();
       console.log(formValues);
-      const response = await axios.post(
-        "http://127.0.0.1:8000/clinic-visit/",
-        formValues
-      );
-      console.log("Response:", response.data);
+
+      const response = await fetch("http://127.0.0.1:8000/child_consult_visit/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      console.log("Response:", await response.json());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -50,16 +100,41 @@ const ClinicVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Visit Information
         </Divider>
+        <div>
+          <label htmlFor="child_name" className="text-gray-700">
+            Child's Name
+          </label>
+          <Select
+            id="child_name"
+            showSearch
+            placeholder="Search and select child"
+            optionFilterProp="children"
+            onChange={handlechildNameChange}
+            filterOption={(input, option) =>
+              (option?.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+            value={formValues.child_name}
+            className="w-full"
+          >
+            {children.map((child) => (
+              <Option key={child.url} value={child.child_name}>
+                {child.child_name}
+              </Option>
+            ))}
+          </Select>
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="visit_date" className="text-gray-700">
+            <label htmlFor="date" className="text-gray-700">
               Visit Date
             </label>
             <Input
-              id="visit_date"
+              id="date"
               type="date"
               onChange={handleInputChange}
-              value={formValues.visit_date}
+              value={formValues.date}
             />
           </div>
 
@@ -69,15 +144,15 @@ const ClinicVisitForm: React.FC = () => {
             </label>
             <Select
               id="visit_type"
-              placeholder="Select Visit Type"
+              placeholder="Select Answer"
               className="w-full"
-              onChange={handleSelectChange}
+              onChange={(value) => handleSelectChange("visit_type", value)}
+              value={formValues.visit_type}
             >
               <Option value="Consultation">Consultation</Option>
               <Option value="Vaccination">Vaccination</Option>
               <Option value="Checkup">Checkup</Option>
               <Option value="Emergency">Emergency</Option>
-              {/* Add other common visit types here */}
             </Select>
           </div>
         </div>
@@ -140,33 +215,34 @@ const ClinicVisitForm: React.FC = () => {
             <label htmlFor="test_results" className="text-gray-700">
               Test Results
             </label>
-            <Input.TextArea
+            <textarea
               id="test_results"
-              rows={4}
-              // onChange={handleInputChange}
+              className="p-2 w-full border border-gray-300 rounded-lg bg-white"
+              onChange={handleInputChange}
               value={formValues.test_results}
-              placeholder="Enter test results"
-            />
+              rows={4}
+              placeholder="Enter Test Results"
+            ></textarea>
           </div>
 
           <div>
-            <label htmlFor="additional_notes" className="text-gray-700">
+          <label htmlFor="additional_notes" className="text-gray-700">
               Additional Notes
             </label>
-            <Input.TextArea
+            <textarea
               id="additional_notes"
-              rows={4}
-              // onChange={handleInputChange}
+              className="p-2 w-full border border-gray-300 rounded-lg bg-white"
+              onChange={handleInputChange}
               value={formValues.additional_notes}
+              rows={4}
               placeholder="Enter any additional notes"
-            />
+            ></textarea>
           </div>
         </div>
 
         <div className="flex justify-center mt-6">
           <Button
             type="primary"
-            onClick={onFinish}
             htmlType="submit"
             className="bg-rchs"
           >

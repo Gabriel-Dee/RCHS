@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Input, Button, Select, Checkbox, Divider } from "antd";
-import axios from "axios";
+import { Input, Button, Select, Divider } from "antd";
 import React from "react";
 
 const { Option } = Select;
 
 interface Mother {
   url: string;
+  id: string;
   healthcare_centre_name: string;
   mother_name: string;
   registration_number: string;
@@ -36,13 +36,11 @@ const ClinicVisitForm: React.FC = () => {
     visit_date: "",
     visit_number: "",
     mother_name: "",
-
     // Section 2: Health Measurements
     body_temperature: "",
     blood_pressure: "",
     hb_percentage: "",
     pmtct_nutrition: "",
-
     // Section 3: Breastfeeding
     breastfeeding: "",
     milk_coming_out: "",
@@ -51,11 +49,9 @@ const ClinicVisitForm: React.FC = () => {
     full_nipples: "",
     abscesses: "",
     breastfeeding_advice: "",
-
     // Section 4: Uterus
     uterus_shrinking: "",
     uterus_pain: "",
-
     // Section 5: Incision / Surgical wound
     incision_did_not_tear: "",
     incision_type: "",
@@ -65,19 +61,15 @@ const ClinicVisitForm: React.FC = () => {
     bad_smell: "",
     lochia_amount: "",
     lochia_color: "",
-
     // Section 6: Mental State
     mental_state: "",
     mental_issues: "",
-
     // Section 7: Family Planning
     advice_given: "",
-
     // Section 8: Prophylactic Medications
     ferrous_sulphate: false,
     folic_acid: false,
     tetanus_toxoid_doses: "",
-
     // Section 9: Provider Information
     pmtct_ctx: "",
     postpartum_medications: "",
@@ -122,19 +114,21 @@ const ClinicVisitForm: React.FC = () => {
     setFormValues({ ...formValues, mother_name: value });
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = e.target;
-    setFormValues({ ...formValues, [id]: checked });
-  };
-
-  const onFinish = async () => {
+  // Handler for form submission
+  const onFinish = async (e: any) => {
     try {
+      e.preventDefault();
       console.log(formValues);
-      const response = await axios.post(
-        "http://127.0.0.1:8000/mother_visit/",
-        formValues
-      );
-      console.log("Response:", response.data);
+
+      const response = await fetch("http://127.0.0.1:8000/mother_visit/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      console.log("Response:", await response.json());
     } catch (error) {
       console.error("Error:", error);
     }
