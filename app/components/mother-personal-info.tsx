@@ -1,22 +1,18 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 
-const PersonalInfo: React.FC = () => {
-  const searchParams = useSearchParams();
-  const motherData = searchParams.get("motherData");
-  // Parse the motherData string to JSON
-  const selectedMotherData = motherData
-    ? typeof motherData === "string"
-      ? JSON.parse(motherData)
-      : JSON.parse(motherData[0]) // Handle case when motherData is an array
-    : null;
-
-  const personalInfo = selectedMotherData
+interface PersonalInfoProps {
+  motherData: any;
+}
+const PersonalInfo: React.FC<PersonalInfoProps> = ({ motherData }) => {
+  const personalInfo = motherData
     ? [
-        { attribute: "Full name:", value: selectedMotherData.name },
-        { attribute: "Age:", value: selectedMotherData.age.toString() },
-        { attribute: "Last Visit Date:", value: selectedMotherData.lastVisit },
+        { attribute: "Full name:", value: motherData.mother_name },
+        {
+          attribute: "Age:",
+          value: motherData.age ? motherData.age.toString() : "N/A",
+        },
+        { attribute: "Last Visit Date:", value: motherData.lastVisit || "N/A" },
       ]
     : [];
 
