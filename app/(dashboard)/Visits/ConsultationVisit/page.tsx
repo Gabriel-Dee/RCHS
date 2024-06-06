@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Input, Button, Select, Divider } from "antd";
-import axios from "axios";
 
 const { Option } = Select;
 
