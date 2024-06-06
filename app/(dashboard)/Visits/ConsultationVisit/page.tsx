@@ -24,7 +24,7 @@ interface Child {
 const ClinicVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     child_name: "",
-    visit_date: "",
+    date: "",
     visit_type: "",
     height: "",
     weight: "",
@@ -76,7 +76,7 @@ const ClinicVisitForm: React.FC = () => {
       e.preventDefault();
       console.log(formValues);
 
-      const response = await fetch("http://127.0.0.1:8000/clinic-visit/", {
+      const response = await fetch("http://127.0.0.1:8000/child_consult_visit/", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -127,19 +127,19 @@ const ClinicVisitForm: React.FC = () => {
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="visit_date" className="text-gray-700">
+            <label htmlFor="date" className="text-gray-700">
               Visit Date
             </label>
             <Input
-              id="visit_date"
+              id="date"
               type="date"
               onChange={handleInputChange}
-              value={formValues.visit_date}
+              value={formValues.date}
             />
           </div>
 
           <div>
-          <label htmlFor="visit_type" className="text-gray-700 block">
+            <label htmlFor="visit_type" className="text-gray-700 block">
               Visit Type
             </label>
             <Select
@@ -215,33 +215,34 @@ const ClinicVisitForm: React.FC = () => {
             <label htmlFor="test_results" className="text-gray-700">
               Test Results
             </label>
-            <Input.TextArea
+            <textarea
               id="test_results"
-              rows={4}
-              // onChange={handleInputChange}
+              className="p-2 w-full border border-gray-300 rounded-lg bg-white"
+              onChange={handleInputChange}
               value={formValues.test_results}
-              placeholder="Enter test results"
-            />
+              rows={4}
+              placeholder="Enter Test Results"
+            ></textarea>
           </div>
 
           <div>
-            <label htmlFor="additional_notes" className="text-gray-700">
+          <label htmlFor="additional_notes" className="text-gray-700">
               Additional Notes
             </label>
-            <Input.TextArea
+            <textarea
               id="additional_notes"
-              rows={4}
-              // onChange={handleInputChange}
+              className="p-2 w-full border border-gray-300 rounded-lg bg-white"
+              onChange={handleInputChange}
               value={formValues.additional_notes}
+              rows={4}
               placeholder="Enter any additional notes"
-            />
+            ></textarea>
           </div>
         </div>
 
         <div className="flex justify-center mt-6">
           <Button
             type="primary"
-            onClick={onFinish}
             htmlType="submit"
             className="bg-rchs"
           >
