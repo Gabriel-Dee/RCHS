@@ -8,11 +8,11 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ motherData }) => {
   const personalInfo = motherData
     ? [
         { attribute: "Full name:", value: motherData.mother_name },
+        { attribute: "Partner's name:", value: motherData.partner_name || "N/A" },
         {
           attribute: "Age:",
-          value: motherData.age ? motherData.age.toString() : "N/A",
+          value: motherData.mother_age ? motherData.mother_age.toString() : "N/A",
         },
-        { attribute: "Last Visit Date:", value: motherData.lastVisit || "N/A" },
       ]
     : [];
 

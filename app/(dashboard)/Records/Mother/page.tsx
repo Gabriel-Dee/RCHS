@@ -17,7 +17,7 @@ export default async function Records() {
     redirect("/api/auth/signin?callbackUrl=/Records/Mother");
   }
   // Fetch data here
-  const res = await fetch("http://127.0.0.1:8000/mother/", {
+  const res = await fetch("http://127.0.0.1:8000/api/getMotherSummary/", {
     // headers: {
     //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
     // },
