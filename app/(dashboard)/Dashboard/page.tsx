@@ -1,5 +1,5 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import DashboardCard from "@/app/components/DashboardCard";
+import DashboardCard from "@/app/components/dashboardCard";
 import RecentChildAttendance from "@/app/components/recent-visits";
 import {
   TableCard,

@@ -5,23 +5,49 @@ interface PersonalInfoProps {
   childData: any;
 }
 
+const calculateAge = (dob: string): string => {
+  const birthDate = new Date(dob);
+  const currentDate = new Date();
+
+  let years = currentDate.getFullYear() - birthDate.getFullYear();
+  let months = currentDate.getMonth() - birthDate.getMonth();
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  return `${years} years, ${months} months`;
+};
+
 const PersonalInfo: React.FC<PersonalInfoProps> = ({ childData }) => {
   const personalInfo = childData
     ? [
         { attribute: "Full name:", value: childData.child_name },
-        { attribute: "Age:", value: childData.age ? childData.age.toString() : "N/A" },
+        { attribute: "Mother's name:", value: childData.mother_name },
+        {
+          attribute: "Age:",
+          value: childData.date_of_birth
+            ? calculateAge(childData.date_of_birth)
+            : "N/A",
+        },
         { attribute: "Gender:", value: childData.child_gender || "N/A" },
         {
-          attribute: "Weight (kg):",
-          value: childData.weight ? childData.weight.toString() : "N/A",
+          attribute: "Weight at Birth(kg):",
+          value: childData.weight_at_birth
+            ? childData.weight_at_birth.toString()
+            : "N/A",
         },
         {
-          attribute: "Height (cm):",
-          value: childData.height ? childData.height.toString() : "N/A",
+          attribute: "Length at Births(cm):",
+          value: childData.length_at_birth
+            ? childData.length_at_birth.toString()
+            : "N/A",
         },
-        { attribute: "Last Visit Date:", value: childData.lastVisit || "N/A" },
       ]
     : [];
+
+  console.log(childData);
 
   return (
     <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-rchs rounded-md">
@@ -66,4 +92,3 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ childData }) => {
 };
 
 export default PersonalInfo;
-

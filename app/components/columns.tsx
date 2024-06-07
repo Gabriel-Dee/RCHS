@@ -27,6 +27,10 @@ export const columns: ColumnDef<ChildAttendance>[] = [
     accessorKey: "date",
     header: "Last Visit Date",
   },
+  {
+    accessorKey: "visit_number",
+    header: "Last Visit Number",
+  },
 ];
 
 // Define columns for child attendance data table
@@ -36,7 +40,7 @@ export const mothercolumns: ColumnDef<MotherAttendance>[] = [
     header: "Name",
   },
   {
-    accessorKey: "age",
+    accessorKey: "mother_age",
     header: "Age",
   },
   {
@@ -44,7 +48,11 @@ export const mothercolumns: ColumnDef<MotherAttendance>[] = [
     header: "Partner",
   },
   {
-    accessorKey: "lastVisit",
+    accessorKey: "visit_date",
     header: "Last Visit Date",
+  },
+  {
+    accessorKey: "visit_number",
+    header: "Last Visit Number",
   },
 ];
