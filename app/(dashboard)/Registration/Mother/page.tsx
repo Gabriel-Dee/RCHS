@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import axios from "axios";
 import { Input, Button, Select } from "antd";
-import { headers } from "next/headers";
-
-const { Option } = Select;
 
 const MotherDetailsForm: React.FC = () => {
   // State variables to store form values
@@ -58,11 +54,6 @@ const MotherDetailsForm: React.FC = () => {
         body: JSON.stringify(formValues),
         method: "POST",
       });
-
-      // const response = await axios.post(
-      //   "http://127.0.0.1:8000/mother/",
-      //   formValues
-      // );
       console.log("Response:", await response.json()); // Log the response from the server
     } catch (error) {
       console.error("Error:", error); // Log any errors that occur during the request
@@ -72,7 +63,7 @@ const MotherDetailsForm: React.FC = () => {
   return (
     <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
       <h2 className="text-lg font-semibold text-gray-700 capitalize">
-        Mother(Parent/Guardian) Registration Form
+        Parent/Guardian Registration Form
       </h2>
       <form onSubmit={onFinish} className="mt-4 space-y-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -115,7 +106,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="mother_name" className="text-gray-700">
-              Mother's Name
+              Full Name
             </label>
             <Input
               id="mother_name"
@@ -127,7 +118,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="mother_age" className="text-gray-700">
-              Mother's Age
+              Age (Years)
             </label>
             <Input
               id="mother_age"
@@ -139,7 +130,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="mother_education" className="text-gray-700">
-              Mother's Education
+              Education
             </label>
             <Input
               id="mother_education"
@@ -160,8 +151,8 @@ const MotherDetailsForm: React.FC = () => {
           </div>
 
           <div>
-          <label htmlFor="Height" className="text-gray-700 block">
-              Height
+            <label htmlFor="Height" className="text-gray-700 block">
+              Height (Cm)
             </label>
             <Input
               id="Height"
@@ -172,7 +163,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="partner_name" className="text-gray-700">
-              Husband's/Partner's/Companion's Name
+              Partner's/Companion's Name
             </label>
             <Input
               id="partner_name"
@@ -183,7 +174,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="partner_age" className="text-gray-700">
-              Husband's/Partner's/Companion's Age
+              Partner's/Companion's Age
             </label>
             <Input
               id="partner_age"
@@ -195,7 +186,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="partner_work" className="text-gray-700">
-              Husband's/Partner's/Companion's Work
+              Partner's/Companion's Work
             </label>
             <Input
               id="partner_work"
@@ -206,7 +197,7 @@ const MotherDetailsForm: React.FC = () => {
 
           <div>
             <label htmlFor="partner_education" className="text-gray-700">
-              Husband's/Partner's/Companion's Education
+              Partner's/Companion's Education
             </label>
             <Input
               id="partner_education"

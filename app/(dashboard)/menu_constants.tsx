@@ -33,7 +33,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         submenu: true,
         subMenuItems: [
           { title: "Child", path: "/Registration/Child" },
-          { title: "Mother", path: "/Registration/Mother" },
+          { title: "Parent", path: "/Registration/Mother" },
         ],
       },
       {
@@ -43,7 +43,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         submenu: true,
         subMenuItems: [
           { title: "Child", path: "/Records/Child" },
-          { title: "Mother", path: "/Records/Mother" },
+          { title: "Parent", path: "/Records/Mother" },
         ],
       },
       {

@@ -111,7 +111,7 @@ const ChildDetailsForm: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="mother_name" className="text-gray-700">
-              Mother's Name
+              Parent's Name
             </label>
             <Select
               id="mother_name"

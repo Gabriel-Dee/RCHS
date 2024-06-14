@@ -67,7 +67,7 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search Mother..."
+          placeholder="Search Parent/Guardian..."
           value={(table.getColumn("mother_name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("mother_name")?.setFilterValue(event.target.value)
