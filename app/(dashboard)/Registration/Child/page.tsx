@@ -52,11 +52,11 @@ const ChildDetailsForm: React.FC = () => {
 
   const [mothers, setMothers] = useState<Mother[]>([]);
   const [districtsByRegion, setDistrictsByRegion] = useState<string[]>([]);
-  const [residentialDistrictsByRegion, setResidentialDistrictsByRegion] = useState<string[]>([]);
+  const [residentialDistrictsByRegion, setResidentialDistrictsByRegion] =
+    useState<string[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-  // Fetch mothers list from the server
   useEffect(() => {
     const fetchMothers = async () => {
       try {
@@ -71,46 +71,82 @@ const ChildDetailsForm: React.FC = () => {
     fetchMothers();
   }, []);
 
-  // Handler for input change
-  const handleInputChange = (
+  const generateRegistrationNumber = async (): Promise<string> => {
+    const currentYear = new Date().getFullYear();
+    const hospitalNumber =
+      hospitals.indexOf(formValues.healthcare_centre_name) + 1;
+    const hospitalNumberPadded = hospitalNumber.toString().padStart(4, "0");
+    const patientType = "02"; // Since it's a child form
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/childStatistics/"
+      );
+      const data = await response.json();
+      const patientNumber = (data.total_children + 1)
+        .toString()
+        .padStart(5, "0");
+
+      return `${currentYear}${hospitalNumberPadded}${patientType}${patientNumber}`;
+    } catch (error) {
+      console.error("Error fetching child statistics:", error);
+      return ""; // Return empty string in case of error
+    }
+  };
+
+  const handleInputChange = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { id, value } = e.target;
     setFormValues({ ...formValues, [id]: value });
+
+    if (id === "healthcare_centre_name" || id === "mother_name") {
+      const regNumber = await generateRegistrationNumber();
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        child_number: regNumber,
+      }));
+    }
   };
 
-  // Specific handlers for select changes
-  const handleMotherNameChange = (value: string) => {
-    setFormValues({ ...formValues, mother_name: value });
+  const handleMotherNameChange = async (value: string) => {
+    setFormValues((prevValues) => ({ ...prevValues, mother_name: value }));
+    const regNumber = await generateRegistrationNumber();
+    setFormValues((prevValues) => ({ ...prevValues, child_number: regNumber }));
   };
 
   const handleChildGenderChange = (value: string) => {
-    setFormValues({ ...formValues, child_gender: value });
+    setFormValues((prevValues) => ({ ...prevValues, child_gender: value }));
   };
 
   const handleMaternalHealthWorkerChange = (value: string) => {
-    setFormValues({ ...formValues, maternal_health_worker: value });
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      maternal_health_worker: value,
+    }));
   };
 
   const handleBirthRegionChange = (value: string) => {
-    setFormValues({ ...formValues, birth_region: value, birth_district: "" });
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      birth_region: value,
+      birth_district: "",
+    }));
     setDistrictsByRegion(districts[value as keyof typeof districts]);
   };
 
   const handleResidentialRegionChange = (value: string) => {
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       residential_region: value,
       residential_district: "",
-    });
+    }));
     setResidentialDistrictsByRegion(districts[value as keyof typeof districts]);
   };
 
-  // Handler for form submission
   const onFinish = async (e: any) => {
     e.preventDefault();
 
-    // Validate form
     const requiredFields = [
       "mother_name",
       "healthcare_centre_name",
@@ -129,15 +165,13 @@ const ChildDetailsForm: React.FC = () => {
 
     for (const field of requiredFields) {
       if (!formValues[field as keyof typeof formValues]) {
-        setModalMessage(`Please fill the ${field.replace('_', ' ')} field.`);
+        setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
         setModalVisible(true);
         return;
       }
     }
 
     try {
-      console.log(formValues);
-
       const response = await fetch("http://127.0.0.1:8000/child/", {
         headers: {
           "Content-Type": "application/json",
@@ -193,12 +227,20 @@ const ChildDetailsForm: React.FC = () => {
               id="healthcare_centre_name"
               placeholder="Select Healthcare Centre"
               className="w-full"
-              onChange={(value) =>
-                setFormValues({ ...formValues, healthcare_centre_name: value })
-              }
+              onChange={async (value) => {
+                setFormValues((prevValues) => ({
+                  ...prevValues,
+                  healthcare_centre_name: value,
+                }));
+                const regNumber = await generateRegistrationNumber();
+                setFormValues((prevValues) => ({
+                  ...prevValues,
+                  child_number: regNumber,
+                }));
+              }}
               value={formValues.healthcare_centre_name}
             >
-              {hospitals.map((hospital:any) => (
+              {hospitals.map((hospital: any) => (
                 <Option key={hospital} value={hospital}>
                   {hospital}
                 </Option>
@@ -212,11 +254,10 @@ const ChildDetailsForm: React.FC = () => {
             </label>
             <Input
               id="child_number"
-              type="number"
-              onChange={handleInputChange}
+              type="text"
+              readOnly
               value={formValues.child_number}
               required
-              min={0}
             />
           </div>
 
@@ -245,8 +286,8 @@ const ChildDetailsForm: React.FC = () => {
               onChange={handleChildGenderChange}
               value={formValues.child_gender}
             >
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
+              <Option value="Male">Male</Option>
+              <Option value="Female">Female</Option>
             </Select>
           </div>
 
@@ -399,11 +440,7 @@ const ChildDetailsForm: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-6">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-rchs"
-          >
+          <Button type="primary" htmlType="submit" className="bg-rchs">
             Submit
           </Button>
         </div>

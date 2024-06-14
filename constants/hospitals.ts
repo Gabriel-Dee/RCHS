@@ -1,5 +1,5 @@
 // hospitals.ts
-export const hospitals = [
+export const hospitals: string[] = [
     "Muhimbili National Hospital",
     "Amana Regional Referral Hospital",
     "Mwananyamala Regional Referral Hospital",
