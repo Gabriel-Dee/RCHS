@@ -54,17 +54,6 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  // const handleRowClick = (motherData: TData) => {
-  //   console.log("Row clicked:", motherData);
-
-  //   const queryString = JSON.stringify(motherData);
-  //   console.log("Navigating to URL: /Profiles/Mother with query:", queryString);
-
-  //   router.push(
-  //     `/Profiles/Mother?motherData=${encodeURIComponent(queryString)}`
-  //   );
-  // };
-
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Mother");

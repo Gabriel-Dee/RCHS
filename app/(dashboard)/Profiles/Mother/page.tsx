@@ -7,25 +7,49 @@ import React, { useEffect, useState } from "react";
 import ActivityLog from "@/app/components/patient-activity-log";
 import PersonalInfo from "@/app/components/mother-personal-info";
 
+type ActivityItem = {
+  id: number;
+  description: string;
+  timestamp: string;
+};
+
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
   const [selectedMotherData, setSelectedMotherData] = useState<any | null>(null);
+  const [selectedActivityData, setSelectedActivityData] = useState<ActivityItem[]>([]);
 
-  console.log("This is the id");
-  console.log(id);
-  console.log(selectedMotherData);
+  console.log("This is the id", id);
+  console.log("Selected Mother Data:", selectedMotherData);
 
   useEffect(() => {
     if (id) {
       fetch(`http://127.0.0.1:8000/mother/${id}/`)
         .then((res) => res.json())
-        .then((data) => setSelectedMotherData(data))
-        .catch((error) =>
-          console.error("Error fetching mother data:", error)
-        );
+        .then((data) => {
+          console.log("Mother data fetched:", data);
+          setSelectedMotherData(data);
+        })
+        .catch((error) => console.error("Error fetching mother data:", error));
     }
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/mother_visit/${id}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Activity data fetched:", data);
+          const formattedData: ActivityItem[] = data.map((item: any) => ({
+            id: item.id,
+            description: `Visit Number ${item.visit_number}: ${item.breastfeeding_advice}`,
+            timestamp: new Date(item.visit_date).toLocaleDateString(),
+          }));
+          setSelectedActivityData(formattedData);
+        })
+        .catch((error) => console.error("Error fetching activity data:", error));
+    }
+  }, [id]);
 
   if (!selectedMotherData) {
     return <div>Loading...</div>;
@@ -60,8 +84,8 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
-      <PersonalInfo motherData={selectedMotherData}/>
-      <ActivityLog />
+      <PersonalInfo motherData={selectedMotherData} />
+      <ActivityLog activityData={selectedActivityData} />
     </>
   );
 };

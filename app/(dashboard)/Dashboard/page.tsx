@@ -17,6 +17,11 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/Dashboard");
   }
+
+  // Fetch Child Statistics data here
+  const statsRes = await fetch("http://127.0.0.1:8000/api/childStatistics/");
+  const statistics = await statsRes.json();
+
   // Fetch Child data here
   const res = await fetch("http://127.0.0.1:8000/api/getChildSummary/", {
     // headers: {
@@ -34,8 +39,8 @@ export default async function Dashboard() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <DashboardCard
             title="Total Children"
-            value="1,200"
-            percentageChange="+20.1% from last year"
+            value={statistics.total_children}
+            percentageChange=""
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,8 +58,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Total Male"
-            value="600"
-            percentageChange="+18.1% from last year"
+            value={statistics.total_male_children}
+            percentageChange=""
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -74,8 +79,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Total Female"
-            value="800"
-            percentageChange="+10% from last year"
+            value={statistics.total_female_children}
+            percentageChange=""
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,8 +99,8 @@ export default async function Dashboard() {
           />
           <DashboardCard
             title="Average Age"
-            value="2.5"
-            percentageChange="+1 since last year"
+            value={statistics.average_age}
+            percentageChange=""
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +122,7 @@ export default async function Dashboard() {
             <TableCardHeader>
               <TableCardTitle>Recent Patients</TableCardTitle>
               <TableCardDescription>
-                256 Patients Attended this month
+              {statistics.total_children} Patients Attended
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>

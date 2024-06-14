@@ -27,7 +27,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
     title: "Manage",
     menuList: [
       {
-        title: "Patient Registration",
+        title: "Registration",
         path: "/Registration",
         icon: BsPersonAdd({ size: 20 }),
         submenu: true,
@@ -37,7 +37,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         ],
       },
       {
-        title: "Patient Records",
+        title: "Records",
         path: "/Records",
         icon: BsFillPersonLinesFill({ size: 20 }),
         submenu: true,
@@ -47,7 +47,7 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         ],
       },
       {
-        title: "Hospital Visits",
+        title: "Visits",
         path: "/Visits",
         icon: BsCalendarFill({ size: 20 }),
         submenu: true,
@@ -68,11 +68,11 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         path: "/Analytics",
         icon: BsPieChartFill({ size: 20 }),
       },
-      {
-        title: "Immunisation",
-        path: "/Immunisation",
-        icon: BsShieldFillCheck({ size: 20 }),
-      },
+      // {
+      //   title: "Immunisation",
+      //   path: "/Immunisation",
+      //   icon: BsShieldFillCheck({ size: 20 }),
+      // },
     ],
   },
   {
