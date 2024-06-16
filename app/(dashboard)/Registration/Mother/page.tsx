@@ -88,7 +88,6 @@ const ParentGuardianDetailsForm: React.FC = () => {
     // Validate form
     const requiredFields = [
       "healthcare_centre_name",
-      "gender",
       "registration_number",
       "mosquito_net_voucher_number",
       "mother_name",
@@ -102,13 +101,14 @@ const ParentGuardianDetailsForm: React.FC = () => {
       "partner_education",
       "residential_region",
       "residential_district",
-      "residential_district",
       "Chairperson_name",
     ];
+
     if (formValues.registrant_type === "parent") {
       requiredFields.push("parent_type", "gender");
     }
 
+    // Validate required fields
     for (const field of requiredFields) {
       if (!formValues[field as keyof typeof formValues]) {
         setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
@@ -117,20 +117,52 @@ const ParentGuardianDetailsForm: React.FC = () => {
       }
     }
 
+    // Filter out unnecessary fields based on the registrant type
+    let filteredFormValues: Partial<typeof formValues> = { ...formValues };
+
+    if (
+      formValues.registrant_type !== "parent" ||
+      formValues.parent_type !== "mother"
+    ) {
+      const { pregnancies, alive_children, miscarriages, births, ...rest } =
+        filteredFormValues;
+
+      filteredFormValues = rest;
+    }
+
+    // Ensure filteredFormValues conforms to the expected structure
+    filteredFormValues = {
+      ...filteredFormValues,
+    } as typeof formValues;
+
     try {
-      console.log(formValues);
+      console.log(filteredFormValues);
 
       const response = await fetch("http://127.0.0.1:8000/mother/", {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(filteredFormValues),
         method: "POST",
       });
 
-      console.log("Response:", await response.json());
+      const data = await response.json();
+      console.log("Response:", data);
+      if (response.ok) {
+        // Handle success scenario
+        setModalMessage("Registration successful!");
+        setModalVisible(true);
+      } else {
+        // Handle error scenario
+        setModalMessage(
+          data.detail || "An error occurred during registration."
+        );
+        setModalVisible(true);
+      }
     } catch (error) {
       console.error("Error:", error);
+      setModalMessage("An error occurred during registration.");
+      setModalVisible(true);
     }
   };
 
