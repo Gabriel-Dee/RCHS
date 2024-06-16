@@ -1,7 +1,7 @@
 "use client";
+import React from "react";
 import { useState, useEffect } from "react";
 import { Input, Button, Select } from "antd";
-import React from "react";
 import { regions } from "@/constants/regions";
 import { districts } from "@/constants/districts";
 import { hospitals } from "@/constants/hospitals";
@@ -100,7 +100,7 @@ const ChildDetailsForm: React.FC = () => {
     const { id, value } = e.target;
     setFormValues({ ...formValues, [id]: value });
 
-    if (id === "healthcare_centre_name" || id === "mother_name") {
+    if (id === "healthcare_centre_name") {
       const regNumber = await generateRegistrationNumber();
       setFormValues((prevValues) => ({
         ...prevValues,
@@ -111,8 +111,8 @@ const ChildDetailsForm: React.FC = () => {
 
   const handleMotherNameChange = async (value: string) => {
     setFormValues((prevValues) => ({ ...prevValues, mother_name: value }));
-    const regNumber = await generateRegistrationNumber();
-    setFormValues((prevValues) => ({ ...prevValues, child_number: regNumber }));
+    // const regNumber = await generateRegistrationNumber();
+    // setFormValues((prevValues) => ({ ...prevValues, child_number: regNumber }));
   };
 
   const handleChildGenderChange = (value: string) => {
@@ -180,9 +180,23 @@ const ChildDetailsForm: React.FC = () => {
         method: "POST",
       });
 
-      console.log("Response:", await response.json());
+      const data = await response.json();
+      console.log("Response:", data);
+      if (response.ok) {
+        // Handle success scenario
+        setModalMessage("Registration successful!");
+        setModalVisible(true);
+      } else {
+        // Handle error scenario
+        setModalMessage(
+          data.detail || "An error occurred during registration."
+        );
+        setModalVisible(true);
+      }
     } catch (error) {
       console.error("Error:", error);
+      setModalMessage("An error occurred during registration.");
+      setModalVisible(true);
     }
   };
 

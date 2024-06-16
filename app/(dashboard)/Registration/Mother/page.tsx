@@ -40,11 +40,33 @@ const ParentGuardianDetailsForm: React.FC = () => {
   const [residentialDistrictsByRegion, setResidentialDistrictsByRegion] =
     useState<string[]>([]);
 
-  const handleInputChange = (
+  const generateRegistrationNumber = async (): Promise<string> => {
+    const currentYear = new Date().getFullYear();
+    const hospitalNumber =
+      hospitals.indexOf(formValues.healthcare_centre_name) + 1;
+    const hospitalNumberPadded = hospitalNumber.toString().padStart(4, "0");
+    const patientType = "01"; // Since it's a parent form
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/getParentStatistics/"
+      );
+      const data = await response.json();
+      const patientNumber = (data.total_parents + 1)
+        .toString()
+        .padStart(5, "0");
+
+      return `${currentYear}${hospitalNumberPadded}${patientType}${patientNumber}`;
+    } catch (error) {
+      console.error("Error fetching parent statistics:", error);
+      return ""; // Return empty string in case of error
+    }
+  };
+
+  const handleInputChange = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { id, value } = e.target;
-
     // Fields that should only accept alphabetic characters and spaces
     const textOnlyFields = [
       "mother_name",
@@ -53,15 +75,21 @@ const ParentGuardianDetailsForm: React.FC = () => {
       "partner_work",
       "Chairperson_name",
     ];
-
     if (textOnlyFields.includes(id)) {
       const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(value)) {
         return; // If the value contains anything other than letters and spaces, do nothing
       }
     }
-
     setFormValues({ ...formValues, [id]: value });
+
+    if (id === "healthcare_centre_name") {
+      const regNumber = await generateRegistrationNumber();
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        child_number: regNumber,
+      }));
+    }
   };
 
   const handleSelectChange = (id: string, value: string) => {
@@ -80,6 +108,15 @@ const ParentGuardianDetailsForm: React.FC = () => {
   const handleParentTypeChange = (value: string) => {
     const gender = value === "mother" ? "female" : "male";
     setFormValues({ ...formValues, parent_type: value, gender });
+  };
+
+  const handleResidentialRegionChange = (value: string) => {
+    setFormValues({
+      ...formValues,
+      residential_region: value,
+      residential_district: "",
+    });
+    setResidentialDistrictsByRegion(districts[value as keyof typeof districts]);
   };
 
   const onFinish = async (e: any) => {
@@ -166,15 +203,6 @@ const ParentGuardianDetailsForm: React.FC = () => {
     }
   };
 
-  const handleResidentialRegionChange = (value: string) => {
-    setFormValues({
-      ...formValues,
-      residential_region: value,
-      residential_district: "",
-    });
-    setResidentialDistrictsByRegion(districts[value as keyof typeof districts]);
-  };
-
   return (
     <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
       <h2 className="text-lg font-semibold text-gray-700 capitalize">
@@ -190,9 +218,17 @@ const ParentGuardianDetailsForm: React.FC = () => {
               id="healthcare_centre_name"
               placeholder="Select Healthcare Centre"
               className="w-full"
-              onChange={(value) =>
-                setFormValues({ ...formValues, healthcare_centre_name: value })
-              }
+              onChange={async (value) => {
+                setFormValues((prevValues) => ({
+                  ...prevValues,
+                  healthcare_centre_name: value,
+                }));
+                const regNumber = await generateRegistrationNumber();
+                setFormValues((prevValues) => ({
+                  ...prevValues,
+                  registration_number: regNumber,
+                }));
+              }}
               value={formValues.healthcare_centre_name}
             >
               {hospitals.map((hospital: any) => (
