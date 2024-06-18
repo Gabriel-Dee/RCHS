@@ -259,6 +259,7 @@ const ClinicVisitForm: React.FC = () => {
             >
               <Option value="above_150">Exclusive Breastfeeding (EBF)</Option>
               <Option value="below_150">Replacement Feeding (RF)</Option>
+              <Option value="below_150">Complementary Feeding (RF)</Option>
             </Select>
           </div>
         </div>
