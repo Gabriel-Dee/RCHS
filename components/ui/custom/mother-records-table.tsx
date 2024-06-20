@@ -54,17 +54,6 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     },
   });
 
-  // const handleRowClick = (motherData: TData) => {
-  //   console.log("Row clicked:", motherData);
-
-  //   const queryString = JSON.stringify(motherData);
-  //   console.log("Navigating to URL: /Profiles/Mother with query:", queryString);
-
-  //   router.push(
-  //     `/Profiles/Mother?motherData=${encodeURIComponent(queryString)}`
-  //   );
-  // };
-
   const handleNewPatientRegistration = (e: any) => {
     e.preventDefault();
     router.push("/Registration/Mother");
@@ -78,7 +67,7 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search Mother..."
+          placeholder="Search Parent/Guardian..."
           value={(table.getColumn("mother_name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("mother_name")?.setFilterValue(event.target.value)

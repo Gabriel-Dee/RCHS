@@ -9,7 +9,7 @@ export const SIDENAV_ITEMS:SideNavItem[]=[
         // icon: <BsHouseDoor/>
     },
     {
-        title: "Patient Records",
+        title: "Records",
         path: "/Records",
         icon:  BsFillPersonLinesFill ({size:20})
     },

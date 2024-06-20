@@ -8,10 +8,17 @@ import PersonalInfo from "@/app/components/child-personal-info";
 import ActivityLog from "@/app/components/patient-activity-log";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
 
+type ActivityItem = {
+  id: number;
+  description: string;
+  timestamp: string;
+};
+
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [selectedChildData, setSelectedChildData] = useState<any | null>(null);
+  const [selectedActivityData, setSelectedActivityData] = useState<ActivityItem[]>([]);
 
   console.log("This is the id");
   console.log(id);
@@ -27,6 +34,24 @@ const Profile: React.FC = () => {
         );
     }
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/mother_visit/${id}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          const formattedData: ActivityItem[] = data.map((item: any) => ({
+            id: item.id,
+            description: `Visit Number ${item.visit_number}: ${item.breastfeeding_advice}`,
+            timestamp: new Date(item.visit_date).toLocaleDateString(),
+          }));
+          setSelectedActivityData(formattedData);
+        })
+        .catch((error) =>
+          console.error("Error fetching activity data:", error)
+        );
+    }
+  }, [id]);
 
   if (!selectedChildData) {
     return <div>Loading...</div>;
@@ -67,7 +92,7 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <PersonalInfo childData={selectedChildData}/>
-      <ActivityLog />
+      <ActivityLog activityData={selectedActivityData}/>
       <NavigationMenu />
     </>
   );

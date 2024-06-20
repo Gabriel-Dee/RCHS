@@ -31,9 +31,9 @@ export default async function Records() {
         <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-7">
           <TableCard className="lg:col-span-12 border-2">
             <TableCardHeader>
-              <TableCardTitle>Mother Records</TableCardTitle>
+              <TableCardTitle>Parent Records</TableCardTitle>
               <TableCardDescription>
-                This is a table containing a List of Mothers
+                This is a table containing a List of Parents
               </TableCardDescription>
             </TableCardHeader>
             <TableCardContent>
