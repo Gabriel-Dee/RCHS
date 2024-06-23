@@ -250,8 +250,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
               onChange={handleRegistrantTypeChange}
               value={formValues.registrant_type}
             >
-              <Option value="parent">Parent</Option>
-              <Option value="guardian">Guardian</Option>
+              <Option value="Parent">Parent</Option>
+              <Option value="Guardian">Guardian</Option>
             </Select>
           </div>
 
@@ -267,8 +267,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
                 onChange={handleParentTypeChange}
                 value={formValues.parent_type}
               >
-                <Option value="mother">Mother</Option>
-                <Option value="father">Father</Option>
+                <Option value="Mother">Mother</Option>
+                <Option value="Father">Father</Option>
               </Select>
             </div>
           )}
@@ -288,8 +288,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
                 value={formValues.gender}
                 disabled={formValues.registrant_type === "parent"}
               >
-                <Option value="male">Male</Option>
-                <Option value="female">Female</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
               </Select>
             </div>
           )}
@@ -364,10 +364,10 @@ const ParentGuardianDetailsForm: React.FC = () => {
               }
               value={formValues.mother_education}
             >
-              <Option value="primary">Primary School</Option>
-              <Option value="secondary">Secondary School</Option>
-              <Option value="college">College</Option>
-              <Option value="university">University</Option>
+              <Option value="Primary">Primary School</Option>
+              <Option value="Secondary">Secondary School</Option>
+              <Option value="College">College</Option>
+              <Option value="University">University</Option>
             </Select>
           </div>
 
