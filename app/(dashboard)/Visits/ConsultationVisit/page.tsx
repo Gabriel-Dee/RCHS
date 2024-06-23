@@ -93,7 +93,7 @@ const ClinicVisitForm: React.FC = () => {
   return (
     <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
       <h2 className="text-lg font-semibold text-gray-700 capitalize">
-        Clinic Visit Form
+        Consultation Visit Form
       </h2>
       <form onSubmit={onFinish} className="mt-4 space-y-6">
         {/* Section 1: Visit Info */}

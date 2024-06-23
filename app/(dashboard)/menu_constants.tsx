@@ -52,8 +52,8 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         icon: BsCalendarFill({ size: 20 }),
         submenu: true,
         subMenuItems: [
-          { title: "Initial Visits", path: "/Visits/BeforeCard" },
-          { title: "Later Visits", path: "/Visits/AfterCard" },
+          { title: "Parent Visits", path: "/Visits/BeforeCard" },
+          { title: "Child Visits", path: "/Visits/AfterCard" },
           { title: "Consultation Visits", path: "/Visits/ConsultationVisit" },
         ],
       },

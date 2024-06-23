@@ -53,7 +53,7 @@ const ClinicVisitForm: React.FC = () => {
     uterus_shrinking: "",
     uterus_pain: "",
     // Section 5: Incision / Surgical wound
-    incision_did_not_tear: "",
+    // incision_did_not_tear: "",
     incision_type: "",
     wound_healed: "",
     pus: "",
@@ -137,7 +137,7 @@ const ClinicVisitForm: React.FC = () => {
   return (
     <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md border border-blue-400 min-w-full">
       <h2 className="text-lg font-semibold text-gray-700 capitalize">
-        Clinic Visit Form
+        Parent Visit Form
       </h2>
       <form onSubmit={onFinish} className="mt-4 space-y-6">
         {/* Section 1: Visit Information */}
@@ -195,10 +195,10 @@ const ClinicVisitForm: React.FC = () => {
               }
               value={formValues.visit_number}
             >
-              <Option value="first">First (within 48 hrs)</Option>
-              <Option value="second">Second (within 7 days)</Option>
-              <Option value="third">Third (in 2 weeks)</Option>
-              <Option value="fourth">Fourth (in 42 days)</Option>
+              <Option value="First">First (within 48 hrs)</Option>
+              <Option value="Second">Second (within 7 days)</Option>
+              <Option value="Third">Third (in 28 days)</Option>
+              <Option value="Fourth">Fourth (in 42 days)</Option>
             </Select>
           </div>
         </div>
@@ -227,7 +227,7 @@ const ClinicVisitForm: React.FC = () => {
             </label>
             <Input
               id="blood_pressure"
-              type="text"
+              type="number"
               onChange={handleInputChange}
               value={formValues.blood_pressure}
             />
@@ -257,9 +257,15 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("pmtct_nutrition", value)}
               value={formValues.pmtct_nutrition}
             >
-              <Option value="above_150">Exclusive Breastfeeding (EBF)</Option>
-              <Option value="below_150">Replacement Feeding (RF)</Option>
-              <Option value="below_150">Complementary Feeding (RF)</Option>
+              <Option value="Exclusive Breastfeeding (EBF)">
+                Exclusive Breastfeeding (EBF)
+              </Option>
+              <Option value="Replacement Feeding (RF)">
+                Replacement Feeding (RF)
+              </Option>
+              <Option value="Complementary Feeding (CF)">
+                Complementary Feeding (CF)
+              </Option>
             </Select>
           </div>
         </div>
@@ -281,8 +287,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("breastfeeding", value)}
               value={formValues.breastfeeding}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -297,8 +303,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("milk_coming_out", value)}
               value={formValues.milk_coming_out}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -318,8 +324,8 @@ const ClinicVisitForm: React.FC = () => {
               }
               value={formValues.breastfeeding_within_hour}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -334,8 +340,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("sore_nipples", value)}
               value={formValues.sore_nipples}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -350,8 +356,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("full_nipples", value)}
               value={formValues.full_nipples}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -366,8 +372,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("abscesses", value)}
               value={formValues.abscesses}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
         </div>
@@ -405,8 +411,8 @@ const ClinicVisitForm: React.FC = () => {
               }
               value={formValues.uterus_shrinking}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -421,8 +427,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("uterus_pain", value)}
               value={formValues.uterus_pain}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
         </div>
@@ -431,44 +437,23 @@ const ClinicVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Incision / Surgical wound
         </Divider>
+        <div>
+          <label htmlFor="incision_type" className="text-gray-700 block">
+            Type of Incision
+          </label>
+          <Select
+            id="incision_type"
+            placeholder="Select Answer"
+            className="w-full"
+            onChange={(value) => handleSelectChange("incision_type", value)}
+            value={formValues.incision_type}
+          >
+            <Option value="Tear">Tear</Option>
+            <Option value="Episiotomy">Episiotomy</Option>
+          </Select>
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Inputs for Incision / Surgical wound */}
-          <div>
-            <label
-              htmlFor="incision_did_not_tear"
-              className="text-gray-700 block"
-            >
-              Incision: Did not tear?
-            </label>
-            <Select
-              id="incision_did_not_tear"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) =>
-                handleSelectChange("incision_did_not_tear", value)
-              }
-              value={formValues.incision_did_not_tear}
-            >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
-            </Select>
-          </div>
-
-          <div>
-            <label htmlFor="incision_type" className="text-gray-700 block">
-              Type of Incision
-            </label>
-            <Select
-              id="incision_type"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) => handleSelectChange("incision_type", value)}
-              value={formValues.incision_type}
-            >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
-            </Select>
-          </div>
 
           <div>
             <label htmlFor="wound_healed" className="text-gray-700 block">
@@ -481,8 +466,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("wound_healed", value)}
               value={formValues.wound_healed}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -497,8 +482,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("pus", value)}
               value={formValues.pus}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -513,8 +498,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("wound_open", value)}
               value={formValues.wound_open}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -529,8 +514,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("bad_smell", value)}
               value={formValues.bad_smell}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -545,8 +530,9 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("lochia_amount", value)}
               value={formValues.lochia_amount}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Much">Much</Option>
+              <Option value="Medium">Medium</Option>
+              <Option value="Little">Little</Option>
             </Select>
           </div>
 
@@ -561,8 +547,9 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("lochia_color", value)}
               value={formValues.lochia_color}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Rubra - Red">Rubra - Red</Option>
+              <Option value="Serosa - Yellowish">Serosa - Yellowish</Option>
+              <Option value="Alba - White">Alba - White</Option>
             </Select>
           </div>
         </div>
@@ -571,24 +558,23 @@ const ClinicVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Mental State
         </Divider>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {/* Inputs for Mental State */}
-          <div>
-            <label htmlFor="mental_state" className="text-gray-700 block">
-              Mental State
-            </label>
-            <Select
-              id="mental_state"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) => handleSelectChange("mental_state", value)}
-              value={formValues.mental_state}
-            >
-              <Option value="yes">Sick</Option>
-              <Option value="no">Not sick</Option>
-            </Select>
-          </div>
+        {/* Inputs for Mental State */}
+        <div>
+          <label htmlFor="mental_state" className="text-gray-700 block">
+            Mental State
+          </label>
+          <Select
+            id="mental_state"
+            placeholder="Select Answer"
+            className="w-full"
+            onChange={(value) => handleSelectChange("mental_state", value)}
+            value={formValues.mental_state}
+          >
+            <Option value="Sick">Sick</Option>
+            <Option value="Not Sick">Not sick</Option>
+          </Select>
         </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2"></div>
         <div>
           <label htmlFor="mental_issues" className="text-gray-700 block">
             Other Issues
@@ -607,23 +593,21 @@ const ClinicVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Family Planning
         </Divider>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {/* Inputs for Family Planning */}
-          <div>
-            <label htmlFor="advice_given" className="text-gray-700 block">
-              Has Advice been given
-            </label>
-            <Select
-              id="advice_given"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) => handleSelectChange("advice_given", value)}
-              value={formValues.advice_given}
-            >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
-            </Select>
-          </div>
+        {/* Inputs for Family Planning */}
+        <div>
+          <label htmlFor="advice_given" className="text-gray-700 block">
+            Has Advice been given
+          </label>
+          <Select
+            id="advice_given"
+            placeholder="Select Answer"
+            className="w-full"
+            onChange={(value) => handleSelectChange("advice_given", value)}
+            value={formValues.advice_given}
+          >
+            <Option value="Yes">Yes</Option>
+            <Option value="No">No</Option>
+          </Select>
         </div>
 
         {/* Section 8: Prophylactic Medications */}
@@ -655,30 +639,26 @@ const ClinicVisitForm: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-
-          <div>
-            <label
-              htmlFor="tetanus_toxoid_doses"
-              className="text-gray-700 block"
-            >
-              Tetanus Toxoid: How many doses has the patient received?
-            </label>
-            <Select
-              id="tetanus_toxoid_doses"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) =>
-                handleSelectChange("tetanus_toxoid_doses", value)
-              }
-              value={formValues.tetanus_toxoid_doses}
-            >
-              <Option value="TT1">TT1</Option>
-              <Option value="TT2">TT2</Option>
-              <Option value="TT3">TT3</Option>
-              <Option value="TT4">TT4</Option>
-              <Option value="TT5">TT5</Option>
-            </Select>
-          </div>
+        </div>
+        <div>
+          <label htmlFor="tetanus_toxoid_doses" className="text-gray-700 block">
+            Tetanus Toxoid: How many doses has the patient received?
+          </label>
+          <Select
+            id="tetanus_toxoid_doses"
+            placeholder="Select Answer"
+            className="w-full"
+            onChange={(value) =>
+              handleSelectChange("tetanus_toxoid_doses", value)
+            }
+            value={formValues.tetanus_toxoid_doses}
+          >
+            <Option value="TT1">TT1</Option>
+            <Option value="TT2">TT2</Option>
+            <Option value="TT3">TT3</Option>
+            <Option value="TT4">TT4</Option>
+            <Option value="TT5">TT5</Option>
+          </Select>
         </div>
 
         {/* Section 9: Extra Information */}
@@ -698,8 +678,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("pmtct_ctx", value)}
               value={formValues.pmtct_ctx}
             >
-              <Option value="yes">Yes</Option>
-              <Option value="no">No</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
@@ -725,8 +705,8 @@ const ClinicVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("vitamin_a", value)}
               value={formValues.vitamin_a}
             >
-              <Option value="received">Received</Option>
-              <Option value="not_received">Not Received</Option>
+              <Option value="Received">Received</Option>
+              <Option value="Not received">Not Received</Option>
             </Select>
           </div>
 
@@ -745,13 +725,13 @@ const ClinicVisitForm: React.FC = () => {
 
         {/* Section 10: Provider Information */}
         <Divider orientation="left" className="text-lg font-semibold">
-          Provider Information
+          Attendant's Information
         </Divider>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Inputs for Provider Information */}
           <div>
             <label htmlFor="provider_name" className="text-gray-700">
-              Provider's Name
+              Attendant's Name
             </label>
             <Input
               id="provider_name"
@@ -762,13 +742,21 @@ const ClinicVisitForm: React.FC = () => {
 
           <div>
             <label htmlFor="provider_title" className="text-gray-700">
-              Provider's Title
+              Attendant's Title
             </label>
-            <Input
+            <Select
               id="provider_title"
-              onChange={handleInputChange}
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) => handleSelectChange("provider_title", value)}
               value={formValues.provider_title}
-            />
+            >
+              <Option value="Healthcare Worker">Healthcare Worker</Option>
+              <Option value="Traditional Birth Attendant (TBA)">
+                Traditional Birth Attendant (TBA)
+              </Option>
+              <Option value="Others">Others</Option>
+            </Select>
           </div>
         </div>
 
