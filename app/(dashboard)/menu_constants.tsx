@@ -61,18 +61,17 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         title: "Reports",
         path: "/Reports",
         icon: BsFileBarGraphFill({ size: 20 }),
-        // icon: BsFileBarGraphFill({ size: 20 }),
+        submenu: true,
+        subMenuItems: [
+          { title: "Postnatal Report", path: "/Reports/PostnatalCareReports" },
+          { title: "Child Follow-up Report", path: "/Reports/ChildFollowupReports" },
+        ],
       },
       {
         title: "Analytics",
         path: "/Analytics",
         icon: BsPieChartFill({ size: 20 }),
       },
-      // {
-      //   title: "Immunisation",
-      //   path: "/Immunisation",
-      //   icon: BsShieldFillCheck({ size: 20 }),
-      // },
     ],
   },
   {
