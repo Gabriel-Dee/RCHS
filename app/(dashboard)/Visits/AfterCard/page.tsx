@@ -25,17 +25,17 @@ const ChildVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     child_name: "",
     visit_number: "",
+    visit_phase: "",
     date: "",
     child_growth_and_development_status: "",
     return_date: "",
-    measles: "",
     vitamin_a: "",
     deworming_medication: "",
     weight_grams: "",
     height: "",
     anemia: "",
     body_temperature: "",
-    exclusive_breastfeeding: "",
+    infant_nutrition: "",
     unable_to_breastfeed: "",
     child_play: "",
     eyes: "",
@@ -123,42 +123,68 @@ const ChildVisitForm: React.FC = () => {
         <Divider orientation="left" className="text-lg font-semibold">
           Basic Information
         </Divider>
+        <div>
+          <label htmlFor="child_name" className="text-gray-700">
+            Child's Name
+          </label>
+          <Select
+            id="child_name"
+            showSearch
+            placeholder="Search and select child"
+            optionFilterProp="children"
+            onChange={handlechildNameChange}
+            filterOption={(input, option) =>
+              (option?.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+            value={formValues.child_name}
+            className="w-full"
+          >
+            {children.map((child) => (
+              <Option key={child.url} value={child.child_name}>
+                {child.child_name}
+              </Option>
+            ))}
+          </Select>
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="child_name" className="text-gray-700">
-              Child's Name
+            <label htmlFor="visit_phase" className="text-gray-700 block">
+              Visit Phase
             </label>
             <Select
-              id="child_name"
-              showSearch
-              placeholder="Search and select child"
-              optionFilterProp="children"
-              onChange={handlechildNameChange}
-              filterOption={(input, option) =>
-                (option?.children as unknown as string)
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              value={formValues.child_name}
+              id="visit_phase"
+              placeholder="Select Visit Phase"
               className="w-full"
+              onChange={(value) =>
+                setFormValues({ ...formValues, visit_phase: value })
+              }
+              value={formValues.visit_phase}
             >
-              {children.map((child) => (
-                <Option key={child.url} value={child.child_name}>
-                  {child.child_name}
-                </Option>
-              ))}
+              <Option value="Before Card">Before Card</Option>
+              <Option value="After Card">After Card</Option>
             </Select>
           </div>
+
           <div>
             <label htmlFor="visit_number" className="text-gray-700">
               Visit Number
             </label>
-            <Input
+            <Select
               id="visit_number"
-              type="number"
-              onChange={handleInputChange}
+              placeholder="Select Visit Phase"
+              className="w-full"
+              onChange={(value) =>
+                setFormValues({ ...formValues, visit_number: value })
+              }
               value={formValues.visit_number}
-            />
+            >
+              <Option value="First">First (within 48 hrs)</Option>
+              <Option value="Second">Second (within 7 days)</Option>
+              <Option value="Third">Third (in 28 days)</Option>
+              <Option value="Fourth">Fourth (in 42 days)</Option>
+            </Select>
           </div>
           <div>
             <label htmlFor="date" className="text-gray-700">
@@ -172,6 +198,22 @@ const ChildVisitForm: React.FC = () => {
             />
           </div>
           <div>
+            <label htmlFor="return_date" className="text-gray-700">
+              Return Date
+            </label>
+            <Input
+              id="return_date"
+              type="date"
+              onChange={handleInputChange}
+              value={formValues.return_date}
+            />
+          </div>
+        </div>
+        <Divider orientation="left" className="text-lg font-semibold">
+          Child's Measurements and Health Indicators
+        </Divider>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <label
               htmlFor="child_growth_and_development_status"
               className="text-gray-700"
@@ -182,23 +224,14 @@ const ChildVisitForm: React.FC = () => {
               id="child_growth_and_development_status"
               placeholder="Select Answer"
               className="w-full"
-              onChange={(value) => handleSelectChange("child_growth_and_development_status", value)}
+              onChange={(value) =>
+                handleSelectChange("child_growth_and_development_status", value)
+              }
               value={formValues.child_growth_and_development_status}
             >
               <Option value="Stunted">Stunted</Option>
               <Option value="Not Stunted">Not Stunted</Option>
             </Select>
-          </div>
-          <div>
-            <label htmlFor="return_date" className="text-gray-700">
-              Return Date
-            </label>
-            <Input
-              id="return_date"
-              type="date"
-              onChange={handleInputChange}
-              value={formValues.return_date}
-            />
           </div>
           <div>
             <label htmlFor="weight_grams" className="text-gray-700">
@@ -251,7 +284,7 @@ const ChildVisitForm: React.FC = () => {
 
           <div>
             <label htmlFor="anemia" className="text-gray-700">
-              Anemia (Hb or palmar pallor)
+              Anemia (Hb or paleness of the palms)
             </label>
             <Input
               id="anemia"
@@ -262,40 +295,32 @@ const ChildVisitForm: React.FC = () => {
           {/* Add more input fields for basic information */}
         </div>
 
-        {/* Section 2: Child Checkup */}
         <Divider orientation="left" className="text-lg font-semibold">
-          Child Checkup
+          Child's Nutrition
         </Divider>
+        <div>
+          <label htmlFor="infant_nutrition" className="text-gray-700 block">
+            Infant Nutrition
+          </label>
+          <Select
+            id="infant_nutrition"
+            placeholder="Select PMTCT Nutrition"
+            className="w-full"
+            onChange={(value) => handleSelectChange("infant_nutrition", value)}
+            value={formValues.infant_nutrition}
+          >
+            <Option value="Exclusive Breastfeeding (EBF)">
+              Exclusive Breastfeeding (EBF)
+            </Option>
+            <Option value="Replacement Feeding (RF)">
+              Replacement Feeding (RF)
+            </Option>
+            <Option value="Complementary Feeding (CF)">
+              Complementary Feeding (CF)
+            </Option>
+          </Select>
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {/* Exclusive Breastfeeding */}
-          <div>
-            <label
-              htmlFor="exclusive_breastfeeding"
-              className="text-gray-700 block"
-            >
-              Infant Nutrition
-            </label>
-            <Select
-              id="exclusive_breastfeeding"
-              placeholder="Select PMTCT Nutrition"
-              className="w-full"
-              onChange={(value) =>
-                handleSelectChange("exclusive_breastfeeding", value)
-              }
-              value={formValues.exclusive_breastfeeding}
-            >
-              <Option value="Exclusive Breastfeeding (EBF)">
-                Exclusive Breastfeeding (EBF)
-              </Option>
-              <Option value="Replacement Feeding (RF)">
-                Replacement Feeding (RF)
-              </Option>
-              <Option value="Complementary Feeding (CF)">
-                Complementary Feeding (CF)
-              </Option>
-            </Select>
-          </div>
-
           {/* Unable to Breastfeed */}
           <div>
             <label htmlFor="unable_to_breastfeed" className="text-gray-700">
@@ -331,11 +356,17 @@ const ChildVisitForm: React.FC = () => {
               <Option value="Not Active">Not Active</Option>
             </Select>
           </div>
+        </div>
 
+        {/* Section 2: Child Checkup */}
+        <Divider orientation="left" className="text-lg font-semibold">
+          Child Checkup
+        </Divider>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Eyes */}
           <div>
             <label htmlFor="eyes" className="text-gray-700">
-              Eyes
+              Do the eyes have any discharge?
             </label>
             <Select
               id="eyes"
@@ -344,15 +375,15 @@ const ChildVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("eyes", value)}
               value={formValues.eyes}
             >
-              <Option value="Fine">Fine</Option>
-              <Option value="Not Fine">Not Fine</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
           {/* Mouth */}
           <div>
             <label htmlFor="mouth" className="text-gray-700">
-              Mouth
+              Does the mouth have White coating?
             </label>
             <Select
               id="mouth"
@@ -361,15 +392,15 @@ const ChildVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("mouth", value)}
               value={formValues.mouth}
             >
-              <Option value="Fine">Fine</Option>
-              <Option value="Not Fine">Not Fine</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
           {/* Ears */}
           <div>
             <label htmlFor="ears" className="text-gray-700">
-              Ears
+              Do the ears have any Discharge?
             </label>
             <Select
               id="ears"
@@ -378,15 +409,15 @@ const ChildVisitForm: React.FC = () => {
               onChange={(value) => handleSelectChange("ears", value)}
               value={formValues.ears}
             >
-              <Option value="Fine">Fine</Option>
-              <Option value="Not Fine">Not Fine</Option>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
           </div>
 
           {/* Navel Healed */}
           <div>
             <label htmlFor="navel_healed" className="text-gray-700">
-              Navel Healed
+              Is the navel Healed?
             </label>
             <Select
               id="navel_healed"
@@ -403,7 +434,7 @@ const ChildVisitForm: React.FC = () => {
           {/* Navel Red */}
           <div>
             <label htmlFor="navel_red" className="text-gray-700">
-              Navel Red
+              Is the navel Red?
             </label>
             <Select
               id="navel_red"
@@ -420,7 +451,7 @@ const ChildVisitForm: React.FC = () => {
           {/* Navel Discharge Odor */}
           <div>
             <label htmlFor="navel_discharge_odor" className="text-gray-700">
-              Navel Discharge Odor
+              Does the navel discharge Odor?
             </label>
             <Select
               id="navel_discharge_odor"
@@ -439,7 +470,7 @@ const ChildVisitForm: React.FC = () => {
           {/* Has pus-filled bumps */}
           <div>
             <label htmlFor="has_pus_filled_bumps" className="text-gray-700">
-              Has Pus-filled Bumps
+              Does the skin have Pus-filled Bumps?
             </label>
             <Select
               id="has_pus_filled_bumps"
@@ -458,7 +489,7 @@ const ChildVisitForm: React.FC = () => {
           {/* Has turned yellow */}
           <div>
             <label htmlFor="has_turned_yellow" className="text-gray-700">
-              Has Turned Yellow
+              Has the skin turned Yellow?
             </label>
             <Select
               id="has_turned_yellow"
@@ -586,23 +617,6 @@ const ChildVisitForm: React.FC = () => {
             >
               <Option value="Yes">Yes</Option>
               <Option value="No">No</Option>
-            </Select>
-          </div>
-
-                    {/* Measles */}
-                    <div>
-            <label htmlFor="measles" className="text-gray-700">
-              Measles
-            </label>
-            <Select
-              id="measles"
-              placeholder="Select"
-              className="w-full"
-              onChange={(value) => handleSelectChange("measles", value)}
-              value={formValues.measles}
-            >
-              <Option value="Taken">Taken</Option>
-              <Option value="Not Taken">Not Taken</Option>
             </Select>
           </div>
 
