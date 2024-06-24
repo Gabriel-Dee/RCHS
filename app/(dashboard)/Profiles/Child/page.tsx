@@ -33,18 +33,18 @@ const Profile: React.FC = () => {
           console.error("Error fetching child data:", error)
         );
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/mother_visit/${id}/`)
+      fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
         .then((response) => response.json())
         .then((data) => {
-          const formattedData: ActivityItem[] = data.map((item: any) => ({
-            id: item.id,
-            description: `Visit Number ${item.visit_number}: ${item.breastfeeding_advice}`,
-            timestamp: new Date(item.visit_date).toLocaleDateString(),
-          }));
+          const formattedData: ActivityItem[] = [{
+            id: data.id,
+            description: `Visit Number ${data.visit_number}: ${data.breastfeeding_advice}`,
+            timestamp: new Date(data.visit_date).toLocaleDateString(),
+          }];
           setSelectedActivityData(formattedData);
         })
         .catch((error) =>
@@ -91,8 +91,8 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
-      <PersonalInfo childData={selectedChildData}/>
-      <ActivityLog activityData={selectedActivityData}/>
+      <PersonalInfo childData={selectedChildData} />
+      <ActivityLog activityData={selectedActivityData} />
       <NavigationMenu />
     </>
   );

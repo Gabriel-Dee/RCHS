@@ -47,8 +47,6 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ childData }) => {
       ]
     : [];
 
-  console.log(childData);
-
   return (
     <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 border border-rchs rounded-md">
       <div className="w-full flex flex-col 2xl:w-1/3 min-w-full">

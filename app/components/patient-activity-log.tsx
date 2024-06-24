@@ -11,8 +11,14 @@ interface ActivityLogProps {
   activityData: ActivityItem[];
 }
 
-const ActivityLog: React.FC<ActivityLogProps> = ({ activityData }) => {
+const ActivityLog: React.FC<ActivityLogProps> = ({ activityData = [] }) => {
   console.log("Rendering ActivityLog with data:", activityData);
+
+  // Ensure activityData is an array
+  if (!Array.isArray(activityData)) {
+    console.error("activityData is not an array", activityData);
+    return <p>Invalid activity data</p>;
+  }
 
   return (
     <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8 border border-rchs">
