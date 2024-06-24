@@ -8,7 +8,17 @@ import {
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const GirlWeightStatistics: React.FC = () => {
+type CardItem = {
+  id: number;
+  weight_grams: number;
+  height: number;
+};
+
+interface GirlWeightStatisticsProps {
+  cardData: CardItem[];
+}
+
+const GirlWeightStatistics: React.FC<GirlWeightStatisticsProps> = ({ cardData = [] }) => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
@@ -16,16 +26,19 @@ const GirlWeightStatistics: React.FC = () => {
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // Updated weight data
-    const dataWeightAgainstAge = [
-      // Replace with your weight data from 0 to 60 months
-      2.0, 2.4, 2.8, 3.2, 3.6, 4.0, 4.4, 4.8, 5.2, 5.6, 6.0, 6.4, 6.8, 7.2, 7.6,
-      8.0, 8.4, 8.8, 9.2, 9.6, 10.0, 10.4, 10.8, 11.2, 11.6, 12.0, 12.4, 12.8,
-      13.2, 13.6, 14.0, 14.4, 14.8, 15.2, 15.6, 16.0, 16.4, 16.8, 17.2, 17.6,
-      18.0, 18.4, 18.8, 19.2, 19.6, 20.0, 20.4, 20.8, 21.2, 21.6, 22.0, 22.4,
-      22.8, 23.2, 23.6, 24.0, 24.4, 24.8, 25.2, 25.6, 26.0, 26.4, 26.8, 27.2,
-      27.6, 28.0,
-    ];
+    // // Updated weight data
+    // const dataWeightAgainstAge = [
+    //   // Replace with your weight data from 0 to 60 months
+    //   2.0, 2.4, 2.8, 3.2, 3.6, 4.0, 4.4, 4.8, 5.2, 5.6, 6.0, 6.4, 6.8, 7.2, 7.6,
+    //   8.0, 8.4, 8.8, 9.2, 9.6, 10.0, 10.4, 10.8, 11.2, 11.6, 12.0, 12.4, 12.8,
+    //   13.2, 13.6, 14.0, 14.4, 14.8, 15.2, 15.6, 16.0, 16.4, 16.8, 17.2, 17.6,
+    //   18.0, 18.4, 18.8, 19.2, 19.6, 20.0, 20.4, 20.8, 21.2, 21.6, 22.0, 22.4,
+    //   22.8, 23.2, 23.6, 24.0, 24.4, 24.8, 25.2, 25.6, 26.0, 26.4, 26.8, 27.2,
+    //   27.6, 28.0,
+    // ];
+
+    // Replace hardcoded weight data with the weights from cardData
+    const dataWeightAgainstAge = cardData.map((item) => item.weight_grams);
 
     // Updated line1Data
     const line1Data = [

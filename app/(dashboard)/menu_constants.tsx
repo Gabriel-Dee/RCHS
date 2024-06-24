@@ -52,9 +52,9 @@ export const SIDENAV_ITEMS: SideNavItemGroup[] = [
         icon: BsCalendarFill({ size: 20 }),
         submenu: true,
         subMenuItems: [
-          { title: "Parent Visits", path: "/Visits/BeforeCard" },
-          { title: "Child Visits", path: "/Visits/AfterCard" },
-          { title: "Consultation Visits", path: "/Visits/ConsultationVisit" },
+          { title: "Parent Visits", path: "/Visits/ParentVisits" },
+          { title: "Child Visits", path: "/Visits/ChildVisits" },
+          { title: "Consultation Visits", path: "/Visits/ConsultationVisits" },
         ],
       },
       {

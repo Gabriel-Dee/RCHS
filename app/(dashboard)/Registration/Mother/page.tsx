@@ -141,7 +141,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
       "Chairperson_name",
     ];
 
-    if (formValues.registrant_type === "parent") {
+    if (formValues.registrant_type === "Parent") {
       requiredFields.push("parent_type", "gender");
     }
 
@@ -158,8 +158,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
     let filteredFormValues: Partial<typeof formValues> = { ...formValues };
 
     if (
-      formValues.registrant_type !== "parent" ||
-      formValues.parent_type !== "mother"
+      formValues.registrant_type !== "Parent" ||
+      formValues.parent_type !== "Mother"
     ) {
       const { pregnancies, alive_children, miscarriages, births, ...rest } =
         filteredFormValues;
@@ -255,7 +255,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
             </Select>
           </div>
 
-          {formValues.registrant_type === "parent" && (
+          {formValues.registrant_type === "Parent" && (
             <div>
               <label htmlFor="parent_type" className="text-gray-700">
                 Are you the Mother or Father?
@@ -273,8 +273,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
             </div>
           )}
 
-          {(formValues.registrant_type === "guardian" ||
-            (formValues.registrant_type === "parent" &&
+          {(formValues.registrant_type === "Guardian" ||
+            (formValues.registrant_type === "Parent" &&
               formValues.parent_type !== "")) && (
             <div>
               <label htmlFor="gender" className="text-gray-700">
@@ -286,7 +286,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
                 className="w-full"
                 onChange={(value) => handleSelectChange("gender", value)}
                 value={formValues.gender}
-                disabled={formValues.registrant_type === "parent"}
+                disabled={formValues.registrant_type === "Parent"}
               >
                 <Option value="Male">Male</Option>
                 <Option value="Female">Female</Option>
@@ -506,8 +506,8 @@ const ParentGuardianDetailsForm: React.FC = () => {
             />
           </div>
 
-          {formValues.registrant_type === "parent" &&
-            formValues.parent_type === "mother" && (
+          {formValues.registrant_type === "Parent" &&
+            formValues.parent_type === "Mother" && (
               <>
                 <div>
                   <label htmlFor="pregnancies" className="text-gray-700">

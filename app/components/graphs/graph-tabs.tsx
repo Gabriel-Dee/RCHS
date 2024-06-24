@@ -10,8 +10,26 @@ enum Menu {
   BMI = "BMI",
 }
 
-const NavigationMenu: React.FC = () => {
+type CardItem = {
+  id: number;
+  weight_grams: number;
+  height: number;
+};
+
+interface CardProps {
+  cardData: CardItem[];
+}
+
+const NavigationMenu: React.FC<CardProps> = ({ cardData = [] }) => {
   const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
+
+  console.log("Rendering NavigationMenu with data:", cardData);
+
+  // Ensure cardData is an array
+  if (!Array.isArray(cardData)) {
+    console.error("cardData is not an array", cardData);
+    return <p>Invalid card data</p>;
+  }
 
   const handleMenuClick = (menu: Menu) => {
     setSelectedMenu(menu);
@@ -70,9 +88,9 @@ const NavigationMenu: React.FC = () => {
             </li>
           </ul>
         </div>
-        {selectedMenu === Menu.LENGTH_HEIGHT && <BoyStatistics0t02 />}
-        {selectedMenu === Menu.WEIGHT && <GirlWeightStatistics />}
-        {selectedMenu === Menu.BMI && <BoyBmiStatistics0to2 />}
+        {selectedMenu === Menu.LENGTH_HEIGHT && <BoyStatistics0t02 cardData={cardData} />}
+        {selectedMenu === Menu.WEIGHT && <GirlWeightStatistics cardData={cardData} />}
+        {selectedMenu === Menu.BMI && <BoyBmiStatistics0to2 cardData={cardData} />}
       </div>
     </div>
   );

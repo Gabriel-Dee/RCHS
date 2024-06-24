@@ -14,11 +14,18 @@ type ActivityItem = {
   timestamp: string;
 };
 
+type CardItem = {
+  id: number;
+  weight_grams: number;
+  height: number;
+};
+
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [selectedChildData, setSelectedChildData] = useState<any | null>(null);
   const [selectedActivityData, setSelectedActivityData] = useState<ActivityItem[]>([]);
+  const [selectedCardData, setSelectedCardData] = useState<CardItem[]>([]);
 
   console.log("This is the id");
   console.log(id);
@@ -49,6 +56,24 @@ const Profile: React.FC = () => {
         })
         .catch((error) =>
           console.error("Error fetching activity data:", error)
+        );
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          const formattedData: CardItem[] = [{
+            id: data.id,
+            weight_grams: data.weight_grams,
+            height: data.height,
+          }];
+          setSelectedCardData(formattedData);
+        })
+        .catch((error) =>
+          console.error("Error fetching card data:", error)
         );
     }
   }, [id]);
@@ -93,7 +118,7 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo childData={selectedChildData} />
       <ActivityLog activityData={selectedActivityData} />
-      <NavigationMenu />
+      <NavigationMenu cardData={selectedCardData} />
     </>
   );
 };
