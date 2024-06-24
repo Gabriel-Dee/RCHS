@@ -39,15 +39,16 @@ const Profile: React.FC = () => {
       fetch(`http://127.0.0.1:8000/mother_visit/${id}/`)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Activity data fetched:", data);
-          const formattedData: ActivityItem[] = data.map((item: any) => ({
-            id: item.id,
-            description: `Visit Number ${item.visit_number}: ${item.breastfeeding_advice}`,
-            timestamp: new Date(item.visit_date).toLocaleDateString(),
-          }));
+          const formattedData: ActivityItem[] = [{
+            id: data.id,
+            description: `Visit Number ${data.visit_number}: ${data.breastfeeding_advice}`,
+            timestamp: new Date(data.visit_date).toLocaleDateString(),
+          }];
           setSelectedActivityData(formattedData);
         })
-        .catch((error) => console.error("Error fetching activity data:", error));
+        .catch((error) =>
+          console.error("Error fetching activity data:", error)
+        );
     }
   }, [id]);
 
