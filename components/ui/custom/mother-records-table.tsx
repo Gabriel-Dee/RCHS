@@ -78,7 +78,7 @@ export function MotherDataTable<TData extends { id: string }, TValue>({
           onClick={handleNewPatientRegistration}
           className="flex flex-col ml-2"
         >
-          Register Mother
+          Register Parent
         </Button>
       </div>
       <div className="rounded-md border border-rchsLight">

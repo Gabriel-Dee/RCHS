@@ -7,20 +7,32 @@ import {
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const BoyStatistics0t02: React.FC = () => {
+type CardItem = {
+  id: number;
+  weight_grams: number;
+  height: number;
+};
+
+interface BoyStatistics0t02Props {
+  cardData: CardItem[];
+}
+
+const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({ cardData = [] }) => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // Data preparation
-    const dataLengthAgainstAge = [
-      // this has also been defined at drawLineOnTopPlugin
-      45, 46, 48, 50, 51.5, 52, 54, 55.5, 57, 58.5, 60, 62, 65, 66.5, 67.5, 69,
-      70.5, 72, 73.5, 75, 76, 78, 80, 82, 85,
-    ];
-
+    // // Data preparation
+    // const dataLengthAgainstAge = [
+    //   // this has also been defined at drawLineOnTopPlugin
+    //   45, 46, 48, 50, 51.5, 52, 54, 55.5, 57, 58.5, 60, 62, 65, 66.5, 67.5, 69,
+    //   70.5, 72, 73.5, 75, 76, 78, 80, 82, 85,
+    // ];
+    // Replace hardcoded length data with the heights from cardData
+    const dataLengthAgainstAge = cardData.map(item => item.height);
+ 
     // Data for all seven lines
     const line1Data = [
       44.2, 48.9, 52.4, 55.3, 57.6, 59.6, 61.2, 62.7, 64, 65.2, 66.4, 67.6,

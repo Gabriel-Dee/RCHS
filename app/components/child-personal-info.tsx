@@ -24,7 +24,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ childData }) => {
   const personalInfo = childData
     ? [
         { attribute: "Full name:", value: childData.child_name },
-        { attribute: "Mother's name:", value: childData.mother_name },
+        { attribute: "Parent's name:", value: childData.mother_name },
         {
           attribute: "Age:",
           value: childData.date_of_birth

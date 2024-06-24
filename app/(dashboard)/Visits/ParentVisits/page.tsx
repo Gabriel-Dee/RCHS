@@ -146,7 +146,7 @@ const ClinicVisitForm: React.FC = () => {
         </Divider>
         <div>
           <label htmlFor="mother_name" className="text-gray-700">
-            Mother's Name
+            Parent's Name
           </label>
           <Select
             id="mother_name"

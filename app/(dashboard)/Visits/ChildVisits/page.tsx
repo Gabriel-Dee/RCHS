@@ -55,6 +55,7 @@ const ChildVisitForm: React.FC = () => {
     name_of_attendant: "",
     attendant_title: "",
     hb_percentage: "",
+    bmi: "",
   });
 
   const [children, setChildren] = useState<Child[]>([]);
@@ -214,28 +215,8 @@ const ChildVisitForm: React.FC = () => {
         </Divider>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label
-              htmlFor="child_growth_and_development_status"
-              className="text-gray-700"
-            >
-              Child Growth and Development Status
-            </label>
-            <Select
-              id="child_growth_and_development_status"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) =>
-                handleSelectChange("child_growth_and_development_status", value)
-              }
-              value={formValues.child_growth_and_development_status}
-            >
-              <Option value="Stunted">Stunted</Option>
-              <Option value="Not Stunted">Not Stunted</Option>
-            </Select>
-          </div>
-          <div>
             <label htmlFor="weight_grams" className="text-gray-700">
-              Weight (Grams)
+              Weight (Kgs)
             </label>
             <Input
               id="weight_grams"
@@ -292,7 +273,40 @@ const ChildVisitForm: React.FC = () => {
               value={formValues.anemia}
             />
           </div>
-          {/* Add more input fields for basic information */}
+
+          <div>
+            <label htmlFor="bmi" className="text-gray-700">
+              BMI
+            </label>
+            <Input
+              id="bmi"
+              type="number"
+              step="0.01"
+              onChange={handleInputChange}
+              value={formValues.bmi}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="child_growth_and_development_status"
+              className="text-gray-700"
+            >
+              Child Growth and Development Status
+            </label>
+            <Select
+              id="child_growth_and_development_status"
+              placeholder="Select Answer"
+              className="w-full"
+              onChange={(value) =>
+                handleSelectChange("child_growth_and_development_status", value)
+              }
+              value={formValues.child_growth_and_development_status}
+            >
+              <Option value="Stunted">Stunted</Option>
+              <Option value="Not Stunted">Not Stunted</Option>
+            </Select>
+          </div>
         </div>
 
         <Divider orientation="left" className="text-lg font-semibold">
