@@ -30,9 +30,10 @@ const ParentGuardianDetailsForm: React.FC = () => {
     alive_children: "",
     miscarriages: "",
     births: "",
-    registrant_type: "", // New field for Parent/Guardian
-    parent_type: "", // New field for Mother/Father
-    gender: "", // New field for Gender
+    registrant_type: "",
+    parent_type: "",
+    gender: "", 
+    phone: "",
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -347,6 +348,19 @@ const ParentGuardianDetailsForm: React.FC = () => {
               type="number"
               onChange={handleInputChange}
               value={formValues.mother_age}
+              min={0}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="text-gray-700">
+              Phone Number
+            </label>
+            <Input
+              id="phone"
+              type="number"
+              onChange={handleInputChange}
+              value={formValues.phone}
               min={0}
             />
           </div>
