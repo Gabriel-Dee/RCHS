@@ -73,7 +73,6 @@ const ClinicVisitForm: React.FC = () => {
   // Handler for form submission
   const onFinish = async (e: React.FormEvent) => {
     try {
-      e.preventDefault();
       console.log(formValues);
 
       const response = await fetch("http://127.0.0.1:8000/child_consult_visit/", {
