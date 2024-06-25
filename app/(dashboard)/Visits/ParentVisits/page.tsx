@@ -53,7 +53,6 @@ const ClinicVisitForm: React.FC = () => {
     uterus_shrinking: "",
     uterus_pain: "",
     // Section 5: Incision / Surgical wound
-    // incision_did_not_tear: "",
     incision_type: "",
     wound_healed: "",
     pus: "",
