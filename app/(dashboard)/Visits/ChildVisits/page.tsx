@@ -27,7 +27,7 @@ const ChildVisitForm: React.FC = () => {
     visit_number: "",
     visit_phase: "",
     date: "",
-    child_growth_and_development_status: "",
+    // child_growth_and_development_status: "",
     return_date: "",
     vitamin_a: "",
     deworming_medication: "",
@@ -84,6 +84,24 @@ const ChildVisitForm: React.FC = () => {
     const { id, value } = e.target;
     setFormValues({ ...formValues, [id]: value });
   };
+
+  const calculateBMI = (weight: number, height: number): number => {
+    if (weight > 0 && height > 0) {
+      return (weight / (height * height)) * 10000;
+    }
+    return 0;
+  };
+
+  // Update BMI whenever weight or height changes
+  useEffect(() => {
+    const weight = parseFloat(formValues.weight_grams);
+    const height = parseFloat(formValues.height);
+    const bmi = calculateBMI(weight, height);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      bmi: bmi.toFixed(2),
+    }));
+  }, [formValues.weight_grams, formValues.height]);
 
   // Specific handlers for select changes
   const handlechildNameChange = (value: string) => {
@@ -287,7 +305,7 @@ const ChildVisitForm: React.FC = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label
               htmlFor="child_growth_and_development_status"
               className="text-gray-700"
@@ -306,7 +324,7 @@ const ChildVisitForm: React.FC = () => {
               <Option value="Stunted">Stunted</Option>
               <Option value="Not Stunted">Not Stunted</Option>
             </Select>
-          </div>
+          </div> */}
         </div>
 
         <Divider orientation="left" className="text-lg font-semibold">

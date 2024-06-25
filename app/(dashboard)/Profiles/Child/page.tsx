@@ -46,16 +46,16 @@ const Profile: React.FC = () => {
     if (id) {
       fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
         .then((response) => response.json())
-        .then((data) => {
+        .then((dataa) => {
           const formattedData: ActivityItem[] = [{
-            id: data.id,
-            description: `Visit Number ${data.visit_number}: ${data.breastfeeding_advice}`,
-            timestamp: new Date(data.visit_date).toLocaleDateString(),
+            id: dataa.id,
+            description: `Visit Number ${dataa.visit_number}: ${dataa.breastfeeding_advice}`,
+            timestamp: new Date(dataa.visit_date).toLocaleDateString(),
           }];
           setSelectedActivityData(formattedData);
         })
         .catch((error) =>
-          console.error("Error fetching activity data:", error)
+          console.error("Error fetching activity dataa:", error)
         );
     }
   }, [id]);
@@ -64,13 +64,13 @@ const Profile: React.FC = () => {
     if (id) {
       fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
         .then((response) => response.json())
-        .then((data) => {
-          const formattedData: CardItem[] = [{
-            id: data.id,
-            weight_grams: data.weight_grams,
-            height: data.height,
+        .then((dataaa) => {
+          const formattedDataa: CardItem[] = [{
+            id: dataaa.id,
+            weight_grams: dataaa.weight_grams,
+            height: dataaa.height,
           }];
-          setSelectedCardData(formattedData);
+          setSelectedCardData(formattedDataa);
         })
         .catch((error) =>
           console.error("Error fetching card data:", error)
@@ -102,7 +102,7 @@ const Profile: React.FC = () => {
         </div>
         <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
           <div className="flex items-center space-x-4 mt-2">
-            <Link href={"/Visits"}>
+            <Link href={"/Visits/ChildVisits"}>
               <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
                 <span>New Visit</span>
               </Button>
