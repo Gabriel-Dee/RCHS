@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Input, Button, Select, Divider } from "antd";
+import NotificationModal from "@/app/components/NotificationModal";
 
 const { Option } = Select;
 
@@ -35,6 +36,8 @@ const ClinicVisitForm: React.FC = () => {
   });
 
   const [children, setChildren] = useState<Child[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   // Fetch Child list from the server
   useEffect(() => {
@@ -72,20 +75,57 @@ const ClinicVisitForm: React.FC = () => {
 
   // Handler for form submission
   const onFinish = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const requiredFields = [
+      "child_name",
+      "date",
+      "visit_type",
+      "height",
+      "weight",
+      "temperature",
+      "other",
+      "test_results",
+      "additional_notes",
+    ];
+
+    for (const field of requiredFields) {
+      if (!formValues[field as keyof typeof formValues]) {
+        setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
+        setModalVisible(true);
+        return;
+      }
+    }
+
     try {
-      console.log(formValues);
+      const response = await fetch(
+        "http://127.0.0.1:8000/child_consult_visit/",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+          method: "POST",
+        }
+      );
 
-      const response = await fetch("http://127.0.0.1:8000/child_consult_visit/", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-        method: "POST",
-      });
-
-      console.log("Response:", await response.json());
+      const data = await response.json();
+      console.log("Response:", data);
+      if (response.ok) {
+        // Handle success scenario
+        setModalMessage("Registration successful!");
+        setModalVisible(true);
+      } else {
+        // Handle error scenario
+        setModalMessage(
+          data.detail || "An error occurred during registration."
+        );
+        setModalVisible(true);
+      }
     } catch (error) {
       console.error("Error:", error);
+      setModalMessage("An error occurred during registration.");
+      setModalVisible(true);
     }
   };
 
@@ -225,7 +265,7 @@ const ClinicVisitForm: React.FC = () => {
           </div>
 
           <div>
-          <label htmlFor="additional_notes" className="text-gray-700">
+            <label htmlFor="additional_notes" className="text-gray-700">
               Additional Notes
             </label>
             <textarea
@@ -240,15 +280,17 @@ const ClinicVisitForm: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-6">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-rchs"
-          >
+          <Button type="primary" htmlType="submit" className="bg-rchs">
             Submit
           </Button>
         </div>
       </form>
+      {modalVisible && (
+        <NotificationModal
+          message={modalMessage}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
     </section>
   );
 };

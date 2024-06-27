@@ -7,18 +7,7 @@ import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/components/child-personal-info";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
 import ActivityLog from "@/app/components/Visit Activity Log/child-activity-log";
-
-type ActivityItem = {
-  id: number;
-  description: string;
-  timestamp: string;
-};
-
-type CardItem = {
-  id: number;
-  weight_grams: number;
-  height: number;
-};
+import { ActivityItem, CardItem } from "@/types/types";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();

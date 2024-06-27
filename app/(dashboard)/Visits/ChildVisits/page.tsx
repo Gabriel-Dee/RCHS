@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Input, Button, Divider, Select } from "antd";
+import NotificationModal from "@/app/components/NotificationModal";
 
 const { Option } = Select;
 
@@ -27,7 +28,6 @@ const ChildVisitForm: React.FC = () => {
     visit_number: "",
     visit_phase: "",
     date: "",
-    // child_growth_and_development_status: "",
     return_date: "",
     vitamin_a: "",
     deworming_medication: "",
@@ -59,6 +59,8 @@ const ChildVisitForm: React.FC = () => {
   });
 
   const [children, setChildren] = useState<Child[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   // Fetch Child list from the server
   useEffect(() => {
@@ -114,22 +116,78 @@ const ChildVisitForm: React.FC = () => {
 
   // Handler for form submission
   const onFinish = async (e: React.FormEvent) => {
-    try {
       e.preventDefault();
-      console.log(formValues);
 
-      const response = await fetch("http://127.0.0.1:8000/child_visit/", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-        method: "POST",
-      });
+      const requiredFields = [
+        "child_name",
+        "visit_number",
+        "visit_phase",
+        "date",
+        "return_date",
+        "vitamin_a",
+        "deworming_medication",
+        "weight_grams",
+        "height",
+        "anemia",
+        "body_temperature",
+        "infant_nutrition",
+        "unable_to_breastfeed",
+        "child_play",
+        "eyes",
+        "mouth",
+        "ears",
+        "navel_healed",
+        "navel_red",
+        "navel_discharge_odor",
+        "has_pus_filled_bumps",
+        "has_turned_yellow",
+        "received_bcg",
+        "received_polio_0",
+        "received_polio_1",
+        "received_dtp_hep_hib",
+        "received_pneumococcal",
+        "received_rota",
+        "name_of_attendant",
+        "attendant_title",
+        "hb_percentage",
+        "bmi"
+      ];      
 
-      console.log("Response:", await response.json());
-    } catch (error) {
-      console.error("Error:", error);
-    }
+      for (const field of requiredFields) {
+        if (!formValues[field as keyof typeof formValues]) {
+          setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
+          setModalVisible(true);
+          return;
+        }
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/child_visit/", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+          method: "POST",
+        });
+  
+        const data = await response.json();
+        console.log("Response:", data);
+        if (response.ok) {
+          // Handle success scenario
+          setModalMessage("Registration successful!");
+          setModalVisible(true);
+        } else {
+          // Handle error scenario
+          setModalMessage(
+            data.detail || "An error occurred during registration."
+          );
+          setModalVisible(true);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setModalMessage("An error occurred during registration.");
+        setModalVisible(true);
+      }
   };
 
   return (
@@ -304,27 +362,6 @@ const ChildVisitForm: React.FC = () => {
               value={formValues.bmi}
             />
           </div>
-
-          {/* <div>
-            <label
-              htmlFor="child_growth_and_development_status"
-              className="text-gray-700"
-            >
-              Child Growth and Development Status
-            </label>
-            <Select
-              id="child_growth_and_development_status"
-              placeholder="Select Answer"
-              className="w-full"
-              onChange={(value) =>
-                handleSelectChange("child_growth_and_development_status", value)
-              }
-              value={formValues.child_growth_and_development_status}
-            >
-              <Option value="Stunted">Stunted</Option>
-              <Option value="Not Stunted">Not Stunted</Option>
-            </Select>
-          </div> */}
         </div>
 
         <Divider orientation="left" className="text-lg font-semibold">
@@ -738,6 +775,12 @@ const ChildVisitForm: React.FC = () => {
           </Button>
         </div>
       </form>
+      {modalVisible && (
+        <NotificationModal
+          message={modalMessage}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
     </section>
   );
 };

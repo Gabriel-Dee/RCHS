@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Input, Button, Select, Divider } from "antd";
 import React from "react";
+import NotificationModal from "@/app/components/NotificationModal";
 
 const { Option } = Select;
 
@@ -76,10 +77,11 @@ const ClinicVisitForm: React.FC = () => {
     date_of_next_visit: "",
     provider_name: "",
     provider_title: "",
-    phone: "",
   });
 
   const [mothers, setMothers] = useState<Mother[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   // Fetch mothers list from the server
   useEffect(() => {
@@ -116,22 +118,90 @@ const ClinicVisitForm: React.FC = () => {
 
   // Handler for form submission
   const onFinish = async (e: any) => {
-    try {
       e.preventDefault();
-      console.log(formValues);
 
-      const response = await fetch("http://127.0.0.1:8000/mother_visit/", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-        method: "POST",
-      });
+      const requiredFields = [
+        // Section 1: Visit Information
+        "visit_date",
+        "visit_number",
+        "mother_name",
+        // Section 2: Health Measurements
+        "body_temperature",
+        "blood_pressure",
+        "hb_percentage",
+        "pmtct_nutrition",
+        // Section 3: Breastfeeding
+        "breastfeeding",
+        "milk_coming_out",
+        "breastfeeding_within_hour",
+        "sore_nipples",
+        "full_nipples",
+        "abscesses",
+        "breastfeeding_advice",
+        // Section 4: Uterus
+        "uterus_shrinking",
+        "uterus_pain",
+        // Section 5: Incision / Surgical wound
+        "incision_type",
+        "wound_healed",
+        "pus",
+        "wound_open",
+        "bad_smell",
+        "lochia_amount",
+        "lochia_color",
+        // Section 6: Mental State
+        "mental_state",
+        "mental_issues",
+        // Section 7: Family Planning
+        "advice_given",
+        // Section 8: Prophylactic Medications
+        "ferrous_sulphate",
+        "folic_acid",
+        "tetanus_toxoid_doses",
+        // Section 9: Provider Information
+        "pmtct_ctx",
+        "postpartum_medications",
+        "vitamin_a",
+        "date_of_next_visit",
+        "provider_name",
+        "provider_title",
+      ];
 
-      console.log("Response:", await response.json());
-    } catch (error) {
-      console.error("Error:", error);
-    }
+      for (const field of requiredFields) {
+        if (!formValues[field as keyof typeof formValues]) {
+          setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
+          setModalVisible(true);
+          return;
+        }
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/mother_visit/", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+          method: "POST",
+        });
+  
+        const data = await response.json();
+        console.log("Response:", data);
+        if (response.ok) {
+          // Handle success scenario
+          setModalMessage("Registration successful!");
+          setModalVisible(true);
+        } else {
+          // Handle error scenario
+          setModalMessage(
+            data.detail || "An error occurred during registration."
+          );
+          setModalVisible(true);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setModalMessage("An error occurred during registration.");
+        setModalVisible(true);
+      }
   };
 
   return (
@@ -771,6 +841,12 @@ const ClinicVisitForm: React.FC = () => {
           </Button>
         </div>
       </form>
+      {modalVisible && (
+        <NotificationModal
+          message={modalMessage}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
     </section>
   );
 };
