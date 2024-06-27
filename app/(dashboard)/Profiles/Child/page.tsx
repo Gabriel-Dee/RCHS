@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/components/child-personal-info";
-import ActivityLog from "@/app/components/patient-activity-log";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
+import ActivityLog from "@/app/components/Visit Activity Log/child-activity-log";
 
 type ActivityItem = {
   id: number;
@@ -24,57 +24,69 @@ const Profile: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [selectedChildData, setSelectedChildData] = useState<any | null>(null);
-  const [selectedActivityData, setSelectedActivityData] = useState<ActivityItem[]>([]);
+  const [selectedActivityData, setSelectedActivityData] = useState<
+    ActivityItem[]
+  >([]);
   const [selectedCardData, setSelectedCardData] = useState<CardItem[]>([]);
 
   console.log("This is the id");
   console.log(id);
   console.log(selectedChildData);
+  console.log(selectedActivityData);
 
   useEffect(() => {
     if (id) {
       fetch(`http://127.0.0.1:8000/child/${id}/`)
         .then((res) => res.json())
         .then((data) => setSelectedChildData(data))
+        .catch((error) => console.error("Error fetching child data:", error));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetch(`http://127.0.0.1:8000/child_visit/`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Fetched activity data:", data);
+          const filteredVisits = data.filter((visit: any) =>
+            visit.child.includes(`/child/${id}/`)
+          );
+          const formattedActivityData: ActivityItem[] = filteredVisits.map(
+            (visit: any) => ({
+              id: visit.id,
+              description: `Visit Number ${visit.visit_number}`,
+              timestamp: visit.date
+                ? new Date(visit.date).toLocaleDateString()
+                : "No Date",
+            })
+          );
+          setSelectedActivityData(formattedActivityData);
+        })
         .catch((error) =>
-          console.error("Error fetching child data:", error)
+          console.error("Error fetching activity data:", error)
         );
     }
   }, [id]);
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
+      fetch(`http://127.0.0.1:8000/child_visit/`)
         .then((response) => response.json())
-        .then((dataa) => {
-          const formattedData: ActivityItem[] = [{
-            id: dataa.id,
-            description: `Visit Number ${dataa.visit_number}: ${dataa.breastfeeding_advice}`,
-            timestamp: new Date(dataa.visit_date).toLocaleDateString(),
-          }];
-          setSelectedActivityData(formattedData);
+        .then((data) => {
+          const filteredVisits = data.filter((visit: any) =>
+            visit.child.includes(`/child/${id}/`)
+          );
+          const formattedCardData: CardItem[] = filteredVisits.map(
+            (visit: any) => ({
+              id: visit.id,
+              weight_grams: visit.weight_grams,
+              height: visit.height,
+            })
+          );
+          setSelectedCardData(formattedCardData);
         })
-        .catch((error) =>
-          console.error("Error fetching activity dataa:", error)
-        );
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      fetch(`http://127.0.0.1:8000/child_visit/${id}/`)
-        .then((response) => response.json())
-        .then((dataaa) => {
-          const formattedDataa: CardItem[] = [{
-            id: dataaa.id,
-            weight_grams: dataaa.weight_grams,
-            height: dataaa.height,
-          }];
-          setSelectedCardData(formattedDataa);
-        })
-        .catch((error) =>
-          console.error("Error fetching card data:", error)
-        );
+        .catch((error) => console.error("Error fetching card data:", error));
     }
   }, [id]);
 

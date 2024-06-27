@@ -24,6 +24,7 @@ export default async function Records() {
   });
 
   const motherAttendanceData = await res.json();
+  console.log(motherAttendanceData)
 
   return (
     <>

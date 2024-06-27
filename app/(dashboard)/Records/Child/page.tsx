@@ -24,7 +24,8 @@ export default async function Records() {
   });
 
   const childAttendanceData = await res.json();
-
+  console.log(childAttendanceData);
+  
   return (
     <>
       <div className="flex-1 space-y-4">

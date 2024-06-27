@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ActivityLog from "@/app/components/patient-activity-log";
 import PersonalInfo from "@/app/components/mother-personal-info";
+import ActivityLog from "@/app/components/Visit Activity Log/parent-activity-log";
 
 type ActivityItem = {
   id: number;
@@ -36,15 +36,21 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/mother_visit/${id}/`)
+      fetch(`http://127.0.0.1:8000/mother_visit/`)
         .then((response) => response.json())
         .then((data) => {
-          const formattedData: ActivityItem[] = [{
-            id: data.id,
-            description: `Visit Number ${data.visit_number}: ${data.breastfeeding_advice}`,
-            timestamp: new Date(data.visit_date).toLocaleDateString(),
-          }];
-          setSelectedActivityData(formattedData);
+          console.log("Fetched activity data:", data);
+          const filteredVisits = data.filter((visit: any) =>
+            visit.mother.includes(`/mother/${id}/`)
+          );
+          const formattedActivityData: ActivityItem[] = filteredVisits.map(
+            (visit: any) => ({
+              id: visit.id,
+              description: `Visit Number ${visit.visit_number}`,
+              timestamp: visit.visit_date ? new Date(visit.visit_date).toLocaleDateString() : "No Date",
+            })
+          );
+          setSelectedActivityData(formattedActivityData);
         })
         .catch((error) =>
           console.error("Error fetching activity data:", error)

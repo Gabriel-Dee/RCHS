@@ -28,8 +28,6 @@ interface Mother {
   births: string;
   miscarriage_age: string;
   miscarriage_year: string;
-  registrant_type: string;
-  parent_type: string;
 }
 
 const ClinicVisitForm: React.FC = () => {
@@ -78,6 +76,7 @@ const ClinicVisitForm: React.FC = () => {
     date_of_next_visit: "",
     provider_name: "",
     provider_title: "",
+    phone: "",
   });
 
   const [mothers, setMothers] = useState<Mother[]>([]);
@@ -163,20 +162,13 @@ const ClinicVisitForm: React.FC = () => {
             value={formValues.mother_name}
             className="w-full"
           >
-            {mothers
-              .filter(
-                (mother) =>
-                  mother.registrant_type === "Parent" &&
-                  mother.parent_type === "Mother"
-              )
-              .map((mother) => (
-                <Option key={mother.url} value={mother.mother_name}>
-                  {mother.mother_name}
-                </Option>
-              ))}
+            {mothers.map((mother) => (
+              <Option key={mother.url} value={mother.mother_name}>
+                {mother.mother_name}
+              </Option>
+            ))}
           </Select>
         </div>
-
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="visit_date" className="text-gray-700">

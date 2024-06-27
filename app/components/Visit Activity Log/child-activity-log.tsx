@@ -13,7 +13,7 @@ interface ActivityLogProps {
 
 const ActivityLog: React.FC<ActivityLogProps> = ({ activityData = [] }) => {
   console.log("Rendering ActivityLog with data:", activityData);
-
+  console.log(activityData);
   // Ensure activityData is an array
   if (!Array.isArray(activityData)) {
     console.error("activityData is not an array", activityData);
@@ -30,7 +30,10 @@ const ActivityLog: React.FC<ActivityLogProps> = ({ activityData = [] }) => {
           <div className="absolute h-full border border-dashed border-opacity-20 border-[#326164]"></div>
 
           {activityData.map((item) => (
-            <div key={item.id} className="flex items-center w-full my-6 -ml-1.5">
+            <div
+              key={item.id}
+              className="flex items-center w-full my-6 -ml-1.5"
+            >
               <div className="w-1/12 z-10">
                 <div className="w-3.5 h-3.5 bg-rchs rounded-full"></div>
               </div>

@@ -107,7 +107,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
   };
 
   const handleParentTypeChange = (value: string) => {
-    const gender = value === "mother" ? "female" : "male";
+    const gender = value === "Mother" ? "Female" : "Male";
     setFormValues({ ...formValues, parent_type: value, gender });
   };
 
