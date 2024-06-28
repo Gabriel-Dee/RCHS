@@ -136,10 +136,7 @@ const Profile: React.FC = () => {
               </Button>
             </Link>
             <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
-              <span>New Appointment</span>
-            </Button>
-            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
-              <span>Generate Report</span>
+              <span>Edit Patient</span>
             </Button>
           </div>
         </div>
