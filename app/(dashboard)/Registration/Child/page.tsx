@@ -111,8 +111,6 @@ const ChildDetailsForm: React.FC = () => {
 
   const handleMotherNameChange = async (value: string) => {
     setFormValues((prevValues) => ({ ...prevValues, mother_name: value }));
-    // const regNumber = await generateRegistrationNumber();
-    // setFormValues((prevValues) => ({ ...prevValues, child_number: regNumber }));
   };
 
   const handleChildGenderChange = (value: string) => {
@@ -144,6 +142,9 @@ const ChildDetailsForm: React.FC = () => {
     setResidentialDistrictsByRegion(districts[value as keyof typeof districts]);
   };
 
+  const MIN_HEIGHT_CM = 48; // Minimum height in cm
+  const MIN_WEIGHT_KG = 2.5; // Minimum weight in kg
+
   const onFinish = async (e: any) => {
     e.preventDefault();
 
@@ -169,6 +170,19 @@ const ChildDetailsForm: React.FC = () => {
         setModalVisible(true);
         return;
       }
+    }
+
+    // Perform validation for height and weight
+    if (+formValues.length_at_birth < MIN_HEIGHT_CM) {
+      setModalMessage(`Height should be at least ${MIN_HEIGHT_CM} cm.`);
+      setModalVisible(true);
+      return;
+    }
+
+    if (+formValues.weight_at_birth < MIN_WEIGHT_KG) {
+      setModalMessage(`Weight should be at least ${MIN_WEIGHT_KG} kg.`);
+      setModalVisible(true);
+      return;
     }
 
     try {

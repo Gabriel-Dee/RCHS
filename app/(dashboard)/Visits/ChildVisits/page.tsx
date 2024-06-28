@@ -84,6 +84,7 @@ const ChildVisitForm: React.FC = () => {
     >
   ) => {
     const { id, value } = e.target;
+
     setFormValues({ ...formValues, [id]: value });
   };
 
@@ -114,80 +115,96 @@ const ChildVisitForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
+  const MIN_HEIGHT_CM = 48; // Minimum height in cm
+  const MIN_WEIGHT_KG = 2.5; // Minimum weight in kg
+
   // Handler for form submission
   const onFinish = async (e: React.FormEvent) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const requiredFields = [
-        "child_name",
-        "visit_number",
-        "visit_phase",
-        "date",
-        "return_date",
-        "vitamin_a",
-        "deworming_medication",
-        "weight_grams",
-        "height",
-        "anemia",
-        "body_temperature",
-        "infant_nutrition",
-        "unable_to_breastfeed",
-        "child_play",
-        "eyes",
-        "mouth",
-        "ears",
-        "navel_healed",
-        "navel_red",
-        "navel_discharge_odor",
-        "has_pus_filled_bumps",
-        "has_turned_yellow",
-        "received_bcg",
-        "received_polio_0",
-        "received_polio_1",
-        "received_dtp_hep_hib",
-        "received_pneumococcal",
-        "received_rota",
-        "name_of_attendant",
-        "attendant_title",
-        "hb_percentage",
-        "bmi"
-      ];      
+    const requiredFields = [
+      "child_name",
+      "visit_number",
+      "visit_phase",
+      "date",
+      "return_date",
+      "vitamin_a",
+      "deworming_medication",
+      "weight_grams",
+      "height",
+      "anemia",
+      "body_temperature",
+      "infant_nutrition",
+      "unable_to_breastfeed",
+      "child_play",
+      "eyes",
+      "mouth",
+      "ears",
+      "navel_healed",
+      "navel_red",
+      "navel_discharge_odor",
+      "has_pus_filled_bumps",
+      "has_turned_yellow",
+      "received_bcg",
+      "received_polio_0",
+      "received_polio_1",
+      "received_dtp_hep_hib",
+      "received_pneumococcal",
+      "received_rota",
+      "name_of_attendant",
+      "attendant_title",
+      "hb_percentage",
+      "bmi",
+    ];
 
-      for (const field of requiredFields) {
-        if (!formValues[field as keyof typeof formValues]) {
-          setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
-          setModalVisible(true);
-          return;
-        }
+    for (const field of requiredFields) {
+      if (!formValues[field as keyof typeof formValues]) {
+        setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
+        setModalVisible(true);
+        return;
       }
+    }
 
-      try {
-        const response = await fetch("http://127.0.0.1:8000/child_visit/", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-          method: "POST",
-        });
-  
-        const data = await response.json();
-        console.log("Response:", data);
-        if (response.ok) {
-          // Handle success scenario
-          setModalMessage("Registration successful!");
-          setModalVisible(true);
-        } else {
-          // Handle error scenario
-          setModalMessage(
-            data.detail || "An error occurred during registration."
-          );
-          setModalVisible(true);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setModalMessage("An error occurred during registration.");
+    // Perform validation for height and weight
+    if (+formValues.height < MIN_HEIGHT_CM) {
+      setModalMessage(`Height should be at least ${MIN_HEIGHT_CM} cm.`);
+      setModalVisible(true);
+      return;
+    }
+
+    if (+formValues.weight_grams < MIN_WEIGHT_KG) {
+      setModalMessage(`Weight should be at least ${MIN_WEIGHT_KG} kg.`);
+      setModalVisible(true);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/child_visit/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      const data = await response.json();
+      console.log("Response:", data);
+      if (response.ok) {
+        // Handle success scenario
+        setModalMessage("Registration successful!");
+        setModalVisible(true);
+      } else {
+        // Handle error scenario
+        setModalMessage(
+          data.detail || "An error occurred during registration."
+        );
         setModalVisible(true);
       }
+    } catch (error) {
+      console.error("Error:", error);
+      setModalMessage("An error occurred during registration.");
+      setModalVisible(true);
+    }
   };
 
   return (

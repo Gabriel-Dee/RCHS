@@ -73,6 +73,9 @@ const ClinicVisitForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
+  const MIN_HEIGHT_CM = 48; // Minimum height in cm
+  const MIN_WEIGHT_KG = 2.5; // Minimum weight in kg
+
   // Handler for form submission
   const onFinish = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +98,19 @@ const ClinicVisitForm: React.FC = () => {
         setModalVisible(true);
         return;
       }
+    }
+
+    // Perform validation for height and weight
+    if (+formValues.height < MIN_HEIGHT_CM) {
+      setModalMessage(`Height should be at least ${MIN_HEIGHT_CM} cm.`);
+      setModalVisible(true);
+      return;
+    }
+
+    if (+formValues.weight < MIN_WEIGHT_KG) {
+      setModalMessage(`Weight should be at least ${MIN_WEIGHT_KG} kg.`);
+      setModalVisible(true);
+      return;
     }
 
     try {
