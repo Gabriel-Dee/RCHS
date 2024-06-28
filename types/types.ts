@@ -120,3 +120,23 @@ export type ParentActivityItem = {
   provider_name: string;
   provider_title: string;
 };
+
+// types.ts
+export interface ChildData {
+  url: string;
+  id: number;
+  child_name: string;
+  healthcare_centre_name: string;
+  mother_name: string;
+  mother: string;
+  child_number: number;
+  child_gender: string;
+  date_of_birth: string;
+  weight_at_birth: number;
+  length_at_birth: number;
+  birth_region: string;
+  birth_district: string;
+  residential_region: string;
+  residential_district: string;
+  maternal_health_worker: string;
+}

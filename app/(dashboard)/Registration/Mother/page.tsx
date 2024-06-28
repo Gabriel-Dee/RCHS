@@ -32,7 +32,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
     births: "",
     registrant_type: "",
     parent_type: "",
-    gender: "", 
+    gender: "",
     phone: "",
   });
 
@@ -358,10 +358,16 @@ const ParentGuardianDetailsForm: React.FC = () => {
             </label>
             <Input
               id="phone"
-              type="number"
-              onChange={handleInputChange}
-              value={formValues.phone}
-              min={0}
+              type="tel"
+              placeholder="784456789"
+              value={formValues.phone.replace("+255", "")} // Display the value without the +255 prefix
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const phoneRegex = /^[0-9\s]*$/; // Regex to allow only numbers and spaces
+                if (phoneRegex.test(inputValue)) {
+                  setFormValues({ ...formValues, phone: `+255${inputValue}` });
+                }
+              }}
             />
           </div>
 
