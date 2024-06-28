@@ -1,13 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Chart, { BubbleDataPoint, ChartConfiguration, ChartConfigurationCustomTypesPerDataset, ChartTypeRegistry, Point } from "chart.js/auto";
-
-// Example data
-const totalRegisteredPatients = 1000;
-const ageDistribution = { "0-1": 200, "1-2": 300, "2-3": 250, "3-4": 150, "4-5": 100 };
-const genderDistribution = { Male: 500, Female: 500 };
-const monthlyVisitTrends = [30, 50, 45, 60, 80, 70, 90, 100, 110, 120, 130, 140];
-const immunizationCoverage = { BCG: 90, OPV: 85, DPT: 80, Measles: 75 };
 
 const createChart = (id: string, config: ChartConfiguration<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | ChartConfigurationCustomTypesPerDataset<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown>) => {
   const canvasElement = document.getElementById(id);
@@ -18,7 +11,20 @@ const createChart = (id: string, config: ChartConfiguration<keyof ChartTypeRegis
 };
 
 const AnalyticsPage: React.FC = () => {
+  const [data, setData] = useState<any>(null);
+
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/Analytics/");
+      const data = await response.json();
+      setData(data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!data) return;
+
     const charts: (Chart<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null)[] = [];
 
     // Total Registered Patients (Doughnut Chart)
@@ -27,7 +33,7 @@ const AnalyticsPage: React.FC = () => {
       data: {
         labels: ["Total Registered Patients"],
         datasets: [{
-          data: [totalRegisteredPatients],
+          data: [data.Total_Count],
           backgroundColor: ["#36A2EB"],
         }],
       },
@@ -37,10 +43,10 @@ const AnalyticsPage: React.FC = () => {
     charts.push(createChart("ageDistributionChart", {
       type: "bar",
       data: {
-        labels: Object.keys(ageDistribution),
+        labels: Object.keys(data.age_distribution),
         datasets: [{
           label: "Age Distribution",
-          data: Object.values(ageDistribution),
+          data: Object.values(data.age_distribution),
           backgroundColor: "#FF6384",
         }],
       },
@@ -50,9 +56,9 @@ const AnalyticsPage: React.FC = () => {
     charts.push(createChart("genderDistributionChart", {
       type: "pie",
       data: {
-        labels: Object.keys(genderDistribution),
+        labels: ["Male", "Female"],
         datasets: [{
-          data: Object.values(genderDistribution),
+          data: [data.Boys_count, data.Girls_Count],
           backgroundColor: ["#36A2EB", "#FF6384"],
         }],
       },
@@ -65,29 +71,16 @@ const AnalyticsPage: React.FC = () => {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
           label: "Monthly Visit Trends",
-          data: monthlyVisitTrends,
+          data: Object.values(data.visit_distribution),
           borderColor: "#FFCE56",
           fill: false,
         }],
       },
     }));
 
-    // Immunization Coverage (Bar Chart)
-    charts.push(createChart("immunizationCoverageChart", {
-      type: "bar",
-      data: {
-        labels: Object.keys(immunizationCoverage),
-        datasets: [{
-          label: "Immunization Coverage",
-          data: Object.values(immunizationCoverage),
-          backgroundColor: "#4BC0C0",
-        }],
-      },
-    }));
-
     // Cleanup charts on component unmount
     return () => charts.forEach(chart => chart && chart.destroy());
-  }, []);
+  }, [data]);
 
   return (
     <div className="analytics-page p-5 bg-white border border-blue-500 rounded-lg">
@@ -109,10 +102,6 @@ const AnalyticsPage: React.FC = () => {
       <div className="chart-container bg-white p-6 rounded-lg shadow-md mt-6 border border-blue-200">
         <h2 className="text-center text-lg font-semibold mb-4">Monthly Visit Trends</h2>
         <canvas id="monthlyVisitTrendsChart"></canvas>
-      </div>
-      <div className="chart-container bg-white p-6 rounded-lg shadow-md mt-6 border border-blue-200">
-        <h2 className="text-center text-lg font-semibold mb-4">Immunization Coverage</h2>
-        <canvas id="immunizationCoverageChart"></canvas>
       </div>
     </div>
   );
