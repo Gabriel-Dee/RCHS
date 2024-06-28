@@ -55,12 +55,10 @@ export function ChildDataTable<TData extends { id: string }, TValue>({
   });
 
   const handleNewPatientRegistration = (e: any) => {
-    e.preventDefault();
     router.push("/Registration/Child");
   };
 
   const handleRowClick = (childData: TData) => {
-    // router.push(`/Profiles/Child?id=${childData['child-id' as keyof TData]}`);
     router.push(`/Profiles/Child?id=${childData.id}`);
   };
 

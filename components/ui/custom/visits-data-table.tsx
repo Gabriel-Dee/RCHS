@@ -55,17 +55,14 @@ export function VisistsDataTable<TData extends { id: string }, TValue>({
   });
 
   const handleNewPatientRegistration = (e: any) => {
-    e.preventDefault();
     router.push("/Registration/Child");
   };
 
   const handleParentRegistration = (e: any) => {
-    e.preventDefault();
     router.push("Registration/Mother");
   };
 
   const handleRowClick = (childData: TData) => {
-    // router.push(`/Profiles/Child?id=${childData['child-id' as keyof TData]}`);
     router.push(`/Profiles/Child?id=${childData.id}`);
   };
 
