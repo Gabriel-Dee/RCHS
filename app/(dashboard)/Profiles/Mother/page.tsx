@@ -6,30 +6,23 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/components/mother-personal-info";
 import ActivityLog from "@/app/components/Visit Activity Log/parent-activity-log";
-
-type ActivityItem = {
-  id: number;
-  description: string;
-  timestamp: string;
-};
+import { ParentActivityItem } from "@/types/types";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const [selectedMotherData, setSelectedMotherData] = useState<any | null>(null);
-  const [selectedActivityData, setSelectedActivityData] = useState<ActivityItem[]>([]);
-
-  console.log("This is the id", id);
-  console.log("Selected Mother Data:", selectedMotherData);
+  const [selectedMotherData, setSelectedMotherData] = useState<any | null>(
+    null
+  );
+  const [selectedActivityData, setSelectedActivityData] = useState<
+    ParentActivityItem[]
+  >([]);
 
   useEffect(() => {
     if (id) {
       fetch(`http://127.0.0.1:8000/mother/${id}/`)
         .then((res) => res.json())
-        .then((data) => {
-          console.log("Mother data fetched:", data);
-          setSelectedMotherData(data);
-        })
+        .then((data) => setSelectedMotherData(data))
         .catch((error) => console.error("Error fetching mother data:", error));
     }
   }, [id]);
@@ -43,13 +36,49 @@ const Profile: React.FC = () => {
           const filteredVisits = data.filter((visit: any) =>
             visit.mother.includes(`/mother/${id}/`)
           );
-          const formattedActivityData: ActivityItem[] = filteredVisits.map(
-            (visit: any) => ({
+          const formattedActivityData: ParentActivityItem[] =
+            filteredVisits.map((visit: any) => ({
               id: visit.id,
               description: `Visit Number ${visit.visit_number}`,
-              timestamp: visit.visit_date ? new Date(visit.visit_date).toLocaleDateString() : "No Date",
-            })
-          );
+              timestamp: visit.visit_date
+                ? new Date(visit.visit_date).toLocaleDateString()
+                : "No Date",
+              mother_name: visit.mother_name,
+              visit_number: visit.visit_number,
+              visit_date: visit.visit_date,
+              body_temperature: visit.body_temperature,
+              blood_pressure: visit.blood_pressure,
+              hb_percentage: visit.hb_percentage,
+              pmtct_nutrition: visit.pmtct_nutrition,
+              breastfeeding: visit.breastfeeding,
+              milk_coming_out: visit.milk_coming_out,
+              breastfeeding_within_hour: visit.breastfeeding_within_hour,
+              sore_nipples: visit.sore_nipples,
+              full_nipples: visit.full_nipples,
+              abscesses: visit.abscesses,
+              breastfeeding_advice: visit.breastfeeding_advice,
+              uterus_shrinking: visit.uterus_shrinking,
+              uterus_pain: visit.uterus_pain,
+              incision_type: visit.incision_type,
+              wound_healed: visit.wound_healed,
+              pus: visit.pus,
+              wound_open: visit.wound_open,
+              bad_smell: visit.bad_smell,
+              lochia_amount: visit.lochia_amount,
+              lochia_color: visit.lochia_color,
+              mental_state: visit.mental_state,
+              mental_issues: visit.mental_issues,
+              advice_given: visit.advice_given,
+              ferrous_sulphate: visit.ferrous_sulphate,
+              folic_acid: visit.folic_acid,
+              tetanus_toxoid_doses: visit.tetanus_toxoid_doses,
+              pmtct_ctx: visit.pmtct_ctx,
+              postpartum_medications: visit.postpartum_medications,
+              vitamin_a: visit.vitamin_a,
+              date_of_next_visit: visit.date_of_next_visit,
+              provider_name: visit.provider_name,
+              provider_title: visit.provider_title,
+            }));
           setSelectedActivityData(formattedActivityData);
         })
         .catch((error) =>

@@ -18,11 +18,6 @@ const Profile: React.FC = () => {
   >([]);
   const [selectedCardData, setSelectedCardData] = useState<CardItem[]>([]);
 
-  console.log("This is the id");
-  console.log(id);
-  console.log(selectedChildData);
-  console.log(selectedActivityData);
-
   useEffect(() => {
     if (id) {
       fetch(`http://127.0.0.1:8000/child/${id}/`)
@@ -48,6 +43,38 @@ const Profile: React.FC = () => {
               timestamp: visit.date
                 ? new Date(visit.date).toLocaleDateString()
                 : "No Date",
+              child_name: visit.child_name,
+              visit_number: visit.visit_number,
+              visit_phase: visit.visit_phase,
+              date: visit.date,
+              return_date: visit.return_date,
+              vitamin_a: visit.vitamin_a,
+              deworming_medication: visit.deworming_medication,
+              weight_grams: visit.weight_grams,
+              height: visit.height,
+              anemia: visit.anemia,
+              body_temperature: visit.body_temperature,
+              infant_nutrition: visit.infant_nutrition,
+              unable_to_breastfeed: visit.unable_to_breastfeed,
+              child_play: visit.child_play,
+              eyes: visit.eyes,
+              mouth: visit.mouth,
+              ears: visit.ears,
+              navel_healed: visit.navel_healed,
+              navel_red: visit.navel_red,
+              navel_discharge_odor: visit.navel_discharge_odor,
+              has_pus_filled_bumps: visit.has_pus_filled_bumps,
+              has_turned_yellow: visit.has_turned_yellow,
+              received_bcg: visit.received_bcg,
+              received_polio_0: visit.received_polio_0,
+              received_polio_1: visit.received_polio_1,
+              received_dtp_hep_hib: visit.received_dtp_hep_hib,
+              received_pneumococcal: visit.received_pneumococcal,
+              received_rota: visit.received_rota,
+              name_of_attendant: visit.name_of_attendant,
+              attendant_title: visit.attendant_title,
+              hb_percentage: visit.hb_percentage,
+              bmi: visit.bmi,
             })
           );
           setSelectedActivityData(formattedActivityData);

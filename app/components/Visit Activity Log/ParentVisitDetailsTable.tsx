@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/registry/new-york/ui/button";
-import { ActivityItem } from "@/types/types";
+import { ParentActivityItem } from "@/types/types";
 import React from "react";
 
 interface VisitDetailsTableProps {
-  visit: ActivityItem;
+  visit: ParentActivityItem;
   onBack: () => void;
 }
 

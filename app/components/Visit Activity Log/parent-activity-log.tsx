@@ -1,23 +1,28 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import VisitDetailsTable from "./ParentVisitDetailsTable";
+import { ParentActivityItem } from "@/types/types";
 
-type ActivityItem = {
-  id: number;
-  description: string;
-  timestamp: string;
-};
 
 interface ActivityLogProps {
-  activityData: ActivityItem[];
+  activityData: ParentActivityItem[];
 }
 
 const ActivityLog: React.FC<ActivityLogProps> = ({ activityData = [] }) => {
-  console.log("Rendering ActivityLog with data:", activityData);
-  console.log(activityData);
   // Ensure activityData is an array
   if (!Array.isArray(activityData)) {
     console.error("activityData is not an array", activityData);
     return <p>Invalid activity data</p>;
+  }
+
+  const [selectedVisit, setSelectedVisit] = useState<ParentActivityItem | null>(null);
+
+  const handleVisitClick = (item: ParentActivityItem) => {
+    setSelectedVisit(item);
+  };
+
+  if (selectedVisit) {
+    return <VisitDetailsTable visit={selectedVisit} onBack={() => setSelectedVisit(null)} />;
   }
 
   return (
@@ -33,6 +38,7 @@ const ActivityLog: React.FC<ActivityLogProps> = ({ activityData = [] }) => {
             <div
               key={item.id}
               className="flex items-center w-full my-6 -ml-1.5"
+              onClick={() => handleVisitClick(item)}
             >
               <div className="w-1/12 z-10">
                 <div className="w-3.5 h-3.5 bg-rchs rounded-full"></div>

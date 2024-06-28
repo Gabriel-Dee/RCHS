@@ -36,13 +36,6 @@ export type MotherAttendance = {
   visit_number: number;
 };
 
-// src/types/activityTypes.ts
-// export type ActivityItem = {
-//   id: number;
-//   description: string;
-//   timestamp: string;
-// };
-
 export type CardItem = {
   id: number;
   weight_grams: number;
@@ -86,3 +79,44 @@ export interface ActivityItem {
   hb_percentage: number;
   bmi: number;
 }
+
+export type ParentActivityItem = {
+  id: number;
+  description: string;
+  timestamp: string;
+  mother_name: string;
+  visit_number: string;
+  visit_date: string;
+  body_temperature: number;
+  blood_pressure: number;
+  hb_percentage: number;
+  pmtct_nutrition: string;
+  breastfeeding: string;
+  milk_coming_out: string;
+  breastfeeding_within_hour: string;
+  sore_nipples: string;
+  full_nipples: string;
+  abscesses: string;
+  breastfeeding_advice: string;
+  uterus_shrinking: string;
+  uterus_pain: string;
+  incision_type: string;
+  wound_healed: string;
+  pus: string;
+  wound_open: string;
+  bad_smell: string;
+  lochia_amount: string;
+  lochia_color: string;
+  mental_state: string;
+  mental_issues: string;
+  advice_given: string;
+  ferrous_sulphate: boolean;
+  folic_acid: boolean;
+  tetanus_toxoid_doses: string;
+  pmtct_ctx: string;
+  postpartum_medications: string;
+  vitamin_a: string;
+  date_of_next_visit: string;
+  provider_name: string;
+  provider_title: string;
+};
