@@ -1,6 +1,7 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
 import Chart, { BubbleDataPoint, ChartConfiguration, ChartConfigurationCustomTypesPerDataset, ChartTypeRegistry, Point } from "chart.js/auto";
+import Tabs from "@/app/components/tabs";
 
 const createChart = (id: string, config: ChartConfiguration<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | ChartConfigurationCustomTypesPerDataset<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown>) => {
   const canvasElement = document.getElementById(id);
@@ -10,24 +11,12 @@ const createChart = (id: string, config: ChartConfiguration<keyof ChartTypeRegis
   return null;
 };
 
-const AnalyticsPage: React.FC = () => {
-  const [data, setData] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/Analytics/");
-      const data = await response.json();
-      setData(data);
-    };
-    fetchData();
-  }, []);
-
+const ChildAnalytics: React.FC<{ data: any }> = ({ data }) => {
   useEffect(() => {
     if (!data) return;
 
     const charts: (Chart<keyof ChartTypeRegistry, (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null)[] = [];
 
-    // Total Registered Patients (Doughnut Chart)
     charts.push(createChart("totalRegisteredPatientsChart", {
       type: "doughnut",
       data: {
@@ -39,7 +28,6 @@ const AnalyticsPage: React.FC = () => {
       },
     }));
 
-    // Age Distribution (Bar Chart)
     charts.push(createChart("ageDistributionChart", {
       type: "bar",
       data: {
@@ -52,7 +40,6 @@ const AnalyticsPage: React.FC = () => {
       },
     }));
 
-    // Gender Distribution (Pie Chart)
     charts.push(createChart("genderDistributionChart", {
       type: "pie",
       data: {
@@ -64,7 +51,6 @@ const AnalyticsPage: React.FC = () => {
       },
     }));
 
-    // Monthly Visit Trends (Line Chart)
     charts.push(createChart("monthlyVisitTrendsChart", {
       type: "line",
       data: {
@@ -78,13 +64,12 @@ const AnalyticsPage: React.FC = () => {
       },
     }));
 
-    // Cleanup charts on component unmount
     return () => charts.forEach(chart => chart && chart.destroy());
   }, [data]);
 
   return (
     <div className="analytics-page p-5 bg-white border border-blue-500 rounded-lg">
-      <h1 className="text-center text-2xl font-bold mb-6">Healthcare Analytics</h1>
+      <h3 className="text-center text-lg font-bold mb-6">Child Analytics</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="chart-container bg-white p-6 rounded-lg shadow-md border border-blue-200">
           <h2 className="text-center text-lg font-semibold mb-4">Total Registered Patients</h2>
@@ -105,6 +90,38 @@ const AnalyticsPage: React.FC = () => {
       </div>
     </div>
   );
+};
+
+const ParentAnalytics: React.FC<{ data: any }> = ({ data }) => {
+  // Similar to ChildAnalytics, you would define the charts for parent/guardian analytics here.
+  // For the sake of brevity, we'll leave this as an exercise to replicate similar to ChildAnalytics.
+
+  return (
+    <div className="analytics-page p-5 bg-white border border-blue-500 rounded-lg">
+      <h2 className="text-center text-lg font-bold mb-6">Parent/Guardian Analytics</h2>
+      {/* Add Parent/Guardian analytics charts here */}
+    </div>
+  );
+};
+
+const AnalyticsPage: React.FC = () => {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/Analytics/");
+      const data = await response.json();
+      setData(data);
+    };
+    fetchData();
+  }, []);
+
+  const tabs = [
+    { name: "Child Analytics", content: <ChildAnalytics data={data} /> },
+    { name: "Parent/Guardian Analytics", content: <ParentAnalytics data={data} /> },
+  ];
+
+  return <Tabs tabs={tabs} />;
 };
 
 export default AnalyticsPage;
