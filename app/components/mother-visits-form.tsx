@@ -5,7 +5,6 @@ const { Option } = Select;
 
 const ClinicVisitForm: React.FC = () => {
   const onFinish = (values: any) => {
-    console.log('Form values:', values);
   };
 
   return (

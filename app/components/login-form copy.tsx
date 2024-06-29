@@ -53,8 +53,6 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       email,
       password,
     });
-
-    console.log(res);
     
     setIsLoading(false); // Set isLoading to false after the sign-in process completes
 

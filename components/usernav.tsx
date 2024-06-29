@@ -15,9 +15,7 @@ import { signOut, useSession } from "next-auth/react";
 
 export function UserNav() {
   const { data: session }: any = useSession();
-
-  // Log session object to the console
-  console.log("Session Data:", session);
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

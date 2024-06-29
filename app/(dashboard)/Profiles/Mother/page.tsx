@@ -32,7 +32,6 @@ const Profile: React.FC = () => {
       fetch(`http://127.0.0.1:8000/mother_visit/`)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Fetched activity data:", data);
           const filteredVisits = data.filter((visit: any) =>
             visit.mother.includes(`/mother/${id}/`)
           );

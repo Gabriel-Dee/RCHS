@@ -22,9 +22,6 @@ interface CardProps {
 
 const NavigationMenu: React.FC<CardProps> = ({ cardData = [] }) => {
   const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
-
-  console.log("Rendering NavigationMenu with data:", cardData);
-
   // Ensure cardData is an array
   if (!Array.isArray(cardData)) {
     console.error("cardData is not an array", cardData);

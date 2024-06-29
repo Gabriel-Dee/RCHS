@@ -10,8 +10,6 @@ interface MotherAttendanceProps {
 const MotherRecords: NextPage<MotherAttendanceProps> = ({
   motherAttendanceData,
 }) => {
-  console.log("Mother Attendance Data in Component:", motherAttendanceData); // Log data
-
   return (
     <div className="w-full">
       <MotherDataTable data={motherAttendanceData} columns={mothercolumns} />

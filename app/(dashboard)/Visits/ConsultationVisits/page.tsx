@@ -45,7 +45,6 @@ const ClinicVisitForm: React.FC = () => {
       try {
         const response = await fetch("http://127.0.0.1:8000/child/");
         const data = await response.json();
-        console.log("Children data:", data); // Log the fetched data
         setChildren(data);
       } catch (error) {
         console.error("Error fetching children:", error);
@@ -126,7 +125,6 @@ const ClinicVisitForm: React.FC = () => {
       );
 
       const data = await response.json();
-      console.log("Response:", data);
       if (response.ok) {
         // Handle success scenario
         setModalMessage("Registration successful!");

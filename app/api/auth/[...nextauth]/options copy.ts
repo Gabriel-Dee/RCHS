@@ -28,10 +28,7 @@ export const options: NextAuthOptions = {
       },
 
       async authorize(credentials: any, req) {
-        console.log(credentials )
-        console.log("function inaitwa" )
         const { email, password } = credentials;
-        console.log(`paass-${password}`);
         try {
           const res = await fetch(`http://127.0.0.1:8000/api/login/`, {
             method: "POST",
@@ -46,16 +43,12 @@ export const options: NextAuthOptions = {
           });
 
           const user = await res.json();
-          console.log(user);
-          console.log(`status - ${user.status}`);
-
           if (res.ok) {
             return user;
           } else if (res.ok && user.status == false) {
             throw new Error(`${user.message}`);
           } else return null;
         } catch (error) {
-          console.log(error);
           throw new Error("Unauthorised user");
         }
       },

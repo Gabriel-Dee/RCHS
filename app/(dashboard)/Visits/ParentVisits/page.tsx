@@ -185,7 +185,6 @@ const ClinicVisitForm: React.FC = () => {
         });
   
         const data = await response.json();
-        console.log("Response:", data);
         if (response.ok) {
           // Handle success scenario
           setModalMessage("Registration successful!");

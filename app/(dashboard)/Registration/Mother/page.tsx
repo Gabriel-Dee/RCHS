@@ -174,8 +174,6 @@ const ParentGuardianDetailsForm: React.FC = () => {
     } as typeof formValues;
 
     try {
-      console.log(filteredFormValues);
-
       const response = await fetch("http://127.0.0.1:8000/mother/", {
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +183,6 @@ const ParentGuardianDetailsForm: React.FC = () => {
       });
 
       const data = await response.json();
-      console.log("Response:", data);
       if (response.ok) {
         // Handle success scenario
         setModalMessage("Registration successful!");

@@ -10,8 +10,6 @@ interface ChildAttendanceProps {
 const ChildRecords: NextPage<ChildAttendanceProps> = ({
   childAttendanceData,
 }) => {
-  console.log("Child Attendance Data in Component:", childAttendanceData); // Log data
-
   return (
     <div className="w-full">
       <ChildDataTable data={childAttendanceData} columns={columns} />

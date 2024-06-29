@@ -10,7 +10,6 @@ interface ChildAttendanceProps {
 const RecentChildAttendance: NextPage<ChildAttendanceProps> = ({
   childAttendanceData,
 }) => {
-  console.log("Recent Visits Data in Component:", childAttendanceData); // Log data
 
   return (
     <div className="w-full">
