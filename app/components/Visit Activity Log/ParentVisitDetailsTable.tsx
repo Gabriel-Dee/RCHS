@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { ParentActivityItem } from "@/types/types";
 import { Button } from "@/registry/new-york/ui/button";
+import EditParentVisitModal from "../EditParentVisitModal";
 
 interface VisitDetailsTableProps {
   visit: ParentActivityItem;
@@ -12,12 +13,37 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
   visit,
   onBack,
 }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSave = (updatedVisit: ParentActivityItem) => {
+    fetch(`http://127.0.0.1:8000/child_visit/${updatedVisit.id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedVisit),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle successful update
+        setIsEditModalOpen(false);
+        onBack(); // Navigate back after saving
+      })
+      .catch((error) => console.error("Error updating visit data:", error));
+  };
   return (
     <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8 border border-rchs">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium text-gray-800 dark:text-white">
           Visit Details
         </h2>
+        <Button onClick={handleEditClick} className="btn mr-2">
+            Edit
+          </Button>
         <Button onClick={onBack} className="btn">
           Back
         </Button>
@@ -57,6 +83,14 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
           </div>
         </div>
       </div>
+      {isEditModalOpen && (
+        <EditParentVisitModal
+          visit={visit}
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          onSave={handleSave}
+        />
+      )}
     </div>
   );
 };

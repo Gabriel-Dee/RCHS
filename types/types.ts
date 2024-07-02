@@ -82,8 +82,8 @@ export interface ActivityItem {
 
 export type ParentActivityItem = {
   id: number;
-  // description: string;
-  // timestamp: string;
+  description: string;
+  timestamp: string;
   mother_name: string;
   visit_number: string;
   visit_date: string;
