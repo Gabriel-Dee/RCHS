@@ -6,12 +6,7 @@ import {
   fillBetweenLinesSD2negToSD3negPlugin,
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
-
-type CardItem = {
-  id: number;
-  weight_grams: number;
-  height: number;
-};
+import { CardItem } from "@/types/types";
 
 interface BoyStatistics0t02Props {
   cardData: CardItem[];
@@ -24,12 +19,6 @@ const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({ cardData = [] }) 
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // // Data preparation
-    // const dataLengthAgainstAge = [
-    //   // this has also been defined at drawLineOnTopPlugin
-    //   45, 46, 48, 50, 51.5, 52, 54, 55.5, 57, 58.5, 60, 62, 65, 66.5, 67.5, 69,
-    //   70.5, 72, 73.5, 75, 76, 78, 80, 82, 85,
-    // ];
     // Replace hardcoded length data with the heights from cardData
     const dataLengthAgainstAge = cardData.map(item => item.height);
  

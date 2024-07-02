@@ -90,7 +90,8 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/child_visit/`)
+      // fetch(`http://127.0.0.1:8000/child_visit/`)
+      fetch(`http://127.0.0.1:8000/api/getCardDetail/`)
         .then((response) => response.json())
         .then((data) => {
           const filteredVisits = data.filter((visit: any) =>

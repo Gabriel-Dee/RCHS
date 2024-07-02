@@ -14,6 +14,7 @@ type CardItem = {
   id: number;
   weight_grams: number;
   height: number;
+  // child_gender: string;
 };
 
 interface CardProps {
