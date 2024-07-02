@@ -24,7 +24,7 @@ const AnnualReport = forwardRef<HTMLDivElement>((props, ref) => {
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
         <header className="bg-blue-500 text-white p-4 rounded-t-lg flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-bold">Monthly Report</h1>
+            <h1 className="text-2xl font-bold">Monthly Postnatal Care Report</h1>
             <h2 className="text-lg">{reportData.health_facility_name}</h2>
           </div>
           <div className="text-right">

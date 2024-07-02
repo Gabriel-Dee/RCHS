@@ -9,19 +9,19 @@ const cards = [
     imgSrc: "https://cdn.tailgrids.com/1.0/assets/images/cards/card-01/image-01.jpg",
     title: "Monthly Reports",
     description: "Get Hospital Monthly Reports Here",
-    route: "/Reports/MonthlyChildReports",
+    route: "/Reports/ChildFollowupReports/Monthly",
   },
   {
     imgSrc: "https://cdn.tailgrids.com/1.0/assets/images/cards/card-01/image-01.jpg",
     title: "Quarterly Reports",
     description: "Get Hospital Quarterly Reports Here",
-    route: "/Reports/QuarterlyChildReports",
+    route: "/Reports/ChildFollowupReports/Quarterly",
   },
   {
     imgSrc: "https://cdn.tailgrids.com/1.0/assets/images/cards/card-01/image-01.jpg",
     title: "Annual Reports",
     description: "Get Hospital Annual Reports Here",
-    route: "/Reports/AnnualChildReports",
+    route: "/Reports/ChildFollowupReports/Annual",
   },
 ];
 
