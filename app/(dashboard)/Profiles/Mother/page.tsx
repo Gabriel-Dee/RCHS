@@ -1,12 +1,13 @@
-"use client";
+"use client"
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import PersonalInfo from "@/app/components/mother-personal-info";
 import ActivityLog from "@/app/components/Visit Activity Log/parent-activity-log";
 import { ParentActivityItem } from "@/types/types";
+import EditMotherModal from "@/app/components/EditParentModal";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ const Profile: React.FC = () => {
   const [selectedActivityData, setSelectedActivityData] = useState<
     ParentActivityItem[]
   >([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -86,6 +88,26 @@ const Profile: React.FC = () => {
     }
   }, [id]);
 
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSave = (updatedData: any) => { // Adjust this type according to your API response structure
+    fetch(`http://127.0.0.1:8000/mother/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSelectedMotherData(data);
+        setIsEditModalOpen(false);
+      })
+      .catch((error) => console.error("Error updating mother data:", error));
+  };
+
   if (!selectedMotherData) {
     return <div>Loading...</div>;
   }
@@ -113,7 +135,10 @@ const Profile: React.FC = () => {
                 <span>New Visit</span>
               </Button>
             </Link>
-            <Button className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+            <Button
+              onClick={handleEditClick}
+              className="flex items-center bg-rchs hover:bg-rchsLight text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+            >
               <span>Edit Patient</span>
             </Button>
           </div>
@@ -121,6 +146,12 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo motherData={selectedMotherData} />
       <ActivityLog activityData={selectedActivityData} />
+      <EditMotherModal
+        motherData={selectedMotherData}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSave}
+      />
     </>
   );
 };

@@ -140,3 +140,31 @@ export interface ChildData {
   residential_district: string;
   maternal_health_worker: string;
 }
+
+export interface MotherData {
+  url: string;
+  id: number;
+  healthcare_centre_name: string;
+  mother_name: string;
+  registration_number: number;
+  mosquito_net_voucher_number: number;
+  mother_age: number;
+  mother_education: string;
+  mother_employment: string;
+  height: number;
+  partner_name: string;
+  partner_age: number;
+  partner_work: string;
+  partner_education: string;
+  residential_region: string;
+  residential_district: string;
+  chairperson_name: string;
+  pregnancies: number;
+  alive_children: number;
+  miscarriages: number;
+  births: number;
+  registrant_type: string;
+  parent_type: string;
+  gender: string;
+  phone: string;
+}
