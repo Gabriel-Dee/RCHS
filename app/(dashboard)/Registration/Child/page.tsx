@@ -471,13 +471,13 @@ const ChildDetailsForm: React.FC = () => {
             Submit
           </Button>
         </div>
+        {modalVisible && (
+          <NotificationModal
+            message={modalMessage}
+            onClose={() => setModalVisible(false)}
+          />
+        )}
       </form>
-      {modalVisible && (
-        <NotificationModal
-          message={modalMessage}
-          onClose={() => setModalVisible(false)}
-        />
-      )}
     </section>
   );
 };

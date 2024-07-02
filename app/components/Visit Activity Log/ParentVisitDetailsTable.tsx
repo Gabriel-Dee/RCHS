@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@/registry/new-york/ui/button";
-import { ParentActivityItem } from "@/types/types";
 import React from "react";
+import { ParentActivityItem } from "@/types/types";
+import { Button } from "@/registry/new-york/ui/button";
 
 interface VisitDetailsTableProps {
   visit: ParentActivityItem;
