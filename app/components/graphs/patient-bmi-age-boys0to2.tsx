@@ -7,12 +7,7 @@ import {
   fillBetweenLinesSD2toSD3Plugin,
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
-
-type CardItem = {
-  id: number;
-  weight_grams: number;
-  height: number;
-};
+import { CardItem } from "@/types/types";
 
 interface BoyBmiStatistics0to2Props {
   cardData: CardItem[];
@@ -28,13 +23,6 @@ const BoyBmiStatistics0to2: React.FC<BoyBmiStatistics0to2Props> = ({
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // // Updated BMI data
-    // const dataBmiAgainstAge = [
-    //   16.17, 16.0, 15.73, 15.41, 15.09, 14.77, 14.48, 14.22, 13.96, 13.73, 13.5,
-    //   13.31, 13.12, 12.96, 12.81, 12.68, 12.56, 12.45, 12.35, 12.26, 12.18,
-    //   12.11, 12.04, 11.99, 11.93,
-    // ];
-
     // Replace hardcoded length data with the heights from cardData
     // Calculate BMI values from height and weight_grams in cardData
     const dataBmiAgainstAge = cardData.map((item) => {

@@ -8,7 +8,20 @@ import {
 } from "@/plugins/fillBetweenLinesPlugin";
 import { drawLineOnTopPlugin } from "@/plugins/drawLineOnTopPlugin";
 
-const GirlBmiStatistics0t02: React.FC = () => {
+type CardItem = {
+  id: number;
+  weight_grams: number;
+  height: number;
+  child_gender: string;
+};
+
+interface GirlBmiStatistics0t02Props {
+  cardData: CardItem[];
+}
+
+const GirlBmiStatistics0t02: React.FC<GirlBmiStatistics0t02Props> = ({
+  cardData = [],
+}) => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
@@ -16,12 +29,13 @@ const GirlBmiStatistics0t02: React.FC = () => {
   Chart.register(drawLineOnTopPlugin);
 
   useEffect(() => {
-    // Updated BMI data
-    const dataBmiAgainstAge = [
-      16.17, 16.0, 15.73, 15.41, 15.09, 14.77, 14.48, 14.22, 13.96, 13.73, 13.5,
-      13.31, 13.12, 12.96, 12.81, 12.68, 12.56, 12.45, 12.35, 12.26, 12.18,
-      12.11, 12.04, 11.99, 11.93,
-    ];
+    // Replace hardcoded length data with the heights from cardData
+    // Calculate BMI values from height and weight_grams in cardData
+    const dataBmiAgainstAge = cardData.map((item) => {
+      const height_m = item.height / 100; // Convert height from cm to meters
+      const weight_kg = item.weight_grams; // Convert weight from grams to kilograms
+      return weight_kg / (height_m * height_m); // Calculate BMI
+    });
 
     // Updated line1Data
     const line1Data = [
