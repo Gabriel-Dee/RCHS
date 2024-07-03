@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
+import { ActivityItem, CardItem, ChildData } from "@/types/types";
 import PersonalInfo from "@/app/components/child-personal-info";
 import NavigationMenu from "@/app/components/graphs/graph-tabs";
 import ActivityLog from "@/app/components/Visit Activity Log/child-activity-log";
-import { ActivityItem, CardItem, ChildData } from "@/types/types";
 import EditChildModal from "@/app/components/EditChildModal";
+import NavigationMenuGirl from "@/app/components/graphs/graph-tabs-girl";
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
@@ -90,7 +91,6 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      // fetch(`http://127.0.0.1:8000/child_visit/`)
       fetch(`http://127.0.0.1:8000/api/getCardDetail/`)
         .then((response) => response.json())
         .then((data) => {
@@ -105,9 +105,9 @@ const Profile: React.FC = () => {
               child_gender: visit.child_gender,
             })
           );
-          console.log('====================================');
+          console.log("====================================");
           console.log(formattedCardData);
-          console.log('====================================');
+          console.log("====================================");
           setSelectedCardData(formattedCardData);
         })
         .catch((error) => console.error("Error fetching card data:", error));
@@ -174,7 +174,11 @@ const Profile: React.FC = () => {
       </div>
       <PersonalInfo childData={selectedChildData} />
       <ActivityLog activityData={selectedActivityData} />
-      <NavigationMenu cardData={selectedCardData} />
+      {selectedChildData.child_gender === "Male" ? (
+        <NavigationMenu cardData={selectedCardData} />
+      ) : (
+        <NavigationMenuGirl cardData={selectedCardData} />
+      )}
       <EditChildModal
         childData={selectedChildData}
         isOpen={isEditModalOpen}

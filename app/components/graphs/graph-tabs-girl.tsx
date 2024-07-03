@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { CardItem } from "@/types/types";
-import BoyBmiStatistics0to2 from "./patient-bmi-age-boys0to2";
-import BoyStatistics0t02 from "./patient-length-age-boys-0t02";
-import BoyWeightStatistics from "./patient-weight-age-boys";
+import GirlWeightStatistics from "./patient-weight-age-girls";
+import GirlStatistics0to2 from "./patient-length-age-girls-0to2";
+import GirlBmiStatistics0t02 from "./patient-bmi-age-girls0to2";
+
 
 enum Menu {
   LENGTH_HEIGHT = "Length/Height",
@@ -15,7 +16,7 @@ interface CardProps {
   cardData: CardItem[];
 }
 
-const NavigationMenu: React.FC<CardProps> = ({ cardData = [] }) => {
+const NavigationMenuGirl: React.FC<CardProps> = ({ cardData = [] }) => {
   const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
   // Ensure cardData is an array
   if (!Array.isArray(cardData)) {
@@ -80,12 +81,12 @@ const NavigationMenu: React.FC<CardProps> = ({ cardData = [] }) => {
             </li>
           </ul>
         </div>
-        {selectedMenu === Menu.LENGTH_HEIGHT && <BoyStatistics0t02 cardData={cardData} />}
-        {selectedMenu === Menu.WEIGHT && <BoyWeightStatistics cardData={cardData} />}
-        {selectedMenu === Menu.BMI && <BoyBmiStatistics0to2 cardData={cardData} />}
+        {selectedMenu === Menu.LENGTH_HEIGHT && <GirlStatistics0to2 cardData={cardData} />}
+        {selectedMenu === Menu.WEIGHT && <GirlWeightStatistics cardData={cardData} />}
+        {selectedMenu === Menu.BMI && <GirlBmiStatistics0t02 cardData={cardData} />}
       </div>
     </div>
   );
 };
 
-export default NavigationMenu;
+export default NavigationMenuGirl;
