@@ -3,30 +3,30 @@
 import React, { useEffect, useState, forwardRef, ReactNode } from 'react';
 
 interface ReportData {
-  "General Information": {
-    "Health Facility Name": string;
-    "District": string;
-    "Region": string;
-    "Month": number;
-    "Year": number;
-    "Report Preparer's Name": string;
-    "Date": number;
-    "Cadre": string;
-    "Position": string;
-    "Approved by": string;
-    "Facility/District/Region Phone Number": string;
-    "Date Report Received at District": string;
+  general_information: {
+    health_facility_name: string;
+    district: string;
+    region: string;
+    month: number;
+    year: number;
+    report_preparer_name: string;
+    date: number;
+    cadre: string;
+    position: string;
+    approved_by: string;
+    facility_district_region_phone_number: string;
+    date_report_received_at_district: string;
   };
-  "Number of Registered Children": Record<string, Record<string, number>>;
-  "Attendance and Weight-for-Age/Height-for-Age Ratios (Under 1 Year)": Record<string, Record<string, number>>;
-  "Attendance and Weight-for-Age/Height-for-Age Ratios (1 to 5 Years)": Record<string, Record<string, number>>;
-  "Vitamin A Supplementation by Age": Record<string, Record<string, number>>;
-  "Deworming with Mebendazole/Albendazole": Record<string, Record<string, number>>;
-  "Feeding of Infants Born to HIV Positive Mothers": Record<string, Record<string, number>>;
-  "PMTCT Information/Recipients": Record<string, Record<string, number>>;
+  number_of_registered_children: Record<string, Record<string, number>>;
+  attendance_and_weight_for_age_height_for_age_ratios_under_1_year: Record<string, Record<string, number>>;
+  attendance_and_weight_for_age_height_for_age_ratios_1_to_5_years: Record<string, Record<string, number>>;
+  vitamin_a_supplementation_by_age: Record<string, Record<string, number>>;
+  deworming_with_mebendazole_albendazole: Record<string, Record<string, number>>;
+  feeding_of_infants_born_to_hiv_positive_mothers: Record<string, Record<string, number>>;
+  pmtct_information_recipients: Record<string, Record<string, number>>;
 }
 
-const ChildFollowUpReport = forwardRef<HTMLDivElement>((props, ref) => {
+const MonthlyReport = forwardRef<HTMLDivElement>((props, ref) => {
   const [reportData, setReportData] = useState<ReportData | null>(null);
 
   useEffect(() => {
@@ -40,84 +40,48 @@ const ChildFollowUpReport = forwardRef<HTMLDivElement>((props, ref) => {
     return <div>Loading...</div>;
   }
 
+  const { general_information, ...sections } = reportData;
+
   return (
     <div ref={ref} className="min-h-screen bg-gray-100 p-4 rounded-lg">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
         <header className="bg-blue-500 text-white p-4 rounded-t-lg flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-bold">Quarterly Child Follow-up Report</h1>
-            <h2 className="text-lg">Clinic Name</h2>
-            {/* <h2 className="text-lg">{reportData.health_facility_name}</h2> */}
+            <h1 className="text-2xl font-bold">Child Follow-up Report</h1>
+            <h2 className="text-lg">{general_information.health_facility_name}</h2>
           </div>
           <div className="text-right">
             <h3 className="text-xl font-bold">Prepared by</h3>
-            <div className="text-gray-200">{reportData["General Information"]["Date"]}</div>
+            <div className="text-gray-200">{new Date(general_information.date_report_received_at_district).toLocaleDateString()}</div>
           </div>
         </header>
 
         <Section title="General Information">
           <Table>
-            {Object.entries(reportData["General Information"]).map(([key, value]) => (
-              <TableRow key={key} label={key} value={value.toString()} />
-            ))}
+            <TableRow label="Health Facility Name" value={general_information.health_facility_name} />
+            <TableRow label="District" value={general_information.district} />
+            <TableRow label="Region" value={general_information.region} />
+            <TableRow label="Month" value={general_information.month.toString()} />
+            <TableRow label="Year" value={general_information.year.toString()} />
+            <TableRow label="Report Preparer's Name" value={general_information.report_preparer_name} />
+            <TableRow label="Date" value={general_information.date.toString()} />
+            <TableRow label="Cadre" value={general_information.cadre} />
+            <TableRow label="Position" value={general_information.position} />
+            <TableRow label="Approved by" value={general_information.approved_by} />
+            <TableRow label="Facility/District/Region Phone Number" value={general_information.facility_district_region_phone_number} />
+            <TableRow label="Date Report Received at District" value={general_information.date_report_received_at_district} />
           </Table>
         </Section>
 
-        <Section title="Number of Registered Children">
-          <TableWithGender>
-            {Object.entries(reportData["Number of Registered Children"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="Attendance and Weight-for-Age/Height-for-Age Ratios (Under 1 Year)">
-          <TableWithGender>
-            {Object.entries(reportData["Attendance and Weight-for-Age/Height-for-Age Ratios (Under 1 Year)"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="Attendance and Weight-for-Age/Height-for-Age Ratios (1 to 5 Years)">
-          <TableWithGender>
-            {Object.entries(reportData["Attendance and Weight-for-Age/Height-for-Age Ratios (1 to 5 Years)"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="Vitamin A Supplementation by Age">
-          <TableWithGender>
-            {Object.entries(reportData["Vitamin A Supplementation by Age"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="Deworming with Mebendazole/Albendazole">
-          <TableWithGender>
-            {Object.entries(reportData["Deworming with Mebendazole/Albendazole"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="Feeding of Infants Born to HIV Positive Mothers">
-          <TableWithGender>
-            {Object.entries(reportData["Feeding of Infants Born to HIV Positive Mothers"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
-
-        <Section title="PMTCT Information/Recipients">
-          <TableWithGender>
-            {Object.entries(reportData["PMTCT Information/Recipients"]).map(([key, value]) => (
-              <GenderTableRow key={key} label={key} data={value} />
-            ))}
-          </TableWithGender>
-        </Section>
+        {Object.entries(sections).map(([sectionTitle, sectionData]) => (
+          <Section key={sectionTitle} title={sectionTitle.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}>
+            <TableWithGender>
+              {Object.entries(sectionData).map(([key, data]) => (
+                <GenderTableRow key={key} label={key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} data={data} />
+              ))}
+            </TableWithGender>
+          </Section>
+        ))}
       </div>
     </div>
   );
@@ -138,7 +102,7 @@ const Table: React.FC<{ children: ReactNode }> = ({ children }) => (
 
 const TableRow: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <tr className="border-t">
-    <td className="p-2 font-semibold">{label.replace(/_/g, " ")}:</td>
+    <td className="p-2 font-semibold">{label}:</td>
     <td className="p-2">{value}</td>
   </tr>
 );
@@ -160,10 +124,10 @@ const TableWithGender: React.FC<{ children: ReactNode }> = ({ children }) => (
 const GenderTableRow: React.FC<{ label: string; data: Record<string, number> }> = ({ label, data }) => (
   <tr className="border-t">
     <td className="p-2 font-semibold">{label}</td>
-    <td className="p-2">{data.Male}</td>
-    <td className="p-2">{data.Female}</td>
-    <td className="p-2">{data.Total}</td>
+    <td className="p-2">{data.male}</td>
+    <td className="p-2">{data.female}</td>
+    <td className="p-2">{data.total}</td>
   </tr>
 );
 
-export default ChildFollowUpReport;
+export default MonthlyReport;
