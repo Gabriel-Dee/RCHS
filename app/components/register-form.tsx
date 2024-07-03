@@ -49,8 +49,39 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
     setIsLoading(true); // Set isLoading to true when submitting the form
 
+    //   try {
+    //     const res = await fetch("http://127.0.0.1:8000/api/register/", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         user_id,
+    //         username,
+    //         email,
+    //         password,
+    //         first_name,
+    //         middle_name,
+    //         last_name,
+    //         occupation,
+    //       }),
+    //     });
+    //     if (res.status === 400) {
+    //       setError("This email is already registered");
+    //     }
+    //     if (res.status === 200) {
+    //       setError("");
+    //       router.push("/Login");
+    //     }
+    //   } catch (error) {
+    //     setError("Error, try again");
+    //   } finally {
+    //     setIsLoading(false); // Set isLoading to false after the registration process completes
+    //   }
+    // };
+
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/register/", {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,6 +97,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
           occupation,
         }),
       });
+
       if (res.status === 400) {
         setError("This email is already registered");
       }
@@ -76,7 +108,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
     } catch (error) {
       setError("Error, try again");
     } finally {
-      setIsLoading(false); // Set isLoading to false after the registration process completes
+      setIsLoading(false);
     }
   };
 

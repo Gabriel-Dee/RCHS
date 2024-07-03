@@ -11,7 +11,8 @@ export default async function Home() {
       {session ? (
         <Login />
       ) : (
-        <h2>Home - No session</h2>
+        // <h2>Home - No session</h2>
+        <Login />
       )}
     </>
   );
