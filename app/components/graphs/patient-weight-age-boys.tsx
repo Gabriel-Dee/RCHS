@@ -24,8 +24,11 @@ const BoyWeightStatistics: React.FC<BoyWeightStatisticsProps> = ({
 
   useEffect(() => {
     // Replace hardcoded weight data with the weights from cardData
-    const dataWeightAgainstAge = cardData.map((item) => item.weight_grams);
-
+    // const dataWeightAgainstAge = cardData.map((item) => item.weight_grams);
+    const dataWeightAgainstAge = cardData
+    .map((item) => item.weight_grams)
+    .filter((_, index) => index === 0 || index >= 3);
+  
     // Updated line1Data
     const line1Data = [
       2.1, 2.9, 3.8, 4.4, 4.9, 5.3, 5.7, 5.9, 6.2, 6.4, 6.6, 6.8, 6.9, 7.1, 7.2,

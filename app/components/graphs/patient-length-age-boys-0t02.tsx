@@ -12,7 +12,9 @@ interface BoyStatistics0t02Props {
   cardData: CardItem[];
 }
 
-const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({ cardData = [] }) => {
+const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({
+  cardData = [],
+}) => {
   // Register the Chart plugins
   Chart.register(fillBetweenLinesSD2toSD2negPlugin);
   Chart.register(fillBetweenLinesSD2negToSD3negPlugin);
@@ -20,8 +22,10 @@ const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({ cardData = [] }) 
 
   useEffect(() => {
     // Replace hardcoded length data with the heights from cardData
-    const dataLengthAgainstAge = cardData.map(item => item.height);
- 
+    const dataLengthAgainstAge = cardData
+      .map((item) => item.height)
+      .filter((_, index) => index === 0 || index >= 3);
+
     // Data for all seven lines
     const line1Data = [
       44.2, 48.9, 52.4, 55.3, 57.6, 59.6, 61.2, 62.7, 64, 65.2, 66.4, 67.6,
@@ -254,7 +258,9 @@ const BoyStatistics0t02: React.FC<BoyStatistics0t02Props> = ({ cardData = [] }) 
         <h2 className="text-xl text-gray-900 font-bold text-center">
           Child Nutritional Status (Length Vs Age)
         </h2>
-        <p className="text-md text-gray-900 font-bold text-center">This is for Growth Tracking form Birth to two Years of Age</p>
+        <p className="text-md text-gray-900 font-bold text-center">
+          This is for Growth Tracking form Birth to two Years of Age
+        </p>
 
         {/* Omitted code for statistics cards */}
 

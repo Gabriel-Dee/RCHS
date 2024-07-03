@@ -31,11 +31,14 @@ const GirlBmiStatistics0t02: React.FC<GirlBmiStatistics0t02Props> = ({
   useEffect(() => {
     // Replace hardcoded length data with the heights from cardData
     // Calculate BMI values from height and weight_grams in cardData
-    const dataBmiAgainstAge = cardData.map((item) => {
+    const dataBmiAgainstAge = cardData
+    .map((item) => {
       const height_m = item.height / 100; // Convert height from cm to meters
-      const weight_kg = item.weight_grams; // Convert weight from grams to kilograms
+      const weight_kg = item.weight_grams; // Weight in grams
       return weight_kg / (height_m * height_m); // Calculate BMI
-    });
+    })
+    .filter((_, index) => index === 0 || index >= 3);
+  
 
     // Updated line1Data
     const line1Data = [

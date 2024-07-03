@@ -22,8 +22,10 @@ const GirlStatistics0to2: React.FC<GirlStatistics0t02Props> = ({
     Chart.register(drawLineOnTopPlugin);
 
     // Replace hardcoded length data with the heights from cardData
-    const dataLengthAgainstAge = cardData.map((item) => item.height);
-
+    const dataLengthAgainstAge = cardData
+      .map((item) => item.height)
+      .filter((_, index) => index === 0 || index >= 3);
+      
     // Data for all seven lines
     const line1Data = [
       43.6, 47.8, 51, 53.5, 55.6, 57.4, 58.9, 60.3, 61.7, 62.9, 64.1, 65.2,
