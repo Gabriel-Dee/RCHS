@@ -6,6 +6,13 @@ import NotificationModal from "@/app/components/NotificationModal";
 
 const { Option } = Select;
 
+const publicHolidays = [
+  "2024-01-01",
+  "2024-07-04",
+  "2024-12-25",
+  // add more holidays as needed
+];
+
 interface Mother {
   url: string;
   id: string;
@@ -30,6 +37,33 @@ interface Mother {
   miscarriage_age: string;
   miscarriage_year: string;
 }
+
+const calculateNextVisitDate = (
+  currentVisitDate: string | number | Date,
+  visitNumber: string,
+  publicHolidays: string[]
+): string => {
+  const currentVisit = new Date(currentVisitDate);
+  let nextVisit = new Date(currentVisitDate);
+
+  if (visitNumber === "First") {
+    nextVisit.setDate(currentVisit.getDate() + 7);
+  } else if (visitNumber === "Second") {
+    nextVisit.setDate(currentVisit.getDate() + 28);
+  } else if (visitNumber === "Third") {
+    nextVisit.setDate(currentVisit.getDate() + 42);
+  }
+
+  while (
+    nextVisit.getDay() === 0 ||
+    nextVisit.getDay() === 6 ||
+    publicHolidays.includes(nextVisit.toISOString().split("T")[0])
+  ) {
+    nextVisit.setDate(nextVisit.getDate() + 1);
+  }
+
+  return nextVisit.toISOString().split("T")[0];
+};
 
 const ClinicVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
@@ -107,6 +141,20 @@ const ClinicVisitForm: React.FC = () => {
     setFormValues({ ...formValues, [id]: value });
   };
 
+  useEffect(() => {
+    if (formValues.visit_date && formValues.visit_number) {
+      const nextVisitDate = calculateNextVisitDate(
+        formValues.visit_date,
+        formValues.visit_number,
+        publicHolidays
+      );
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        date_of_next_visit: nextVisitDate,
+      }));
+    }
+  }, [formValues.visit_date, formValues.visit_number])
+
   const handleSelectChange = (id: string, value: string) => {
     setFormValues({ ...formValues, [id]: value });
   };
@@ -118,89 +166,89 @@ const ClinicVisitForm: React.FC = () => {
 
   // Handler for form submission
   const onFinish = async (e: any) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const requiredFields = [
-        // Section 1: Visit Information
-        "visit_date",
-        "visit_number",
-        "mother_name",
-        // Section 2: Health Measurements
-        "body_temperature",
-        "blood_pressure",
-        "hb_percentage",
-        "pmtct_nutrition",
-        // Section 3: Breastfeeding
-        "breastfeeding",
-        "milk_coming_out",
-        "breastfeeding_within_hour",
-        "sore_nipples",
-        "full_nipples",
-        "abscesses",
-        "breastfeeding_advice",
-        // Section 4: Uterus
-        "uterus_shrinking",
-        "uterus_pain",
-        // Section 5: Incision / Surgical wound
-        "incision_type",
-        "wound_healed",
-        "pus",
-        "wound_open",
-        "bad_smell",
-        "lochia_amount",
-        "lochia_color",
-        // Section 6: Mental State
-        "mental_state",
-        "mental_issues",
-        // Section 7: Family Planning
-        "advice_given",
-        // Section 8: Prophylactic Medications
-        "ferrous_sulphate",
-        "folic_acid",
-        "tetanus_toxoid_doses",
-        // Section 9: Provider Information
-        "pmtct_ctx",
-        "postpartum_medications",
-        "vitamin_a",
-        "date_of_next_visit",
-        "provider_name",
-        "provider_title",
-      ];
+    const requiredFields = [
+      // Section 1: Visit Information
+      "visit_date",
+      "visit_number",
+      "mother_name",
+      // Section 2: Health Measurements
+      "body_temperature",
+      "blood_pressure",
+      "hb_percentage",
+      "pmtct_nutrition",
+      // Section 3: Breastfeeding
+      "breastfeeding",
+      "milk_coming_out",
+      "breastfeeding_within_hour",
+      "sore_nipples",
+      "full_nipples",
+      "abscesses",
+      "breastfeeding_advice",
+      // Section 4: Uterus
+      "uterus_shrinking",
+      "uterus_pain",
+      // Section 5: Incision / Surgical wound
+      "incision_type",
+      "wound_healed",
+      "pus",
+      "wound_open",
+      "bad_smell",
+      "lochia_amount",
+      "lochia_color",
+      // Section 6: Mental State
+      "mental_state",
+      "mental_issues",
+      // Section 7: Family Planning
+      "advice_given",
+      // Section 8: Prophylactic Medications
+      "ferrous_sulphate",
+      "folic_acid",
+      "tetanus_toxoid_doses",
+      // Section 9: Provider Information
+      "pmtct_ctx",
+      "postpartum_medications",
+      "vitamin_a",
+      "date_of_next_visit",
+      "provider_name",
+      "provider_title",
+    ];
 
-      for (const field of requiredFields) {
-        if (!formValues[field as keyof typeof formValues]) {
-          setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
-          setModalVisible(true);
-          return;
-        }
+    for (const field of requiredFields) {
+      if (!formValues[field as keyof typeof formValues]) {
+        setModalMessage(`Please fill the ${field.replace("_", " ")} field.`);
+        setModalVisible(true);
+        return;
       }
+    }
 
-      try {
-        const response = await fetch("http://127.0.0.1:8000/mother_visit/", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-          method: "POST",
-        });
-  
-        const data = await response.json();
-        if (response.ok) {
-          // Handle success scenario
-          setModalMessage("Registration successful!");
-          setModalVisible(true);
-        } else {
-          // Handle error scenario
-          setModalMessage(
-            data.detail || "An error occurred during registration."
-          );
-          setModalVisible(true);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setModalMessage("An error occurred during registration.");
+    try {
+      const response = await fetch("http://127.0.0.1:8000/mother_visit/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+        method: "POST",
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // Handle success scenario
+        setModalMessage("Registration successful!");
+        setModalVisible(true);
+      } else {
+        // Handle error scenario
+        setModalMessage(
+          data.detail || "An error occurred during registration."
+        );
         setModalVisible(true);
       }
+    } catch (error) {
+      console.error("Error:", error);
+      setModalMessage("An error occurred during registration.");
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -238,20 +286,7 @@ const ClinicVisitForm: React.FC = () => {
             ))}
           </Select>
         </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="visit_date" className="text-gray-700">
-              Visit Date
-            </label>
-            <Input
-              id="visit_date"
-              type="date"
-              onChange={handleInputChange}
-              value={formValues.visit_date}
-            />
-          </div>
-
-          <div>
+        <div>
             <label htmlFor="visit_number" className="text-gray-700 block">
               Visit Number
             </label>
@@ -270,6 +305,42 @@ const ClinicVisitForm: React.FC = () => {
               <Option value="Fourth">Fourth (in 42 days)</Option>
             </Select>
           </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {/* <div>
+            <label htmlFor="visit_date" className="text-gray-700">
+              Visit Date
+            </label>
+            <Input
+              id="visit_date"
+              type="date"
+              onChange={handleInputChange}
+              value={formValues.visit_date}
+            />
+          </div> */}
+
+          <div>
+            <label htmlFor="visit_date" className="text-gray-700">
+              Visit Date
+            </label>
+            <Input
+              id="visit_date"
+              type="date"
+              onChange={handleInputChange}
+              value={formValues.visit_date}
+            />
+          </div>
+          <div>
+            <label htmlFor="date_of_next_visit" className="text-gray-700">
+              Return Date
+            </label>
+            <Input
+              id="date_of_next_visit"
+              type="date"
+              onChange={handleInputChange}
+              value={formValues.date_of_next_visit}
+            />
+          </div>
+
         </div>
 
         {/* Section 2: Health Measurements */}
@@ -779,7 +850,7 @@ const ClinicVisitForm: React.FC = () => {
             </Select>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="date_of_next_visit" className="text-gray-700">
               Date of Next Visit
             </label>
@@ -789,7 +860,7 @@ const ClinicVisitForm: React.FC = () => {
               onChange={handleInputChange}
               value={formValues.date_of_next_visit}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Section 10: Provider Information */}
