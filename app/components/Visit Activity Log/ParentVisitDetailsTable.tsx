@@ -41,12 +41,14 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
         <h2 className="text-lg font-medium text-gray-800 dark:text-white">
           Visit Details
         </h2>
-        <Button onClick={handleEditClick} className="btn mr-2">
+        <div>
+          {/* <Button onClick={handleEditClick} className="btn mr-2">
             Edit
+          </Button> */}
+          <Button onClick={onBack} className="btn">
+            Back
           </Button>
-        <Button onClick={onBack} className="btn">
-          Back
-        </Button>
+        </div>
       </div>
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
         Details of the selected visit.

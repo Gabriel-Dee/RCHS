@@ -10,6 +10,8 @@ import NavigationMenu from "@/app/components/graphs/graph-tabs";
 import ActivityLog from "@/app/components/Visit Activity Log/child-activity-log";
 import EditChildModal from "@/app/components/EditChildModal";
 import NavigationMenuGirl from "@/app/components/graphs/graph-tabs-girl";
+import Recommendations from "@/app/components/recommendations";
+
 
 const Profile: React.FC = () => {
   const searchParams = useSearchParams();
@@ -180,6 +182,7 @@ const Profile: React.FC = () => {
       ) : (
         <NavigationMenuGirl cardData={selectedCardData} />
       )}
+      <Recommendations childNumber={selectedChildData.child_number.toString()} />
       <EditChildModal
         childData={selectedChildData}
         isOpen={isEditModalOpen}

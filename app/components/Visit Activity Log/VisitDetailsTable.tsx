@@ -4,7 +4,6 @@ import { ActivityItem } from "@/types/types";
 import { Button } from "@/registry/new-york/ui/button";
 import EditVisitModal from "../EditChildVisitModal";
 
-
 interface VisitDetailsTableProps {
   visit: ActivityItem;
   onBack: () => void;
@@ -44,9 +43,9 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
           Visit Details
         </h2>
         <div>
-          <Button onClick={handleEditClick} className="btn mr-2">
+          {/* <Button onClick={handleEditClick} className="btn mr-2">
             Edit
-          </Button>
+          </Button> */}
           <Button onClick={onBack} className="btn">
             Back
           </Button>
