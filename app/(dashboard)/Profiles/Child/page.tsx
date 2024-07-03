@@ -102,8 +102,12 @@ const Profile: React.FC = () => {
               id: visit.id,
               weight_grams: visit.weight_grams,
               height: visit.height,
+              child_gender: visit.child_gender,
             })
           );
+          console.log('====================================');
+          console.log(formattedCardData);
+          console.log('====================================');
           setSelectedCardData(formattedCardData);
         })
         .catch((error) => console.error("Error fetching card data:", error));
