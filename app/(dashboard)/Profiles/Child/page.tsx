@@ -32,6 +32,10 @@ const Profile: React.FC = () => {
     }
   }, [id]);
 
+  console.log("====================================");
+  console.log(selectedChildData);
+  console.log("====================================");
+
   useEffect(() => {
     if (id) {
       fetch(`http://127.0.0.1:8000/child_visit/`)
@@ -105,9 +109,6 @@ const Profile: React.FC = () => {
               child_gender: visit.child_gender,
             })
           );
-          console.log("====================================");
-          console.log(formattedCardData);
-          console.log("====================================");
           setSelectedCardData(formattedCardData);
         })
         .catch((error) => console.error("Error fetching card data:", error));
