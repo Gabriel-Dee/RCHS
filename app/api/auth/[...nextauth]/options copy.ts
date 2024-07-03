@@ -9,11 +9,10 @@ import User from "@/models/User";
 import connect from "@/utils/db";
 
 export const options: NextAuthOptions = {
-
   providers: [
     CredentialsProvider({
       name: "Credentials",
-
+      
       credentials: {
         email: {
           label: "Email:",
@@ -26,75 +25,40 @@ export const options: NextAuthOptions = {
           placeholder: "Enter Password",
         },
       },
-
-      async authorize(credentials: any, req) {
-        const { email, password } = credentials;
+      async authorize(credentials: any) {
+        await connect();
         try {
-          const res = await fetch(`http://127.0.0.1:8000/api/login/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify({
-              email: email,
-              password: password,
-            }),
-          });
-
-          const user = await res.json();
-          if (res.ok) {
-            return user;
-          } else if (res.ok && user.status == false) {
-            throw new Error(`${user.message}`);
-          } else return null;
-        } catch (error) {
-          throw new Error("Unauthorised user");
+          const user = await User.findOne({ email: credentials.email });
+          if (user) {
+            const isPasswordCorrect = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
+            if (isPasswordCorrect) {
+              return user;
+            }
+          }
+        } catch (err: any) {
+          throw new Error(err);
         }
       },
+
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-
-  callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
-    },
-    async signIn({ user, account, profile, email, credentials }) {
-      // @ts-ignore
-      if (user.email) {
-        return "success";
-      }
-      return false;
-    },
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.user = token;
-      return session;
-    },
-  },
-
   pages: {
-    signIn: "/Login",
-  },
+      signIn: '/Login',
+    },
 };
 
 export async function loginIsRequiredServer() {
-  const session = await getServerSession(options);
-  if (!session) return redirect("/");
-}
-
-export function loginIsRequiredClient() {
-  if (typeof window !== "undefined") {
-    const session = useSession();
-    const router = useRouter();
-    if (!session) router.push("/");
+    const session = await getServerSession(options);
+    if (!session) return redirect("/");
   }
-}
+  
+  export function loginIsRequiredClient() {
+    if (typeof window !== "undefined") {
+      const session = useSession();
+      const router = useRouter();
+      if (!session) router.push("/");
+    }
+  }

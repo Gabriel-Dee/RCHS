@@ -1,64 +1,61 @@
-// This is where we aetup providers like github provoders or credentials provoders
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
-import bcrypt from "bcryptjs";
-import User from "@/models/User";
-import connect from "@/utils/db";
 
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      
       credentials: {
-        email: {
-          label: "Email:",
-          type: "text",
-          placeholder: "Enter Email",
-        },
-        password: {
-          label: "Password:",
-          type: "password",
-          placeholder: "Enter Password",
-        },
+        email: { label: "Email:", type: "text", placeholder: "Enter Email" },
+        password: { label: "Password:", type: "password", placeholder: "Enter Password" },
       },
       async authorize(credentials: any) {
-        await connect();
         try {
-          const user = await User.findOne({ email: credentials.email });
-          if (user) {
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
-            if (isPasswordCorrect) {
-              return user;
-            }
+          const res = await fetch('http://127.0.0.1:8000/api/login/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || 'Authentication failed');
           }
-        } catch (err: any) {
-          throw new Error(err);
+
+          const user = await res.json();
+          return user;
+        } catch (err) {
+          if (err instanceof Error) {
+            throw new Error(err.message || 'Authentication failed');
+          } else {
+            throw new Error('Authentication failed');
+          }
         }
       },
-
     }),
   ],
   pages: {
-      signIn: '/Login',
-    },
+    signIn: '/Login',
+  },
 };
 
 export async function loginIsRequiredServer() {
-    const session = await getServerSession(options);
-    if (!session) return redirect("/");
+  const session = await getServerSession(options);
+  if (!session) return redirect("/");
+}
+
+export function loginIsRequiredClient() {
+  if (typeof window !== "undefined") {
+    const session = useSession();
+    const router = useRouter();
+    if (!session) router.push("/");
   }
-  
-  export function loginIsRequiredClient() {
-    if (typeof window !== "undefined") {
-      const session = useSession();
-      const router = useRouter();
-      if (!session) router.push("/");
-    }
-  }
+}
