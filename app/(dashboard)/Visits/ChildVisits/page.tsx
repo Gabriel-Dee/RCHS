@@ -5,6 +5,13 @@ import NotificationModal from "@/app/components/NotificationModal";
 
 const { Option } = Select;
 
+const publicHolidays = [
+  "2024-01-01",
+  "2024-07-04",
+  "2024-12-25",
+  // add more holidays as needed
+];
+
 interface Child {
   url: string;
   id: string;
@@ -21,6 +28,38 @@ interface Child {
   maternal_health_worker: string;
   child_residence: string;
 }
+
+const calculateNextVisitDate = (
+  currentVisitDate: string | number | Date,
+  visitPhase: string,
+  visitNumber: string,
+  publicHolidays: string[]
+): string => {
+  const currentVisit = new Date(currentVisitDate);
+  let nextVisit = new Date(currentVisitDate);
+
+  if (visitPhase === "Before Card") {
+    if (visitNumber === "First") {
+      nextVisit.setDate(currentVisit.getDate() + 7);
+    } else if (visitNumber === "Second") {
+      nextVisit.setDate(currentVisit.getDate() + 28);
+    } else if (visitNumber === "Third") {
+      nextVisit.setDate(currentVisit.getDate() + 42);
+    }
+  } else if (visitPhase === "After Card") {
+    nextVisit.setMonth(currentVisit.getMonth() + 1);
+  }
+
+  while (
+    nextVisit.getDay() === 0 ||
+    nextVisit.getDay() === 6 ||
+    publicHolidays.includes(nextVisit.toISOString().split("T")[0])
+  ) {
+    nextVisit.setDate(nextVisit.getDate() + 1);
+  }
+
+  return nextVisit.toISOString().split("T")[0];
+};
 
 const ChildVisitForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
@@ -104,6 +143,22 @@ const ChildVisitForm: React.FC = () => {
       bmi: bmi.toFixed(2),
     }));
   }, [formValues.weight_grams, formValues.height]);
+
+  useEffect(() => {
+    if (formValues.date && formValues.visit_phase && formValues.visit_number) {
+      const nextVisitDate = calculateNextVisitDate(
+        formValues.date,
+        formValues.visit_phase,
+        formValues.visit_number,
+        publicHolidays // Add this line to pass the publicHolidays array
+      );
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        return_date: nextVisitDate,
+      }));
+    }
+  }, [formValues.date, formValues.visit_phase, formValues.visit_number]);
+  
 
   // Specific handlers for select changes
   const handlechildNameChange = (value: string) => {
