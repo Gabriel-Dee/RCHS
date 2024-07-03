@@ -259,25 +259,39 @@ const ChildVisitForm: React.FC = () => {
             </Select>
           </div>
 
-          <div>
-            <label htmlFor="visit_number" className="text-gray-700">
-              Visit Number
-            </label>
-            <Select
-              id="visit_number"
-              placeholder="Select Visit Phase"
-              className="w-full"
-              onChange={(value) =>
-                setFormValues({ ...formValues, visit_number: value })
-              }
-              value={formValues.visit_number}
-            >
-              <Option value="First">First (within 48 hrs)</Option>
-              <Option value="Second">Second (within 7 days)</Option>
-              <Option value="Third">Third (in 28 days)</Option>
-              <Option value="Fourth">Fourth (in 42 days)</Option>
-            </Select>
-          </div>
+          {formValues.visit_phase === "Before Card" ? (
+            <div>
+              <label htmlFor="visit_number" className="text-gray-700">
+                Visit Number
+              </label>
+              <Select
+                id="visit_number"
+                placeholder="Select Visit Number"
+                className="w-full"
+                onChange={(value) =>
+                  setFormValues({ ...formValues, visit_number: value })
+                }
+                value={formValues.visit_number}
+              >
+                <Option value="First">First (within 48 hrs)</Option>
+                <Option value="Second">Second (within 7 days)</Option>
+                <Option value="Third">Third (in 28 days)</Option>
+                <Option value="Fourth">Fourth (in 42 days)</Option>
+              </Select>
+            </div>
+          ) : (
+            <div>
+              <label htmlFor="visit_number" className="text-gray-700">
+                Visit Number
+              </label>
+              <Input
+                id="visit_number"
+                type="number"
+                onChange={handleInputChange}
+                value={formValues.visit_number}
+              />
+            </div>
+          )}
           <div>
             <label htmlFor="date" className="text-gray-700">
               Visit Date
