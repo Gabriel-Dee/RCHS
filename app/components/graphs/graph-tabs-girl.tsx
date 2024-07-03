@@ -5,7 +5,6 @@ import GirlWeightStatistics from "./patient-weight-age-girls";
 import GirlStatistics0to2 from "./patient-length-age-girls-0to2";
 import GirlBmiStatistics0t02 from "./patient-bmi-age-girls0to2";
 
-
 enum Menu {
   LENGTH_HEIGHT = "Length/Height",
   WEIGHT = "Weight",
