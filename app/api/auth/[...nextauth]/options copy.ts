@@ -1,4 +1,3 @@
-// This is where we aetup providers like github provoders or credentials provoders
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { useSession } from "next-auth/react";
