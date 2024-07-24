@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/child/${id}/`)
+      fetch(`http://100.42.178.17:8800/child/${id}/`)
         .then((res) => res.json())
         .then((data) => setSelectedChildData(data))
         .catch((error) => console.error("Error fetching child data:", error));
@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/child_visit/`)
+      fetch(`http://100.42.178.17:8800/child_visit/`)
         .then((response) => response.json())
         .then((data) => {
           const filteredVisits = data.filter((visit: any) =>
@@ -97,7 +97,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://127.0.0.1:8000/api/getCardDetail/`)
+      fetch(`http://100.42.178.17:8800/api/getCardDetail/`)
         .then((response) => response.json())
         .then((data) => {
           const filteredVisits = data.filter((visit: any) =>
@@ -122,7 +122,7 @@ const Profile: React.FC = () => {
   };
 
   const handleSave = (updatedData: ChildData) => {
-    fetch(`http://127.0.0.1:8000/child/${id}/`, {
+    fetch(`http://100.42.178.17:8800/child/${id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

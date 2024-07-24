@@ -20,7 +20,7 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
   };
 
   const handleSave = (updatedVisit: ActivityItem) => {
-    fetch(`http://127.0.0.1:8000/child_visit/${updatedVisit.id}/`, {
+    fetch(`http://100.42.178.17:8800/child_visit/${updatedVisit.id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
