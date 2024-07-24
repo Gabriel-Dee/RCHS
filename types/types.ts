@@ -169,3 +169,9 @@ export interface MotherData {
   gender: string;
   phone: string;
 }
+
+export interface RecommendationItem {
+  id: number;
+  detail: string;
+  // Add other fields if necessary
+}

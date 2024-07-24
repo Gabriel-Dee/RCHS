@@ -105,7 +105,7 @@ const ChildVisitForm: React.FC = () => {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/child/");
+        const response = await fetch("http://100.42.178.17:8800/child/");
         const data = await response.json();
         setChildren(data);
       } catch (error) {
@@ -233,7 +233,7 @@ const ChildVisitForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/child_visit/", {
+      const response = await fetch("http://100.42.178.17:8800/child_visit/", {
         headers: {
           "Content-Type": "application/json",
         },

@@ -4,7 +4,6 @@ import { ActivityItem } from "@/types/types";
 import { Button } from "@/registry/new-york/ui/button";
 import EditVisitModal from "../EditChildVisitModal";
 
-
 interface VisitDetailsTableProps {
   visit: ActivityItem;
   onBack: () => void;
@@ -21,7 +20,7 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
   };
 
   const handleSave = (updatedVisit: ActivityItem) => {
-    fetch(`http://127.0.0.1:8000/child_visit/${updatedVisit.id}/`, {
+    fetch(`http://100.42.178.17:8800/child_visit/${updatedVisit.id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -44,9 +43,9 @@ const VisitDetailsTable: React.FC<VisitDetailsTableProps> = ({
           Visit Details
         </h2>
         <div>
-          <Button onClick={handleEditClick} className="btn mr-2">
+          {/* <Button onClick={handleEditClick} className="btn mr-2">
             Edit
-          </Button>
+          </Button> */}
           <Button onClick={onBack} className="btn">
             Back
           </Button>

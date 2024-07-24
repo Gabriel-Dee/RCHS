@@ -7,7 +7,7 @@ const AnnualReport = forwardRef<HTMLDivElement>((props, ref) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://127.0.0.1:8000/api/ReportQuartely/');
+      const response = await fetch('http://100.42.178.17:8800/api/ReportQuartely/');
       const data = await response.json();
       setReportData(data);
     };
