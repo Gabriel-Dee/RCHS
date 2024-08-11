@@ -60,7 +60,7 @@ const ChildDetailsForm: React.FC = () => {
   useEffect(() => {
     const fetchMothers = async () => {
       try {
-        const response = await fetch("http://100.42.178.17:8800/mother/");
+        const response = await fetch("http://rchsbackend:8800/mother/");
         const data = await response.json();
         setMothers(data);
       } catch (error) {
@@ -80,7 +80,7 @@ const ChildDetailsForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        "http://100.42.178.17:8800/api/childStatistics/"
+        "http://rchsbackend:8800/api/childStatistics/"
       );
       const data = await response.json();
       const patientNumber = (data.total_children + 1)
@@ -186,7 +186,7 @@ const ChildDetailsForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://100.42.178.17:8800/child/", {
+      const response = await fetch("http://rchsbackend:8800/child/", {
         headers: {
           "Content-Type": "application/json",
         },

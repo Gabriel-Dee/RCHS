@@ -23,7 +23,7 @@ const useUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://100.42.178.17:8800/child/');
+        const response = await fetch('http://rchsbackend:8800/child/');
         const data: User[] = await response.json();
         setUsers(data);
       } catch (error) {

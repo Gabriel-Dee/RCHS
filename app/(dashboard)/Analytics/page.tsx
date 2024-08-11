@@ -178,7 +178,7 @@ const AnalyticsPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://100.42.178.17:8800/api/Analytics/");
+      const response = await fetch("http://rchsbackend:8800/api/Analytics/");
       const data = await response.json();
       setData(data);
     };

@@ -17,7 +17,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ childNumber }) => {
     // Log the childNumber to ensure it's correct
     console.log("Fetching recommendations for child number:", childNumber);
 
-    fetch(`http://100.42.178.17:8800/api/get_child_nutrition_recomendations/`, {
+    fetch(`http://rchsbackend:8800/api/get_child_nutrition_recomendations/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -30,7 +30,7 @@ const MonthlyReport = forwardRef<HTMLDivElement>((props, ref) => {
   const [reportData, setReportData] = useState<ReportData | null>(null);
 
   useEffect(() => {
-    fetch("http://100.42.178.17:8800/api/FollowupAnnualy/")
+    fetch("http://rchsbackend:8800/api/FollowupAnnualy/")
       .then((response) => response.json())
       .then((data) => setReportData(data))
       .catch((error) => console.error("Error fetching report data:", error));
