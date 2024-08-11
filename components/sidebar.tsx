@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import SideBarMenuGroup from "./sidebar-menu-group";
-import { SIDENAV_ITEMS } from "@/app/(Dashboard)/menu_constants";
+import { SIDENAV_ITEMS } from "@/app/(dashboard)/menu_constants";
 
 export const SideBar = () => {
   const [mounted, setMounted] = useState(false);
