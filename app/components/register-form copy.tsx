@@ -50,7 +50,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
     setIsLoading(true); // Set isLoading to true when submitting the form
 
     //   try {
-    //     const res = await fetch("http://rchsbackend:8800/api/register/", {
+    //     const res = await fetch("http://100.42.178.17:8800/api/register/", {
     //       method: "POST",
     //       headers: {
     //         "Content-Type": "application/json",

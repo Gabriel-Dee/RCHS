@@ -50,7 +50,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        "http://rchsbackend:8800/api/getParentStatistics/"
+        "http://100.42.178.17:8800/api/getParentStatistics/"
       );
       const data = await response.json();
       const patientNumber = (data.total_parents + 1)
@@ -174,7 +174,7 @@ const ParentGuardianDetailsForm: React.FC = () => {
     } as typeof formValues;
 
     try {
-      const response = await fetch("http://rchsbackend:8800/mother/", {
+      const response = await fetch("http://100.42.178.17:8800/mother/", {
         headers: {
           "Content-Type": "application/json",
         },

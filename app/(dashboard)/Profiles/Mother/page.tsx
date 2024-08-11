@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://rchsbackend:8800/mother/${id}/`)
+      fetch(`http://100.42.178.17:8800/mother/${id}/`)
         .then((res) => res.json())
         .then((data) => setSelectedMotherData(data))
         .catch((error) => console.error("Error fetching mother data:", error));
@@ -31,7 +31,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://rchsbackend:8800/mother_visit/`)
+      fetch(`http://100.42.178.17:8800/mother_visit/`)
         .then((response) => response.json())
         .then((data) => {
           const filteredVisits = data.filter((visit: any) =>
@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
   };
 
   const handleSave = (updatedData: any) => { // Adjust this type according to your API response structure
-    fetch(`http://rchsbackend:8800/mother/${id}/`, {
+    fetch(`http://100.42.178.17:8800/mother/${id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

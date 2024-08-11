@@ -17,7 +17,7 @@ export default async function Records() {
     redirect("/api/auth/signin?callbackUrl=/Records/Mother");
   }
   // Fetch data here
-  const res = await fetch("http://rchsbackend:8800/api/getMotherSummary/", {
+  const res = await fetch("http://100.42.178.17:8800/api/getMotherSummary/", {
     // headers: {
     //   'Authorization': `Bearer ${session.accessToken}`, // If authorization is needed
     // },
